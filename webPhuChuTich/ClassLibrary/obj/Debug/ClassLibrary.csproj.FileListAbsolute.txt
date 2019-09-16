@@ -1,0 +1,16 @@
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\ClassLibrary.dll.config
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\ClassLibrary.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\ClassLibrary.pdb
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\EntityFramework.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\EntityFramework.SqlServer.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\EntityFramework.xml
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\EntityFramework.SqlServer.xml
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\obj\Debug\ClassLibrary.csprojAssemblyReference.cache
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\obj\Debug\ClassLibrary.csproj.CoreCompileInputs.cache
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\obj\Debug\ClassLibrary.csproj.CopyComplete
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\obj\Debug\ClassLibrary.dll
+G:\PhuChuTich\webPhuChuTich\ClassLibrary\obj\Debug\ClassLibrary.pdb
