@@ -45,7 +45,8 @@ namespace www.Areas.Admin.Controllers
             if (Id.HasValue && Id > 0)
             {
                 model = _services.GetById(Id.Value);
-                ViewBag.Title = "Cập nhật tin tức";
+                ViewBag.NgayViet = model.ngayDang.ToString("dd/MM/yyyy");
+                ViewBag.Title = "Cập nhật bài viết";
             }
             else
             {
@@ -70,7 +71,7 @@ namespace www.Areas.Admin.Controllers
                     modifiedUser = User.Identity.Name,
                     contentKey = "TinTuc"
                 };
-                ViewBag.Title = "Thêm mới tin tức";
+                ViewBag.Title = "Thêm mới bài viết";
             }
             IEnumerable<DropdownModel> category = _services.Dropdownlist(0, null, "ChuyenMucTinTuc", _languageId);
             ViewBag.parentId = category.Select(x => new SelectListItem { Text = x.Text, Value = x.Value.ToString() });
@@ -95,6 +96,7 @@ namespace www.Areas.Admin.Controllers
                     model.modifiedTime = DateTime.Now;
                     model.parentId = entity.parentId;
                     model.name = entity.name;
+                    model.authorName = entity.authorName;
                     _services.Update(model);
                     _services.Save();
                 }
@@ -170,6 +172,7 @@ namespace www.Areas.Admin.Controllers
             if (Id.HasValue && Id > 0)
             {
                 model = _services.GetById(Id.Value);
+             
                 ViewBag.Title = "Cập nhật chuyên mục";
             }
             else
