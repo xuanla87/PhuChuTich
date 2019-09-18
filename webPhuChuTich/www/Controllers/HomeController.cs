@@ -174,11 +174,21 @@ namespace www.Controllers
 
         public ActionResult Box1()
         {
-            return PartialView();
+            int Id = 0;
+            int.TryParse(_configSystemServices.GetValueByKey("Box1"), out Id);
+            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            var entity = _services.GetById(Id);
+            ViewBag.Url = entity.alias;
+            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
         public ActionResult Box2()
         {
-            return PartialView();
+            int Id = 0;
+            int.TryParse(_configSystemServices.GetValueByKey("Box2"), out Id);
+            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            var entity = _services.GetById(Id);
+            ViewBag.Url = entity.alias;
+            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(10));
         }
 
         public ActionResult Box3()

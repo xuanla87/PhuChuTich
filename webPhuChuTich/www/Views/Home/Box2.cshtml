@@ -1,1 +1,27 @@
-﻿
+﻿@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <h2><a href="@ViewBag.Url">Câu chuyện nhỏ, bài học lớn</a></h2>
+    <div class="box-body">
+        <div class="box2">
+            @foreach (var item in Model)
+            {
+                <div class="item">
+                    <div class="title">
+                        <a href="@item.alias" title="@item.name">
+                            @if (item.name.Length > 70)
+                            {
+                                @Html.Raw(item.name.Substring(0, 70) + "...")
+                            }
+                            else
+                            {
+                                @Html.Raw(item.name)
+                            }
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+

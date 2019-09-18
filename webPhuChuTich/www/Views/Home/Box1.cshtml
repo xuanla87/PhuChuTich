@@ -1,1 +1,58 @@
-﻿
+﻿@{
+    int count = 0;
+}
+@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <h2><a href="@ViewBag.Url">Tư tưởng, đạo đức, phong cách Hồ Chí Minh</a></h2>
+    <div class="box-body">
+        <div class="box1">
+            @foreach (var item in Model)
+            {
+                count++;
+                if (count == 1)
+                {
+                    <div class="item">
+                        <div class="thumbnail">
+                            <img src="@item.thumbnail" alt="@item.name" />
+                        </div>
+                        <div class="text">
+                            <div class="title">
+                                <a href="@item.alias" title="@item.name">
+                                    @if (item.name.Length > 70)
+                                    {
+                                        @Html.Raw(item.name.Substring(0, 70) + "...")
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(item.name)
+                                    }
+                                </a>
+                            </div>
+                            <div class="description">
+                                @Html.Raw(item.description)
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="item">
+                        <div class="title">
+                            <a href="@item.alias" title="@item.name">
+                                @if (item.name.Length > 70)
+                                {
+                                    @Html.Raw(item.name.Substring(0, 70) + "...")
+                                }
+                                else
+                                {
+                                    @Html.Raw(item.name)
+                                }
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

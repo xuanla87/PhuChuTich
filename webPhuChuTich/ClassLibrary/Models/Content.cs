@@ -22,10 +22,11 @@
         public string createUser { get; set; }
         public string modifiedUser { get; set; }
         public string authorName { get; set; }
+        public DateTime ngayDang { get; set; }
         public int isView { get; set; }
         public bool isTrash { get; set; }
         public bool approved { get; set; }
-        public DateTime approvedTime { get; set; }
+        public DateTime? approvedTime { get; set; }
         public string approvedUser { get; set; }
         public string contentKey { get; set; }
         public string contentMain { get; set; }
