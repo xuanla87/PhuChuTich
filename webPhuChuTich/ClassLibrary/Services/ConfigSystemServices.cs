@@ -95,8 +95,7 @@
                 entity = new ConfigSystem
                 {
                     configKey = _key,
-                    configValue = _value,
-                    isTrash = false
+                    configValue = _value
                 };
                 _Repository.Add(entity);
                 _unitOfWork.Commit();

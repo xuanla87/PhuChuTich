@@ -3,13 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
+        <div class="time">
+            <i class="fa fa-clock-o"></i> Mở cửa tất cả các ngày trong tuần (Trừ chiều thứ 2) Mùa đông: Sáng: 8h - 11h. Chiều: 13h30 - 16h / Mùa hè: Sáng: 7h30 - 11h. Chiều: 13h30 - 16h
+            <div class="day-now">
+                @Html.Action("NgayThang", "Home")
+            </div>
+        </div>
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,23 +23,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Chủ tịch hồ chí minh</a></li>
+                    <li><a href="#">Tin tức sự kiện</a></li>
+                    <li><a href="#">Tư liệu</a></li>
+                    <li><a href="#">Trưng bày - triển lãm</a></li>
+                    <li><a href="#">Các điểm di tích</a></li>
+                    <li><a href="#">Liên hệ</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
+        </div>
+        <div class="slider">
+            <img src="../Content/slider-main.jpg" alt="slider" />
         </div>
         <div class="body-content">
             @RenderBody()
-            <hr />
+            <div class="clearfix30">
+            </div>
             <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                <p>Bản quyền thuộc: <b>Khu di tích Chủ tịch Hồ Chí Minh tại Phủ Chủ Tịch </b></p>
+                <p>Địa chỉ: <b>Số 1 - Hoàng Hoa Thám ( cổng đỏ ) - Ba Đình - Hà Nội </b></p>
+                <p>Điện thoại: <b>08 044 287 - 08 043 315 </b> Fax: <b>08 043 064</b></p>
+                <p>Email: nhasanbacho.pct@gmail.com</p>
+                <div class="clearfix30">
+                </div>
+                <p>Khu di tích mở cửa tất cả các ngày trong tuần (trừ chiều thứ 2)</p>
+                <p>Mùa đông: Sáng: 8h - 11h. Chiều: 13h30 - 16h</p>
+                <p>Mùa hè: Sáng: 7h30 - 11h. Chiều: 13h30 - 16h</p>
+                <p>Liên hệ đăng ký đoàn tham quan: <b>08 043 226</b> (Phòng Tuyên truyền, Giáo Dục) - <b>08 044 287</b> (Phòng Hành chính, Tổng hợp)</p>
             </footer>
+            <div class="icon-main">
+            </div>
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")

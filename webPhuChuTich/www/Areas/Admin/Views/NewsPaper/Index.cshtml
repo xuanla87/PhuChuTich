@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-md-2 text-right">
                                     <button type="button" class="btn btn-danger search btn-flat"><i class="fa fa-filter"></i> Lọc</button>
-                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('TinTuc')"><i class="fa fa-refresh"></i> Hủy</button>
+                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('NewsPaper')"><i class="fa fa-refresh"></i> Hủy</button>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                                 }
                                                 else
                                                 {
-                                                    if (User.IsInRole("Admin"))
+                                                    if (User.IsInRole("Admin") || User.Identity.Name=="admin")
                                                     {
                                                         <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
                                                         <button type="button" class="btn btn-info btn-flat" title="Hủy duyệt" onclick="UnApproval('@item.contentId','TinTuc')"><i class="fa fa-exclamation-triangle"></i></button>

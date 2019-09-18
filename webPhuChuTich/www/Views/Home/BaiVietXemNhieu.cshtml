@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="xem-nhieu">
+        <h2>Xem nhiều nhất</h2>
+        <div class="box-body">
+            @foreach (var item in Model)
+            {
+                <div class="item">
+                    <a href="@item.alias" title="@item.name">
+                        @if (item.name.Length > 120)
+                        {
+                            @Html.Raw(item.name.Substring(0, 120) + "...")
+                        }
+                        else
+                        {
+                            @Html.Raw(item.name)
+                        }
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
+

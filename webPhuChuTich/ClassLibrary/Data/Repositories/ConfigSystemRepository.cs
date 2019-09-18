@@ -19,7 +19,7 @@
 
         public ConfigSystem GetByKey(string _key)
         {
-            return this.DbContext.ConfigSystems.FirstOrDefault(x => x.configKey == _key && x.isTrash == false);
+            return this.DbContext.ConfigSystems.FirstOrDefault(x => x.configKey == _key);
         }
     }
 }

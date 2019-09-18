@@ -1,8 +1,78 @@
-﻿
-@{
-    ViewBag.Title = "Display";
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model ClassLibrary.Models.Content
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="breadcrumb">
+                @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
+            </div>
+            @if (Model.contentKey.StartsWith("ChuyenMucTinTuc"))
+            {
+                <div class="page-content">
+                    @Html.Action("getChildDisplay", "Home", new { Id = Model.contentId, _url = Model.alias })
+                    @Html.Raw(Model.contentMain)
+                </div>
+            }
+            else if (Model.contentKey.StartsWith("CHUYENMUCMEDIA"))
+            {
+                <div class="page-content">
+                    @Html.Action("getChildDisplayMedia", "Home", new { Id = Model.contentId, _url = Model.alias })
+                    @Html.Raw(Model.contentMain)
+                </div>
+            }
+            else if (Model.contentKey.StartsWith("DONVIPHONGKHOA"))
+            {
+                <div class="page-content">
+                    @Html.Action("childrenLichCongTac", "Home", new { Id = Model.contentId })
+                    @Html.Action("LichCongTacChildren", "Home", new { Id = Model.contentId, _url = Model.alias })
+                </div>
+            }
+            else if (Model.contentKey.StartsWith("CHUYENMUCTAILIEU"))
+            {
+                <div class="page-content">
+                    @Html.Action("ViewVanBan", "Home", new { Id = Model.contentId, _url = Model.alias })
+                </div>
+            }
+            else
+            {
+                <div class="page-content">
+                    <h1 class="page-title">@Model.name</h1>
+                    <div class="date-post text-right">
+                        <i>@Model.ngayDang.ToString("dd") Tháng @Model.ngayDang.ToString("MM") Năm @Model.ngayDang.ToString("yyyy") / @Model.isView lượt xem </i>
+                    </div>
+                    <div class="page-des">
+                        @Html.Raw(Model.description)
+                    </div>
+                    @Html.Raw(Model.contentMain)
+                    <div class="text-right">
+                        @Html.Raw(Model.authorName)
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            @Html.Action("TuTuongDaoDuc", "Home")
+            @Html.Action("BaiVietXemNhieu", "Home")
+            <div class="thong-ke">
+                <div class="box">
+                    Thống kê truy cập
+                </div>
+                <div class="box-body">
+                    Lượt truy cập: 1,452,236
+                </div>
+            </div>
 
-<h2>Display</h2>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Action("Index", "Home")
+}
+
+
+
 

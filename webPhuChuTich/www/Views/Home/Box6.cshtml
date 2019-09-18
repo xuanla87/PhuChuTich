@@ -15,7 +15,7 @@
                         count++;
                         if (count == 1)
                         {
-                            <div class="item">
+                            <div class="item-first">
                                 <div class="thumbnail">
                                     <img src="@item.thumbnail" alt="@item.name" />
                                 </div>
@@ -48,19 +48,17 @@
                                 <div class="thumbnail">
                                     <img src="@item.thumbnail" alt="@item.name" />
                                 </div>
-                                <div class="title">
+                                <div class="text">
                                     <a href="@item.alias" title="@item.name">
-                                        @if (item.name.Length > 70)
+                                        @if (item.name.Length > 120)
                                         {
-                                            @Html.Raw(item.name.Substring(0, 70) + "...")
+                                            @Html.Raw(item.name.Substring(0, 120) + "...")
                                         }
                                         else
                                         {
                                             @Html.Raw(item.name)
                                         }
                                     </a>
-                                </div>
-                                <div class="description">
                                     @Html.Raw(item.description)
                                 </div>
                             </div>

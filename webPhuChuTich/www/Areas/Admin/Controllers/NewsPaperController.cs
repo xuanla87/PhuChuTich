@@ -2,6 +2,7 @@
 using ClassLibrary.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -81,8 +82,11 @@ namespace www.Areas.Admin.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Detail(Content entity)
+        public ActionResult Detail(Content entity, string NgayViet)
         {
+            DateTime _ngayDang = DateTime.Now;
+            if (!string.IsNullOrEmpty(NgayViet))
+                _ngayDang = DateTime.ParseExact(NgayViet, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             if (ModelState.IsValid)
             {
                 if (entity.contentId > 0)
@@ -96,6 +100,7 @@ namespace www.Areas.Admin.Controllers
                     model.modifiedTime = DateTime.Now;
                     model.parentId = entity.parentId;
                     model.name = entity.name;
+                    model.ngayDang = _ngayDang;
                     model.authorName = entity.authorName;
                     _services.Update(model);
                     _services.Save();
@@ -110,9 +115,10 @@ namespace www.Areas.Admin.Controllers
                         thumbnail = entity.thumbnail,
                         createTime = DateTime.Now,
                         modifiedTime = DateTime.Now,
+                        ngayDang = _ngayDang,
                         allowComment = false,
                         approved = false,
-                        approvedTime = DateTime.Now,
+                        approvedTime = null,
                         approvedUser = null,
                         authorName = entity.authorName,
                         contentKey = "TinTuc",
@@ -172,7 +178,7 @@ namespace www.Areas.Admin.Controllers
             if (Id.HasValue && Id > 0)
             {
                 model = _services.GetById(Id.Value);
-             
+
                 ViewBag.Title = "Cập nhật chuyên mục";
             }
             else
@@ -183,6 +189,7 @@ namespace www.Areas.Admin.Controllers
                     languageId = _languageId,
                     createTime = DateTime.Now,
                     approvedTime = DateTime.Now,
+                    ngayDang = DateTime.Now,
                     allowComment = false,
                     isHome = false,
                     isNew = false,
@@ -236,9 +243,10 @@ namespace www.Areas.Admin.Controllers
                         thumbnail = entity.thumbnail,
                         createTime = DateTime.Now,
                         modifiedTime = DateTime.Now,
+                        ngayDang = DateTime.Now,
                         allowComment = false,
                         approved = false,
-                        approvedTime = DateTime.Now,
+                        approvedTime =null,
                         approvedUser = null,
                         authorName = null,
                         contentKey = "ChuyenMucTinTuc",
@@ -264,7 +272,7 @@ namespace www.Areas.Admin.Controllers
                     _services.Update(model);
                     _services.Save();
                 }
-                return RedirectToAction("Index", new { _parentId = entity.parentId });
+                return RedirectToAction("ChuyenMuc", new { _parentId = entity.parentId });
             }
             IEnumerable<DropdownModel> category = _services.Dropdownlist(0, (int)entity.contentId, "ChuyenMucTinTuc", entity.languageId);
             ViewBag.contentParentId = category.Select(x => new SelectListItem

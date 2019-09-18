@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Cài đặt hệ thống";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+@model www.Areas.Admin.Models.ModelCaiDatHeThong
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i>Admin</a></li>
+        <li><a href="/Admin/CaiDatHeThong">Cài đặt hệ thống</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                @using (Html.BeginForm())
+                {
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Banner trang", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.SiteBanner, new { @class = "form-control", @placeholder = "Chọn banner.." })
+                                    @Html.ValidationMessageFor(x => x.SiteBanner, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Tiêu đề trang", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.SiteTitle, new { @class = "form-control", @placeholder = "Nhập tiêu đề.." })
+                                    @Html.ValidationMessageFor(x => x.SiteTitle, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Mô tả trang", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.SiteDescription, new { @class = "form-control", @placeholder = "Nhập mô tả.." })
+                                    @Html.ValidationMessageFor(x => x.SiteDescription, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box1", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box1, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box1, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box2", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box2, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box2, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box3", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box3, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box3, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box4", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box4, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box4, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Danh mục chính", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.DanhMucChinh, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.DanhMucChinh, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box5", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box5, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box5, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box6", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box6, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box6, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box7", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box7, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box7, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Box8", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.Box8, null, "---Chọn---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.Box8, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nội dung chân trang", new { @class = "control-lable" })
+                            @Html.TextAreaFor(x => x.SiteFooterInfo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.SiteFooterInfo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Mã nhúng bản đồ", new { @class = "control-lable" })
+                            @Html.TextAreaFor(x => x.BanDo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.BanDo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nội dung", new { @class = "control-lable" })
+                            @Html.TextAreaFor(x => x.SiteAbout, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.SiteAbout, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Lưu dữ liệu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@section scriptAs {
+    <script>
+        $(function () {
+            CKEDITOR.replace('SiteFooterInfo', {
+                toolbar: [
+                    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+                    ['Bold', 'Italic', 'Underline'],
+                    ['Image', 'Youtube', 'Link', 'Unlink'], ['Styles', 'Format', 'Font', 'FontSize'], ['TextColor', 'BGColor'], ['Maximize', 'Source']
+                ], height: '150px'
+
+            });
+            CKEDITOR.replace('SiteAbout', {
+                toolbar: [
+                    ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+                    ['Bold', 'Italic', 'Underline']
+                ], height: '100px'
+
+            });
+        });
+
+    </script>
+}
+

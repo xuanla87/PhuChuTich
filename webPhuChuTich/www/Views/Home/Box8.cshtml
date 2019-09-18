@@ -1,1 +1,52 @@
-﻿
+﻿@{
+    int count = 0;
+    int count1 = 0;
+}
+@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <h2><a href="@ViewBag.Url">Mở cửa thư viện</a></h2>
+    <div class="box-body">
+        <div class="box7">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        if (count == 1)
+                        {
+                            <div class="item-first">
+                                <div class="thumbnail">
+                                    <img src="@item.thumbnail" alt="@item.name" />
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @foreach (var item in Model)
+                    {
+                        count1++;
+                        if (count1 > 1)
+                        {
+                            <div class="item">
+                                <div class="text">
+                                    <a href="@item.alias" title="@item.name">
+                                        @if (item.name.Length > 120)
+                                        {
+                                            @Html.Raw(item.name.Substring(0, 120) + "...")
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(item.name)
+                                        }
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

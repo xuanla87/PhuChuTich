@@ -50,7 +50,7 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar" style="height: auto;">
                 <ul class="sidebar-menu tree" data-widget="tree">
-                    @if (User.Identity.Name == "admin@gmail.com" || User.IsInRole("Admin"))
+                    @if (User.Identity.Name == "admin" || User.IsInRole("Admin"))
                     {
                         <li class="treeview">
                             <a href="#">
