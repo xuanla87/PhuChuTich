@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    ViewBag.Title = "Cập nhật danh mục";
+}
+@model  www.Areas.Admin.Models.ModelDanhMuc
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i>Admin</a></li>
+        <li><a href="/Admin/Menu">Danh sách danh mục</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                @using (Html.BeginForm())
+                {
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Tên danh mục", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Nhập tên.." })
+                                    @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Danh mục cha", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.ParentId, null, "---Chọn danh mục---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.ParentId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Link danh mục", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.Link, new { @class = "form-control", @placeholder = "Nhập link.." })
+                                    @Html.ValidationMessageFor(x => x.Link, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Sắp xếp", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.isSort, new { @class = "form-control number", @placeholder = "Nhập số.." })
+                                    @Html.ValidationMessageFor(x => x.isSort, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                @Html.HiddenFor(x => x.Id)
+                                <div class="col-md-2 text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Lưu dữ liệu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+

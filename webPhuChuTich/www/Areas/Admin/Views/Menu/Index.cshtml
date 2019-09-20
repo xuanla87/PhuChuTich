@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    ViewBag.Title = "Danh sách danh mục";
+    int ipage = 1;
+    if (ViewBag.PageIndex != null)
+    {
+        ipage = (int)ViewBag.PageIndex;
+    }
+    int totalPage = 1;
+    if (ViewBag.TotalPage != null)
+    {
+        totalPage = (int)ViewBag.TotalPage;
+    }
+    int firstPaging = ipage - 2;
+    int lastPaging = ipage + 2;
+    firstPaging = firstPaging <= 0 ? 1 : firstPaging;
+    lastPaging = lastPaging - firstPaging < 5 ? firstPaging + 4 : lastPaging;
+    lastPaging = lastPaging >= totalPage ? totalPage : lastPaging;
+    bool? trash = (bool?)ViewBag.Trash;
+    int count = (ipage - 1) * 20;
+}
+@using www.Areas.Admin.Models
+@model IEnumerable<ModelDanhMuc>
+<section class="content-header">
+    <h1 class="title text-uppercase text-bold">@ViewBag.Title</h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="/Admin/Menu">Quản lý danh mục</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                @using (Html.BeginForm("Index", "Menu", FormMethod.Get, new { @id = "menu-list" }))
+                {
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" name="_searchKey" value="@ViewBag.SearchKey" class="form-control" placeholder="Nhập từ khóa.." />
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("_parentId", null, "--Danh mục cha--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <button type="button" class="btn btn-danger search btn-flat"><i class="fa fa-filter"></i> Lọc</button>
+                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('Menu')"><i class="fa fa-refresh"></i> Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="@Url.Action("ThemMoi", "Menu")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="50">STT</th>
+                                        <th width="350">Tên danh mục</th>
+                                        <th>Link danh mục</th>
+                                        <th>Danh mục cha</th>
+                                        <th>Sắp xếp</th>
+                                        <th width="120">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td class="text-center">@count</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Link</td>
+                                            <td>@Html.Action("getNameById", new { Id = item.ParentId })</td>
+                                            <td>@item.isSort</td>
+                                            <td>
+                                                <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("CapNhat", "Menu", new { Id = item.Id })"><i class="fa fa-pencil"></i></a>
+                                                <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trashMenu('@item.Id')"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                        @if (totalPage > 1)
+                        {
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    @if (firstPaging > 1)
+                                    {
+                                        <li>
+                                            <a href="#" aria-label="Previous" onclick="moveToPreviousPage(@ipage, 'menu-list')">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @for (int i = firstPaging; i <= lastPaging; i++)
+                                    {
+                                        var cssClass = "";
+                                        if (i == ipage)
+                                        {
+                                            cssClass = "active";
+                                        }
+                                        <li class="@cssClass"><a href="#" onclick="moveToPage(@i, 'menu-list')">@i</a></li>
+                                    }
+                                    @if (lastPaging < totalPage)
+                                    {
+                                        <li>
+                                            <a href="#" aria-label="Next" onclick="moveToNextPage(@ipage, 'menu-list')">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
+                        <input type="hidden" name="_pageIndex" value="@ipage" class="page-to-move" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

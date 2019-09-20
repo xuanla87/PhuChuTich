@@ -26,6 +26,7 @@ namespace www.Controllers
             this._configSystemServices = configSystemServices;
             this._contactServices = contactServices;
         }
+
         public ActionResult Index()
         {
             return PartialView();
@@ -87,7 +88,6 @@ namespace www.Controllers
             return PartialView();
         }
 
-
         public ActionResult Search(string searchKey, int? _pageIndex)
         {
             int _laguageId = 1;
@@ -116,6 +116,7 @@ namespace www.Controllers
             Session["CAPTCHA"] = GetRandomText();
             return View();
         }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult LienHe(Contact entity, string txtCaptcha)
@@ -165,12 +166,14 @@ namespace www.Controllers
 
         public ActionResult TuLieuAnh()
         {
-            return PartialView();
+            var model = _services.GetAll(null, null, null, null, "Gallery", 1, false, null, null, null, null);
+            return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(15));
         }
 
         public ActionResult TuLieuVideo()
         {
-            return PartialView();
+            var model = _services.GetAll(null, null, null, null, "Gallery", 1, false, null, null, null, null);
+            return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(5));
         }
 
         public ActionResult Box1()
@@ -182,6 +185,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box2()
         {
             int Id = 0;
@@ -201,6 +205,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box4()
         {
             int Id = 0;
@@ -210,6 +215,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box5()
         {
             int Id = 0;
@@ -219,6 +225,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box6()
         {
             int Id = 0;
@@ -228,6 +235,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box7()
         {
             int Id = 0;
@@ -237,6 +245,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult Box8()
         {
             int Id = 0;
@@ -246,10 +255,12 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
+
         public ActionResult ThongTinHoatDong()
         {
             return PartialView();
         }
+
         public ActionResult getChildDisplay(int Id, string _url, int? _pageIndex)
         {
             int _totalRecord = 0;
@@ -314,6 +325,7 @@ namespace www.Controllers
             ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(8));
         }
+
         public ActionResult NgayThang()
         {
             DateTime _time = DateTime.Now;
@@ -344,5 +356,6 @@ namespace www.Controllers
             ViewBag.TimePage = _stTime;
             return PartialView();
         }
+
     }
 }
