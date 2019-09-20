@@ -21,10 +21,10 @@ function geturl(str) {
     return str;
 }
 $(".geturl").keypress(function () {
-    document.getElementById('Alias').value = geturl($(".geturl").val());
+    document.getElementById('alias').value = geturl($(".geturl").val());
 });
 $(".geturl").keyup(function () {
-    document.getElementById('Alias').value = geturl($(".geturl").val());
+    document.getElementById('alias').value = geturl($(".geturl").val());
 });
 function moveToPreviousPage(currentPage, formId) {
     moveToPage(currentPage - 1, formId);
@@ -48,17 +48,10 @@ $(document).ready(function () {
 function refresh(x) {
     window.location.href = "/Admin/" + x;
 }
-$("#contentThumbnail").click(function () {
+$("#thumbnail").click(function () {
     var ckfiner = new CKFinder();
     ckfiner.selectActionFunction = function (fileUrl) {
-        $("#contentThumbnail").val(fileUrl);
-    };
-    ckfiner.popup();
-});
-$("#Img").click(function () {
-    var ckfiner = new CKFinder();
-    ckfiner.selectActionFunction = function (fileUrl) {
-        $("#Img").val(fileUrl);
+        $("#thumbnail").val(fileUrl);
     };
     ckfiner.popup();
 });
@@ -73,13 +66,6 @@ $("#SiteBannerEn").click(function () {
     var ckfiner = new CKFinder();
     ckfiner.selectActionFunction = function (fileUrl) {
         $("#SiteBannerEn").val(fileUrl);
-    };
-    ckfiner.popup();
-});
-$("#Thumbnail").click(function () {
-    var ckfiner = new CKFinder();
-    ckfiner.selectActionFunction = function (fileUrl) {
-        $("#Thumbnail").val(fileUrl);
     };
     ckfiner.popup();
 });

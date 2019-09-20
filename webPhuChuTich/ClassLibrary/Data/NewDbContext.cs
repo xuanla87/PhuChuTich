@@ -19,6 +19,7 @@
         public DbSet<Menu> Menus { set; get; }
         public DbSet<ConfigSystem> ConfigSystems { set; get; }
         public DbSet<LogAction> LogActions { set; get; }
+        public DbSet<Option> Options { set; get; }
         public static NewDbContext Create()
         {
             return new NewDbContext();

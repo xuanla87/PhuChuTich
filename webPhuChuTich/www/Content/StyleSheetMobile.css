@@ -1,0 +1,60 @@
+﻿@media (max-width: 768px) {
+    .menu-top {
+        float: left;
+        width: 100%;
+    }
+
+        .menu-top .navbar-nav {
+            float: left;
+            width: 100%;
+            background: transparent;
+        }
+
+            .menu-top .navbar-nav li {
+                float: left;
+            }
+
+    .bannermain {
+        display: none;
+    }
+
+    .search-header {
+        margin-top: -35px;
+    }
+
+    .navbar-inverse .navbar-toggle {
+        background-color: #0094ff;
+    }
+
+    .navbar-inverse .navbar-toggle {
+        border-color: #0094ff;
+    }
+
+    .box {
+        float: left;
+        width: 100%;
+    }
+
+    .slider-left {
+        height: auto;
+    }
+
+    footer {
+        float: left;
+    }
+
+        footer .item {
+            float: left;
+            width: 100%;
+        }
+
+    .border-right {
+        border-bottom: 2px solid #fff;
+        border-right: none;
+    }
+
+    .sub-menu {
+        position: initial;
+        margin-left: 15px;
+    }
+}

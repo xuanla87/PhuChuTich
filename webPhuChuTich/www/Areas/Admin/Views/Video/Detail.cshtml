@@ -1,0 +1,106 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+@model  ClassLibrary.Models.Content
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i>Admin</a></li>
+        <li><a href="/Admin/Banner">Danh sách banner</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                @using (Html.BeginForm("Detail", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="box-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.Label("Tiêu đề", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl", @placeholder = "Nhập tiêu đề..", @onchange = "javascript: Changed(this);" })
+                                    @Html.ValidationMessageFor(x => x.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.Label("Hình ảnh", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.thumbnail, new { @class = "form-control", @placeholder = "Chọn ảnh.." })
+                                    @Html.ValidationMessageFor(x => x.thumbnail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.Label("Video", new { @class = "control-lable" })
+                                    @Html.TextBox("fileVideo", "", new { @class = "form-control", @type = "file" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Nội dung", new { @class = "control-lable" })
+                            @Html.TextAreaFor(x => x.contentMain, new { @class = "form-control", @Rows = "6" })
+                            @Html.ValidationMessageFor(x => x.contentMain, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.Label("Thứ tự", new { @class = "control-lable" })
+                                        @Html.TextBoxFor(x => x.isSort, new { @class = "form-control number" })
+                                        @Html.ValidationMessageFor(x => x.isSort, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
+                                @Html.HiddenFor(x => x.alias)
+                                @Html.HiddenFor(x => x.description)
+                                @Html.HiddenFor(x => x.contentId)
+                                @Html.HiddenFor(x => x.isHome)
+                                @Html.HiddenFor(x => x.isNew)
+                                @Html.HiddenFor(x => x.isSort)
+                                @Html.HiddenFor(x => x.isTrash)
+                                @Html.HiddenFor(x => x.isView)
+                                @Html.HiddenFor(x => x.languageId)
+                                @Html.HiddenFor(x => x.modifiedTime)
+                                @Html.HiddenFor(x => x.createTime)
+                                @Html.HiddenFor(x => x.approvedUser)
+                                @Html.HiddenFor(x => x.createUser)
+                                @Html.HiddenFor(x => x.modifiedUser)
+                                @Html.HiddenFor(x => x.approvedTime)
+                                @Html.HiddenFor(x => x.allowComment)
+                                @Html.HiddenFor(x => x.contentKey)
+                                @Html.HiddenFor(x => x.oldId)
+                                <div class="col-md-2 text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Lưu dữ liệu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@section scriptAs {
+    <script>
+        $(function () {
+            CKEDITOR.replace('contentMain');
+        });
+        function Changed(textControl) {
+            document.getElementById('alias').value = geturl(textControl.value);
+            textControl.value = textControl.value.replace(/ + /g, " ");
+            textControl.value = textControl.value.replace(/^\ +|\ +$/g, "");
+        }
+    </script>
+}

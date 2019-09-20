@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Danh sách thành viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+@model IEnumerable<www.Models.ApplicationUser>
+<section class="content-header">
+    <h1 class="title text-uppercase text-bold">@ViewBag.Title</h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="/Admin/ThanhVien">Quản lý thành viên</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                @using (Html.BeginForm("Index", "ThanhVien", FormMethod.Get, new { @id = "tai-khoa-list" }))
+                {
+                    <div class="box-body">
+                        <div class="form-group">
+                            <a href="@Url.Action("ThemMoi", "ThanhVien")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="150">Tài khoản</th>
+                                        <th width="150">Họ tên</th>
+                                        <th width="120">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.UserName</td>
+                                            <td>@item.FullName</td>
+                                            <td>
+                                                <a title="Cập nhật mật khẩu" class="btn btn-primary btn-flat" href="@Url.Action("ChangePass", "ThanhVien", new { Id = item.Id })"><i class="fa fa-key"></i> Đổi mật khẩu</a>
+                                                @if (item.UserName != "admin")
+                                                {
+                                                    <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trashUser('@item.Id','ThanhVien')"><i class="fa fa-trash"></i></button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

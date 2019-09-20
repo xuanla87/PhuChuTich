@@ -66,6 +66,7 @@ namespace www.Models
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -81,6 +82,9 @@ namespace www.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string FullName { get; set; }
+        public string RoleName { get; set; }
     }
 
     public class ResetPasswordViewModel

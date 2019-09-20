@@ -1,0 +1,12 @@
+﻿#loginForm {
+    margin: 60px auto;
+    width: 400px;
+    border: 1px solid #808080;
+    padding: 20px 50px;
+    border-radius: 5px;
+    background: #3c8dbc;
+}
+
+    #loginForm .form-group {
+        margin-bottom: 15px;
+    }
