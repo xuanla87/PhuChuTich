@@ -1,50 +1,85 @@
 ﻿@{
     int count = 0;
+    int count1 = 0;
 }
 @model IEnumerable<ClassLibrary.Models.Content>
 @if (Model != null && Model.Count() > 0)
 {
-    <h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
-    <div class="right">
-        <ul>
-            @foreach (var item in Model)
-            {
-                count++;
-                if (count == 1)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">@item.name</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">@item.name</a>
-                    </li>
-                }
-            }
-        </ul>
-    </div>
-    <div class="left">
-        <ul>
-            @foreach (var item in Model)
-            {
-                count++;
-                if (count == 1)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">@item.name</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">@item.name</a>
-                    </li>
-                }
-            }
-        </ul>
-    </div>
+    <div class="gallery">
+        <h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
+        <div class="box-body">
+            <div class="box-gallery">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="left">
+                            <div class="tab-content">
+                                @foreach (var item in Model)
+                                {
+                                    count1++;
+                                    if (count1 == 1)
+                                    {
+                                        <div id="gallery_@count1" class="tab-pane fade in active">
+                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                            <p class="des">
+                                                @Html.Raw(item.name)
+                                                <a class="btnNext"><i class="fa fa-caret-right"></i></a>
+                                            </p>
+                                        </div>
 
+                                    }
+                                    else if (count1 == Model.Count())
+                                    {
+                                        <div id="gallery_@count1" class="tab-pane fade">
+                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                            <p class="des">
+                                                @Html.Raw(item.name)
+                                                <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
+                                            </p>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="gallery_@count1" class="tab-pane fade">
+                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                            <p class="des">
+                                                @Html.Raw(item.name)
+                                                <a class="btnNext"><i class="fa fa-caret-right"></i></a>
+                                                <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
+                                            </p>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="right">
+                            <ul>
+                                @foreach (var item in Model)
+                                {
+                                    count++;
+                                    if (count == 1)
+                                    {
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#gallery_@count">@item.name</a>
+                                            <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a data-toggle="tab" href="#gallery_@count">@item.name</a>
+                                            <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
-

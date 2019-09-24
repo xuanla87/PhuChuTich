@@ -7,7 +7,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/Scripts/sliderengine/amazingslider-1.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -63,8 +62,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/owl.carousel.min.js"></script>
-    <script src="~/Scripts/sliderengine/amazingslider.js"></script>
-    <script src="~/Scripts/sliderengine/initslider-1.js"></script>
+    <script src="~/Scripts/html5gallery/html5gallery.js"></script>
     @RenderSection("scripts", required: false)
     <script>
         $(window).ready(function () {
@@ -100,6 +98,20 @@
                     }
                 })
             });
+            $('.btnNext').click(function () {
+                $('ul > .active').next('li').find('a').trigger('click');
+            });
+
+            $('.btnPrevious').click(function () {
+                $('ul > .active').prev('li').find('a').trigger('click');
+            });
+            var tabCarousel = setInterval(function () {
+                var tabs = $('.gallery ul > li'),
+                    active = tabs.filter('.active'),
+                    next = active.next('li'),
+                    toClick = next.length ? next.find('a') : tabs.eq(0).find('a');
+                toClick.trigger('click');
+            }, 5000);
         });
     </script>
 </body>

@@ -108,13 +108,6 @@
     <script>
         $(function () {
             CKEDITOR.replace('contentMain');
-            CKEDITOR.replace('description', {
-                toolbar: [
-                    ['Bold', 'Italic', 'Underline'],
-                    ['Styles', 'Format', 'Font', 'FontSize']
-                ], height: '100px'
-
-            });
         });
         function Changed(textControl) {
             document.getElementById('alias').value = geturl(textControl.value);

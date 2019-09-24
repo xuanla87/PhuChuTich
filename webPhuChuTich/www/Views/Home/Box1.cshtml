@@ -41,17 +41,20 @@
                 }
                 else
                 {
-                    <div class="item">
-                        <a href="@item.alias" title="@item.name">
-                            @if (item.name.Length > 200)
-                            {
-                                @Html.Raw(item.name.Substring(0, 200) + "...")
-                            }
-                            else
-                            {
-                                @Html.Raw(item.name)
-                            }
-                        </a>
+                    <div class="line">
+                        <div class="item">
+                            <i class="fa fa-caret-right"></i>
+                            <a href="@item.alias" title="@item.name">
+                                @if (item.name.Length > 200)
+                                {
+                                    @Html.Raw(item.name.Substring(0, 200) + "...")
+                                }
+                                else
+                                {
+                                    @Html.Raw(item.name)
+                                }
+                            </a>
+                        </div>
                     </div>
                 }
             }
