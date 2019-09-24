@@ -12,7 +12,7 @@ using www.Models;
 
 namespace www.Areas.Admin.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ThanhVienController : Controller
     {
         private ApplicationSignInManager _signInManager;

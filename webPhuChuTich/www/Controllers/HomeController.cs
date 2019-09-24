@@ -179,10 +179,14 @@ namespace www.Controllers
         public ActionResult Box1()
         {
             int Id = 0;
+
             int.TryParse(_configSystemServices.GetValueByKey("Box1"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -191,8 +195,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box2"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(10));
         }
 
@@ -201,8 +208,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box3"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -211,8 +221,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box4"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -221,8 +234,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box5"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -231,8 +247,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box6"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -241,8 +260,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box7"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -251,8 +273,11 @@ namespace www.Controllers
             int Id = 0;
             int.TryParse(_configSystemServices.GetValueByKey("Box8"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (Id > 0)
+            {
+                var entity = _services.GetById(Id);
+                ViewBag.Url = entity.alias;
+            }
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
         }
 
@@ -357,5 +382,11 @@ namespace www.Controllers
             return PartialView();
         }
 
+
+        public ActionResult BaiVietNoiBat()
+        {
+            var model = _services.GetTinTucChung(null, null, null, null, "TinTuc", 1, false, true, null, null);
+            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(8));
+        }
     }
 }

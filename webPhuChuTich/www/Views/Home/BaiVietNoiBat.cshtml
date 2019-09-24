@@ -1,0 +1,50 @@
+﻿@{
+    int count = 0;
+}
+@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
+    <div class="right">
+        <ul>
+            @foreach (var item in Model)
+            {
+                count++;
+                if (count == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">@item.name</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">@item.name</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="left">
+        <ul>
+            @foreach (var item in Model)
+            {
+                count++;
+                if (count == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">@item.name</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">@item.name</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+
+}
+

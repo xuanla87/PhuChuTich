@@ -102,6 +102,7 @@ namespace www.Areas.Admin.Controllers
                     model.name = entity.name;
                     model.ngayDang = _ngayDang;
                     model.authorName = entity.authorName;
+                    model.isFeature = entity.isFeature;
                     _services.Update(model);
                     _services.Save();
                 }
@@ -124,7 +125,7 @@ namespace www.Areas.Admin.Controllers
                         contentKey = "TinTuc",
                         contentMain = entity.contentMain,
                         createUser = User.Identity.Name,
-                        isFeature = false,
+                        isFeature = entity.isFeature,
                         isHome = false,
                         isNew = false,
                         isSort = 0,

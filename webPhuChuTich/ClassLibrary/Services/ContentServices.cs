@@ -240,7 +240,7 @@
             {
                 enContent = enContent.Where(x => x.createTime.Date <= _toDate.Value.Date);
             }
-            enContent = enContent.OrderByDescending(x => x.createTime);
+            enContent = enContent.OrderByDescending(x => x.ngayDang);
             int totalRecord = enContent.Count();
             if (_pageIndex != null && _pageSize != null)
             {
