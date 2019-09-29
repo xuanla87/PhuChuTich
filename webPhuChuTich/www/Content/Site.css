@@ -620,3 +620,8 @@ h1.page-title {
     top: 40%;
     cursor: pointer;
 }
+
+.box-gallery img {
+    max-height: 420px;
+    overflow: hidden;
+}
