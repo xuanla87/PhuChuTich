@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ClassLibrary.Models.Contact
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="breadcrumb">
+                Liên hệ
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Họ và tên</label>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.contactFullName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.contactFullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.contactEmail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.contactEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Tiêu đề</label>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.contactTitle, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.contactTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Nộ dung</label>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(x => x.contactBody, new { @class = "form-control", @rows = "5" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Mã bảo mật</label>
+                    </div>
+                    <div class="col-md-9">
+                        <img src="@Url.Action("GetCaptchaImage","Home")" style="width:100%;border-width:0px;" />
+                        <br />
+                        <input name="txtCaptcha" type="text" id="txtCaptcha" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-send"></i> Gửi</button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12">
+            @Html.Action("TuTuongDaoDuc", "Home")
+            @Html.Action("BaiVietXemNhieu", "Home")
+            @Html.Action("_HitCounter", "Home")
+        </div>
+    </div>
+
+}
+
+

@@ -382,7 +382,6 @@ namespace www.Controllers
             return PartialView();
         }
 
-
         public ActionResult BaiVietNoiBat()
         {
             var model = _services.GetTinTucChung(null, null, null, null, "TinTuc", 1, false, true, null, null);
