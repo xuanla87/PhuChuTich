@@ -43,9 +43,20 @@
                     <div class="date-post text-right">
                         <i>@Model.ngayDang.ToString("dd") Tháng @Model.ngayDang.ToString("MM") Năm @Model.ngayDang.ToString("yyyy") / @Model.isView lượt xem </i>
                     </div>
-                    <div class="page-des">
-                        @Html.Raw(Model.description)
-                    </div>
+                    @if (Model.contentKey == "Video")
+                    {
+                        <video controls>
+                            <source src="/FileVideo/@Model.description">
+                        </video>
+                    }
+                    else
+                    {
+                        <div class="page-des">
+                            @Html.Raw(Model.description)
+                        </div>
+                    }
+
+
                     @Html.Raw(Model.contentMain)
                     <div class="text-right">
                         @Html.Raw(Model.authorName)

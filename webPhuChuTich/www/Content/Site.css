@@ -401,6 +401,9 @@ h1.page-title {
 .wrapper-video-slider .item video {
     width: 100%;
 }
+.page-content video {
+    width: 100%;
+}
 /*
 *  Owl Carousel - Core
 */
