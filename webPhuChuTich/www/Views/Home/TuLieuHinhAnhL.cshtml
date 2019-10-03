@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Tư liệu hình ảnh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<ClassLibrary.Models.Content>
+@{
+    int ipage = 1;
+    if (ViewBag.PageIndex != null)
+    {
+        ipage = (int)ViewBag.PageIndex;
+    }
+    int totalPage = 1;
+    if (ViewBag.TotalPage != null)
+    {
+        totalPage = (int)ViewBag.TotalPage;
+    }
+    int firstPaging = ipage - 2;
+    int lastPaging = ipage + 2;
+    firstPaging = firstPaging <= 0 ? 1 : firstPaging;
+    lastPaging = lastPaging - firstPaging < 5 ? firstPaging + 4 : lastPaging;
+    lastPaging = lastPaging >= totalPage ? totalPage : lastPaging;
+}
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="page-content">
+            <div class="breadcrumb">
+                <a href="/">Trang chủ</a> - <a href="tu-lieu-hinh-anh"> Tư liệu hình ảnh</a>
+            </div>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    if (string.IsNullOrEmpty(item.thumbnail))
+                    {
+                        <div class="item">
+                            <a href="@item.alias" title="@item.name">@item.name</a>
+                            <div class="des">
+                                @Html.Raw(item.description)
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-xs-4 col-sm-12">
+                                    <div class="thumbnail">
+                                        <a href="@item.alias"><img src="@item.thumbnail.Replace("~/","")" alt="@item.name" /></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-8 col-xs-8 col-sm-12">
+                                    <a href="@item.alias" title="@item.name">@item.name</a>
+                                    <div class="des">
+                                        @Html.Raw(item.description)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                <div class="row">
+                    <div class="col-md-6" style="line-height:34px;">
+                        <b>Trang @ipage/@totalPage</b> | <b>Số bài viết: </b> <b class="text-danger">@ViewBag.TotalRecord</b>
+                    </div>
+                    @if (totalPage > 1)
+                    {
+                        <div class="col-md-6 text-right">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    @if (firstPaging > 1)
+                                    {
+                                        <li>
+                                            <a href="tu-lieu-hinh-anh?_pageIndex=@(firstPaging-1)" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @for (int i = firstPaging; i <= lastPaging; i++)
+                                    {
+                                        var cssClass = "";
+                                        if (i == ipage)
+                                        {
+                                            cssClass = "active";
+                                        }
+                                        <li class="@cssClass"><a href="tu-lieu-hinh-anh?_pageIndex=@i">@i</a></li>
+                                    }
+                                    @if (lastPaging < totalPage)
+                                    {
+                                        <li>
+                                            <a href="tu-lieu-hinh-anh?_pageIndex=@(firstPaging+1)" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+
+                    }
+                    <input type="hidden" name="_pageIndex" value="@ipage" class="page-to-move" />
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        @Html.Action("TuTuongDaoDuc", "Home")
+        @Html.Action("BaiVietXemNhieu", "Home")
+        @Html.Action("_HitCounter", "Home")
+    </div>
+</div>

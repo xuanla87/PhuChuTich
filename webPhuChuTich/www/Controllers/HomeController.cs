@@ -176,6 +176,32 @@ namespace www.Controllers
             return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(5));
         }
 
+        public ActionResult TuLieuVideoL(int? _pageIndex)
+        {
+            int _laguageId = 1;
+            int _totalRecord = 0;
+            _pageIndex = _pageIndex ?? 1;
+            var entity = _services.GetAll(null, null, null, null, "Video", _laguageId, false, _pageIndex, 20, null, null);
+            _totalRecord = entity.TotalRecord;
+            ViewBag.TotalRecord = _totalRecord.ToString();
+            ViewBag.TotalPage = entity.Total;
+            ViewBag.PageIndex = _pageIndex ?? 1;
+            return View(entity.ViewContents.OrderByDescending(x => x.createTime));
+        }
+
+        public ActionResult TuLieuHinhAnhL(int? _pageIndex)
+        {
+            int _laguageId = 1;
+            int _totalRecord = 0;
+            _pageIndex = _pageIndex ?? 1;
+            var entity = _services.GetAll(null, null, null, null, "Gallery", _laguageId, false, _pageIndex, 20, null, null);
+            _totalRecord = entity.TotalRecord;
+            ViewBag.TotalRecord = _totalRecord.ToString();
+            ViewBag.TotalPage = entity.Total;
+            ViewBag.PageIndex = _pageIndex ?? 1;
+            return View(entity.ViewContents.OrderByDescending(x => x.createTime));
+        }
+
         public ActionResult Box1()
         {
             int Id = 0;
@@ -387,5 +413,79 @@ namespace www.Controllers
             var model = _services.GetTinTucChung(null, null, null, null, "TinTuc", 1, false, true, null, null);
             return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(6));
         }
+
+        public string MainMenu2()
+        {
+            int _languageId = 1;
+            int Id = 0;
+            if (_languageId == 1)
+                int.TryParse(_configSystemServices.GetValueByKey("DanhMucChinh"), out Id);
+            List<Menu> eMenus = _menuServices.GetByParent(Id).Where(x => x.isTrash == false).OrderBy(x => x.isSort).ToList();
+            string _html = "";
+            _html += "<ul class=\"main-nav nav navbar-nav\">";
+            foreach (var item in eMenus)
+            {
+                if (item.menuLink == "/" || item.menuLink == "")
+                {
+                    _html += " <li>";
+                    _html += " <a href=\"" + item.menuLink + "\">";
+                    _html += item.menuName;
+                    _html += "</a>";
+                    _html += SubMenu("sub-menu nav", null, item.menuLink);
+                    _html += "</li>";
+                }
+                else
+                {
+                    _html += " <li>";
+                    _html += " <a href=\"" + item.menuLink + "\">";
+                    _html += item.menuName;
+                    _html += "</a>";
+                    _html += SubMenu("sub-menu nav", null, item.menuLink);
+                    _html += "</li>";
+                }
+            }
+            _html += "</ul>";
+            return _html;
+        }
+
+        public string SubMenu(string _css, string _html, string _link)
+        {
+            var entity = _services.GetByAlias(_link);
+            if (entity != null)
+            {
+                var model = _services.GetAll(null, null, null, (int)entity.contentId, entity.contentKey, 1, false, null, null, null, null);
+                var List = model.ViewContents.OrderBy(x => x.isSort);
+                _html += " <ul class=\"" + _css + "\">";
+                foreach (var item in List)
+                {
+                    _html += " <li>";
+                    _html += " <a href=\"" + item.alias + "\">";
+                    _html += item.name;
+                    _html += "</a>";
+                    _html += SubMenu2(_css, (int)item.contentId, item.contentKey);
+                    _html += "</li>";
+                }
+                _html += "</ul>";
+            }
+            return _html;
+        }
+        public string SubMenu2(string _css, int _id, string _key)
+        {
+            string _html = "";
+            var model = _services.GetByParent(_id, _key);
+            _html += " <ul class=\"" + _css + "\">";
+            foreach (var item in model)
+            {
+                _html += " <li>";
+                _html += " <a href=\"" + item.alias + "\">";
+                _html += item.name;
+                _html += "</a>";
+                _html += SubMenu2(_css, (int)item.contentId, item.contentKey);
+                _html += "</li>";
+            }
+            _html += "</ul>";
+            return _html;
+        }
+
     }
 }

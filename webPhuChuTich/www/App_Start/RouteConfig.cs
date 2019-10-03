@@ -12,7 +12,16 @@ namespace www
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+             name: "VIDEO",
+             url: "tu-lieu-video",
+             defaults: new { controller = "Home", action = "TuLieuVideoL", id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+            name: "Gallery",
+            url: "tu-lieu-hinh-anh",
+            defaults: new { controller = "Home", action = "TuLieuHinhAnhL", id = UrlParameter.Optional }
+          );
             routes.MapRoute(
               name: "TIMKIEM",
               url: "tim-kiem",
