@@ -172,7 +172,7 @@ namespace www.Controllers
 
         public ActionResult TuLieuVideo()
         {
-            var model = _services.GetAll(null, null, null, null, "Gallery", 1, false, null, null, null, null);
+            var model = _services.GetAll(null, null, null, null, "Video", 1, false, null, null, null, null);
             return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(5));
         }
 

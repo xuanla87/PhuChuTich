@@ -358,7 +358,7 @@ h1.page-title {
         border-radius: inherit;
     }
 
-.gallery-slider > .item, {
+.gallery-slider > .item {
     width: 33.33%;
     float: left;
 }
@@ -396,6 +396,10 @@ h1.page-title {
 .gallery-slider .owl-next, .video-slider .owl-next {
     left: auto;
     right: -10px;
+}
+
+.wrapper-video-slider .item video {
+    width: 100%;
 }
 /*
 *  Owl Carousel - Core

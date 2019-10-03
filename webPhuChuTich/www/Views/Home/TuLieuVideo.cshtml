@@ -7,9 +7,9 @@
             @foreach (var item in Model)
             {
                 <div class="item">
-                    <a href="@item.alias" class="thumbnail">
-                        <img src="@item.thumbnail" alt="" />
-                    </a>
+                    <video controls>
+                        <source src="/FileVideo/@item.description" >
+                    </video>
                 </div>
             }
         </div>
