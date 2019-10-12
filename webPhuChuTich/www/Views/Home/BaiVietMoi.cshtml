@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ClassLibrary.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="post-related">
+        <h2>Xem thêm</h2>
+        <div class="box-body">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <i class="fa fa-caret-right"></i>
+                        <a href="@item.alias">@item.name</a>
+                        <p class="time">@item.ngayDang.ToString("dd/MM/yyyy") / @item.isView lượt xem</p>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

@@ -487,5 +487,11 @@ namespace www.Controllers
             return _html;
         }
 
+
+        public ActionResult BaiVietMoi()
+        {
+            var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);
+            return PartialView(entity.ViewContents.OrderByDescending(x => x.createTime).Take(10));
+        }
     }
 }

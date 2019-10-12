@@ -401,6 +401,7 @@ h1.page-title {
 .wrapper-video-slider .item video {
     width: 100%;
 }
+
 .page-content video {
     width: 100%;
 }
@@ -644,4 +645,74 @@ h1.page-title {
     /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
     .sticky + .content {
         padding-top: 60px;
+    }
+
+.sub-menu {
+    background: #d2d3b9;
+    box-shadow: 0 3px 3px rgba(0,0,0,.2);
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    z-index: 999;
+}
+
+    .sub-menu li {
+    }
+
+        .sub-menu li a {
+            font-size: 12px;
+            text-transform: initial;
+            padding: 8px 15px;
+            color: #333 !important;
+            border-bottom: 1px solid #eee;
+            line-height: initial;
+            white-space: nowrap;
+        }
+
+            .sub-menu li a:hover {
+                color: #1256d2 !important;
+            }
+
+.nav li:hover > .sub-menu {
+    display: block;
+}
+
+.sub-menu li {
+    border: none;
+    padding: 0px;
+}
+
+.post-related h2 {
+    font-size: 14px;
+    margin: 0px;
+    font-weight: 600;
+}
+
+.post-related .box-body {
+    margin-top: 15px;
+}
+
+.post-related li {
+    list-style: none;
+}
+
+    .post-related li .time {
+        text-align: right;
+        font-size: 12px;
+        font-style: italic;
+        color: #8f8e8e;
+        text-transform: lowercase;
+    }
+
+a {
+    color: #333;
+}
+
+    a:hover {
+        color: #b63838;
+        text-decoration: none;
     }

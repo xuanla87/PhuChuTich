@@ -21,7 +21,7 @@
                                         <div id="gallery_@count1" class="tab-pane fade in active">
                                             <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
                                             <p class="des">
-                                                @Html.Raw(item.name)
+                                                <a href="@item.alias">@Html.Raw(item.name)</a>
                                                 <a class="btnNext"><i class="fa fa-caret-right"></i></a>
                                             </p>
                                         </div>
@@ -32,7 +32,7 @@
                                         <div id="gallery_@count1" class="tab-pane fade">
                                             <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
                                             <p class="des">
-                                                @Html.Raw(item.name)
+                                                <a href="@item.alias">@Html.Raw(item.name)</a>
                                                 <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
                                             </p>
 
@@ -43,7 +43,7 @@
                                         <div id="gallery_@count1" class="tab-pane fade">
                                             <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
                                             <p class="des">
-                                                @Html.Raw(item.name)
+                                                <a href="@item.alias">@Html.Raw(item.name)</a>
                                                 <a class="btnNext"><i class="fa fa-caret-right"></i></a>
                                                 <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
                                             </p>
