@@ -24,27 +24,22 @@
                     }
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    @foreach (var item in Model)
-                    {
-                        count1++;
-                        if (count1 > 1)
+                    <ul>
+                        @foreach (var item in Model)
                         {
-                            <div class="item">
-                                <div class="text">
-                                    <a href="@item.alias" title="@item.name">
-                                        @if (item.name.Length > 120)
-                                        {
-                                            @Html.Raw(item.name.Substring(0, 120) + "...")
-                                        }
-                                        else
-                                        {
+                            count1++;
+                            if (count1 > 1)
+                            {
+                                <li class="item">
+                                    <div class="text">
+                                        <a href="@item.alias" title="@item.name">
                                             @Html.Raw(item.name)
-                                        }
-                                    </a>
-                                </div>
-                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                            }
                         }
-                    }
+                    </ul>
                 </div>
             </div>
         </div>

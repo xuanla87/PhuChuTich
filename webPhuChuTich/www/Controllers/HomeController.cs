@@ -335,6 +335,10 @@ namespace www.Controllers
                 {
                     ViewBag.PTitle = "<a href=\"/\">Trang chủ</a> - " + getParent(model.parentId) + "<a href=\"" + model.alias + "\">" + model.name + "</a>";
                 }
+                else
+                {
+                    ViewBag.PTitle = "<a href=\"/\">Trang chủ</a> - " + entity.name;
+                }
             }
             else if (entity != null)
             {
@@ -364,7 +368,7 @@ namespace www.Controllers
         public ActionResult BaiVietXemNhieu()
         {
             var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);
-            return PartialView(entity.ViewContents.OrderByDescending(x => x.isView).Take(10));
+            return PartialView(entity.ViewContents.OrderByDescending(x => x.isView).Take(8));
         }
 
         public ActionResult TuTuongDaoDuc()
@@ -389,21 +393,21 @@ namespace www.Controllers
             else
             {
                 if (_time.DayOfWeek == DayOfWeek.Monday)
-                    _stTime = "Thứ 2";
+                    _stTime = "Thứ hai";
                 else if (_time.DayOfWeek == DayOfWeek.Tuesday)
-                    _stTime = "Thứ 3";
+                    _stTime = "Thứ ba";
                 else if (_time.DayOfWeek == DayOfWeek.Wednesday)
-                    _stTime = "Thứ 4";
+                    _stTime = "Thứ tư";
                 else if (_time.DayOfWeek == DayOfWeek.Thursday)
-                    _stTime = "Thứ 5";
+                    _stTime = "Thứ năm";
                 else if (_time.DayOfWeek == DayOfWeek.Friday)
-                    _stTime = "Thứ 6";
+                    _stTime = "Thứ sáu";
                 else if (_time.DayOfWeek == DayOfWeek.Saturday)
-                    _stTime = "Thứ 7";
+                    _stTime = "Thứ bẩy";
                 else if (_time.DayOfWeek == DayOfWeek.Sunday)
                     _stTime = "Chủ nhật";
             }
-            _stTime += _time.ToString("dd | MM | yyyy");
+            _stTime += ", " + _time.ToString("dd / MM / yyyy");
             ViewBag.TimePage = _stTime;
             return PartialView();
         }

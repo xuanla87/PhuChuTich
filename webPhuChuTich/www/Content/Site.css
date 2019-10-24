@@ -46,17 +46,27 @@ img {
 
 .day-now {
     float: right;
-    width: 170px;
+    width: 180px;
     text-transform: initial;
     border: 1px solid #6a9d68;
     padding: 2px;
     line-height: 20px;
 }
 
-    .day-now img {
-        margin-left: 15px;
-        width: 32px;
-    }
+.language {
+    border-radius: 4px;
+    background: #fff;
+    padding: 3px;
+    color: #922e2e;
+    box-shadow: 1px 1px 1px #948e8e;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.day-now img {
+    margin-left: 15px;
+    width: 32px;
+}
 
 .navbar {
     margin-bottom: 0px;
@@ -83,6 +93,10 @@ img {
         padding: 0px 15px;
     }
 
+.navbar-nav a:hover {
+    color: #fff !important;
+}
+
 .breadcrumb {
     background: rgba(246,188,177,1);
     background: -moz-linear-gradient(left, rgba(246,188,177,1) 0%, rgba(240,50,25,1) 0%, rgba(231,55,39,1) 0%, rgba(246,188,178,1) 0%, rgba(246,188,178,0.28) 100%);
@@ -93,12 +107,16 @@ img {
     background: linear-gradient(to right, rgba(246,188,177,1) 0%, rgba(240,50,25,1) 0%, rgba(231,55,39,1) 0%, rgba(246,188,178,1) 0%, rgba(246,188,178,0.28) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6bcb1', endColorstr='#f6bcb2', GradientType=1 );
     border-radius: initial;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
     .breadcrumb a {
         text-transform: uppercase;
         color: #333;
         font-weight: 600;
+        font-size: 16px;
     }
 
 .container {
@@ -193,7 +211,7 @@ img {
 
     .box6 .item .thumbnail {
         width: 150px;
-        height: 110px;
+        max-height: 110px;
         overflow: hidden;
         float: left;
         margin-right: 10px;
@@ -201,6 +219,7 @@ img {
     }
 
     .box6 .item .text {
+        text-align: justify !important;
     }
 
     .box7 .item, .box8 .item {
@@ -229,7 +248,7 @@ footer {
     padding-right: 15px;
     padding-bottom: 30px;
     padding-top: 30px;
-    margin-top: 450px;
+    margin-top: 250px;
 }
 
     footer p {
@@ -250,7 +269,7 @@ footer {
 }
 
 h1.page-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     margin: 0px;
 }
@@ -269,6 +288,8 @@ h1.page-title {
         margin-top: 15px;
         font-size: 13px;
     }
+
+
 
 .tu-tuong-dao-duc {
     margin-bottom: 30px;
@@ -464,10 +485,7 @@ h1.page-title {
             width: 100%;
         }
 
-    .owl-carousel .owl-nav.disabled,
-    .owl-carousel .owl-dots.disabled {
-        display: none;
-    }
+
 
     .owl-carousel .owl-nav .owl-prev,
     .owl-carousel .owl-nav .owl-next,
@@ -644,7 +662,7 @@ h1.page-title {
 
     /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
     .sticky + .content {
-        padding-top: 60px;
+        padding-top: 75px;
     }
 
 .sub-menu {
@@ -674,7 +692,11 @@ h1.page-title {
         }
 
             .sub-menu li a:hover {
-                color: #1256d2 !important;
+                background: transparent;
+            }
+
+            .sub-menu li a:hover {
+                color: #fff !important;
             }
 
 .nav li:hover > .sub-menu {
@@ -713,6 +735,52 @@ a {
 }
 
     a:hover {
-        color: #b63838;
+        color: #1f6304;
         text-decoration: none;
     }
+
+.page-content img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.page-content .date-post {
+    font-size: 12px;
+    margin: 15px 0px;
+}
+
+.page-content p {
+    font-family: 'Times New Roman' !important;
+    font-size: 14px !important;
+}
+
+.page-des {
+    font-size: 14px !important;
+    font-family: 'Times New Roman' !important;
+}
+
+.box7 ul {
+    list-style: none;
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+    .box7 ul li:last-child {
+        border-bottom: none;
+    }
+
+footer p {
+    font-size: 14px !important;
+}
+
+.thumbnail {
+    padding: 0px !important;
+    border-radius: 0px !important;
+    border: none !important;
+    background: transparent;
+}
+
+#navbar .time {
+    background: url(../Content/bgmain.jpg);
+    margin: 0px -15px;
+}

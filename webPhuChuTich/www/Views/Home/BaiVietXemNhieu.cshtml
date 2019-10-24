@@ -8,14 +8,7 @@
             {
                 <div class="item">
                     <a href="@item.alias" title="@item.name">
-                        @if (item.name.Length > 120)
-                        {
-                            @Html.Raw(item.name.Substring(0, 120) + "...")
-                        }
-                        else
-                        {
-                            @Html.Raw(item.name)
-                        }
+                        @Html.Raw(item.name)
                     </a>
                 </div>
             }

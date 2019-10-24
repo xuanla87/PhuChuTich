@@ -15,19 +15,14 @@
                     <div class="item-first">
                         <div class="row">
                             <div class="col-lg-6 col-md-12 col-sm-12">
-                                <img src="@item.thumbnail" alt="@item.name" />
+                                <div class="thumbnail">
+                                    <img src="@item.thumbnail" alt="@item.name" />
+                                </div>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                                 <div class="title">
                                     <a href="@item.alias" title="@item.name">
-                                        @if (item.name.Length > 250)
-                                        {
-                                            @Html.Raw(item.name.Substring(0, 250) + "...")
-                                        }
-                                        else
-                                        {
-                                            @Html.Raw(item.name)
-                                        }
+                                        @Html.Raw(item.name)
                                     </a>
                                 </div>
                                 <div class="description">
@@ -45,14 +40,7 @@
                         <div class="item">
                             <i class="fa fa-caret-right"></i>
                             <a href="@item.alias" title="@item.name">
-                                @if (item.name.Length > 200)
-                                {
-                                    @Html.Raw(item.name.Substring(0, 200) + "...")
-                                }
-                                else
-                                {
-                                    @Html.Raw(item.name)
-                                }
+                                @Html.Raw(item.name)
                             </a>
                         </div>
                     </div>

@@ -18,14 +18,7 @@
                         </div>
                         <div class="title">
                             <a href="@item.alias" title="@item.name">
-                                @if (item.name.Length > 70)
-                                {
-                                    @Html.Raw(item.name.Substring(0, 70) + "...")
-                                }
-                                else
-                                {
-                                    @Html.Raw(item.name)
-                                }
+                                @Html.Raw(item.name)
                             </a>
                         </div>
                         <div class="description">
@@ -39,14 +32,7 @@
                         <div class="title">
                             <i class="fa fa-caret-right"></i>
                             <a href="@item.alias" title="@item.name">
-                                @if (item.name.Length > 70)
-                                {
-                                    @Html.Raw(item.name.Substring(0, 70) + "...")
-                                }
-                                else
-                                {
-                                    @Html.Raw(item.name)
-                                }
+                                @Html.Raw(item.name)
                             </a>
                         </div>
                     </div>
