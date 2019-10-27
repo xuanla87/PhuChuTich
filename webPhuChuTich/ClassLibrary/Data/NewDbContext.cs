@@ -20,6 +20,7 @@
         public DbSet<ConfigSystem> ConfigSystems { set; get; }
         public DbSet<LogAction> LogActions { set; get; }
         public DbSet<Option> Options { set; get; }
+        public DbSet<LienKetWeb> LienKetWebs { set; get; }
         public static NewDbContext Create()
         {
             return new NewDbContext();
