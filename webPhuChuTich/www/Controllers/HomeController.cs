@@ -100,12 +100,13 @@ namespace www.Controllers
             {
                 int _totalRecord = 0;
                 _pageIndex = _pageIndex ?? 1;
-                var entity = _services.GetAll(searchKey, null, null, null, "TinTuc", _laguageId, false, _pageIndex, 20, null, true);
+                var entity = _services.GetAll(searchKey, null, null, null, "TinTuc", _laguageId, false, _pageIndex, 9, null, true);
                 _totalRecord = entity.TotalRecord;
                 ViewBag.TotalRecord = _totalRecord.ToString();
                 ViewBag.TotalPage = entity.Total;
                 ViewBag.PageIndex = _pageIndex ?? 1;
                 ViewBag.SearchKey = searchKey;
+                ViewBag.CurentUrl = "tim-kiem?searchKey=" + searchKey;
                 return View(entity.ViewContents.OrderByDescending(x => x.createTime));
             }
 
@@ -490,7 +491,6 @@ namespace www.Controllers
             _html += "</ul>";
             return _html;
         }
-
 
         public ActionResult BaiVietMoi()
         {

@@ -27,6 +27,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     @Html.Action("MainMenu2", "Home")
+                    <div class="search-header">
+                        <input type="text" id="search-text" name="search-text" placeholder="Tìm kiếm..." />
+                        <span class="fa fa-search"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,6 +77,11 @@
                 navbar.classList.remove("sticky");
             }
         }
+        $('#search-text').keyup(function (e) {
+            if (e.keyCode == 13) {
+                window.location.href = "tim-kiem?searchKey=" + $('#search-text').val();
+            }
+        });
         $(window).ready(function () {
             $(".wrapper-gallery-slider").each(function () {
                 var $this = $(this),
@@ -82,7 +91,7 @@
                     margin: 10,
                     nav: true,
                     dots: false,
-                    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+                    navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
                     responsive: {
                         0: { items: 1 },
                         600: { items: 2, margin: 20 },
@@ -98,7 +107,7 @@
                     margin: 10,
                     nav: true,
                     dots: false,
-                    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+                    navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
                     responsive: {
                         0: { items: 1 },
                         600: { items: 1 },
