@@ -727,7 +727,7 @@ h1.page-title {
 
     .post-related li .time {
         text-align: right;
-        font-size: 12px;
+        font-size: 12px !important;
         font-style: italic;
         color: #8f8e8e;
         text-transform: lowercase;
