@@ -597,7 +597,7 @@ h1.page-title {
 
         .box-gallery .right ul li {
             border-bottom: 1px solid #eee;
-            padding: 15px 30px 15px 15px;
+            padding: 5px 30px 5px 15px;
         }
 
             .box-gallery .right ul li a {
@@ -648,7 +648,7 @@ h1.page-title {
 }
 
 .box-gallery img {
-    max-height: 420px;
+    max-height: 450px;
     overflow: hidden;
 }
 /* The sticky class is added to the navbar with JS when it reaches its scroll position */
@@ -807,3 +807,38 @@ footer p {
         left: 130px;
         color: #fff;
     }
+
+.title {
+    text-align: justify;
+}
+
+.description {
+    text-align: justify;
+}
+
+.text {
+    text-align: justify;
+}
+
+.right ul li {
+    text-align: justify;
+}
+
+.left .des {
+    text-align: justify;
+}
+.tu-tuong-dao-duc .item {
+    text-align: justify;
+}
+.xem-nhieu .item {
+    text-align: justify;
+}
+.post-related ul li {
+    text-align: justify;
+}
+.page-des {
+    text-align: justify;
+}
+.page-title {
+    text-align: justify;
+}
