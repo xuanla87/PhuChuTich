@@ -247,7 +247,7 @@ namespace www.Areas.Admin.Controllers
                         ngayDang = DateTime.Now,
                         allowComment = false,
                         approved = false,
-                        approvedTime =null,
+                        approvedTime = null,
                         approvedUser = null,
                         authorName = null,
                         contentKey = "ChuyenMucTinTuc",
@@ -284,5 +284,20 @@ namespace www.Areas.Admin.Controllers
             return View(entity);
         }
 
+        public ActionResult UnApproval(int id)
+        {
+            _services.UnApproval(id);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Approval(int id)
+        {
+            _services.Approval(id);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Trash(int id)
+        {
+            _services.Trash(id);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

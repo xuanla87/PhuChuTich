@@ -79,7 +79,7 @@ function trash(x, y) {
         if (x > 0) {
             $.ajax({
                 type: "GET",
-                url: "/Admin/TinTuc/Trash",
+                url: "/Admin/NewsPaper/Trash",
                 data: { id: x },
                 datatype: "json",
                 success: function (data) {
@@ -98,7 +98,7 @@ function Approval(x, y) {
         if (x > 0) {
             $.ajax({
                 type: "GET",
-                url: "/Admin/TinTuc/Approval",
+                url: "/Admin/NewsPaper/Approval",
                 data: { id: x },
                 datatype: "json",
                 success: function (data) {
@@ -117,7 +117,7 @@ function UnApproval(x, y) {
         if (x > 0) {
             $.ajax({
                 type: "GET",
-                url: "/Admin/TinTuc/UnApproval",
+                url: "/Admin/NewsPaper/UnApproval",
                 data: { id: x },
                 datatype: "json",
                 success: function (data) {
