@@ -827,18 +827,40 @@ footer p {
 .left .des {
     text-align: justify;
 }
+
 .tu-tuong-dao-duc .item {
     text-align: justify;
 }
+
 .xem-nhieu .item {
     text-align: justify;
 }
+
 .post-related ul li {
     text-align: justify;
 }
+
 .page-des {
     text-align: justify;
 }
+
 .page-title {
     text-align: justify;
+}
+
+.lien-ket-web .box-body {
+    padding: 0px;
+}
+
+.lien-ket-web ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.lien-ket-web .item {
+    line-height: 30px;
+    border-bottom: 1px solid #eee;
+    padding-left: 15px;
+    padding-right: 15px;
 }

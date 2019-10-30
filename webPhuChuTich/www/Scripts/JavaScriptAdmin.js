@@ -187,7 +187,7 @@ function trashLienKet(x) {
         if (x > 0) {
             $.ajax({
                 type: "GET",
-                url: "/Admin/LienKet/Trash",
+                url: "/Admin/LienKetWeb/Trash",
                 data: { Id: x },
                 datatype: "json",
                 success: function (data) {

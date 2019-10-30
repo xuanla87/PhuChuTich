@@ -18,13 +18,15 @@ namespace www.Controllers
         IMenuServices _menuServices;
         IConfigSystemServices _configSystemServices;
         IContactServices _contactServices;
+        ILienKetWebServices _lienKetWebServices;
         private HttpCookie languagecode;
-        public HomeController(IContentServices services, IMenuServices menuServices, IConfigSystemServices configSystemServices, IContactServices contactServices)
+        public HomeController(IContentServices services, IMenuServices menuServices, IConfigSystemServices configSystemServices, IContactServices contactServices, ILienKetWebServices lienKetWebServices)
         {
             this._services = services;
             this._menuServices = menuServices;
             this._configSystemServices = configSystemServices;
             this._contactServices = contactServices;
+            this._lienKetWebServices = lienKetWebServices;
         }
 
         public ActionResult Index()
@@ -496,6 +498,12 @@ namespace www.Controllers
         {
             var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);
             return PartialView(entity.ViewContents.OrderByDescending(x => x.createTime).Take(10));
+        }
+
+        public ActionResult LienKetWeb()
+        {
+            var model = _lienKetWebServices.All();
+            return PartialView(model);
         }
     }
 }

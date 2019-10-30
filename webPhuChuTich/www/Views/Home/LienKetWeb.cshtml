@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ClassLibrary.Models.LienKetWeb>
+<div class="thong-ke lien-ket-web">
+    <div class="box">
+        Liên kết web
+    </div>
+    <div class="box-body">
+        <ul class="">
+            @foreach (var item in Model)
+            {
+                <li class="item">
+                    <a href="@item.lienKetWebLink" target="_blank">@Html.Raw(item.lienKetWebName)</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

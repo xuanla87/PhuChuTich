@@ -78,7 +78,7 @@
                                             <td>@item.isSort</td>
                                             <td>
                                                 <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("CapNhat", "Menu", new { Id = item.Id })"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trashMenu('@item.Id')"><i class="fa fa-trash"></i></button>
+                                                <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trashMenu('@item.Id','Menu')"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     }

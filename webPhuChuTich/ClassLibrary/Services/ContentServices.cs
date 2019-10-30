@@ -116,6 +116,7 @@
             {
                 enContent = enContent.Where(x => x.approved == _isApproval);
             }
+            enContent = enContent.OrderByDescending(x => x.ngayDang);
             int totalRecord = enContent.Count();
             if (_pageIndex != null && _pageSize != null)
             {

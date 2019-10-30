@@ -19,7 +19,7 @@ namespace ClassLibrary.Services
     {
         LienKetWeb Add(LienKetWeb _model, string _userName);
         void Update(LienKetWeb _model, string _userName);
-        LienKetWeb Delete(int _id, string _userName);
+        void Delete(int _id, string _userName);
 
         IEnumerable<LienKetWeb> All();
 
@@ -74,7 +74,7 @@ namespace ClassLibrary.Services
             }
         }
 
-        public LienKetWeb Delete(int _id, string _userName)
+        public void Delete(int _id, string _userName)
         {
             try
             {
@@ -85,16 +85,16 @@ namespace ClassLibrary.Services
                 entity.userAction = _userName;
                 entity.createTime = DateTime.Now;
                 _RepositoryLogAction.Add(entity);
+                _Repository.Delete(_id);
             }
             catch
             {
             }
-            return _Repository.Delete(_id);
         }
 
         public IEnumerable<LienKetWeb> All()
         {
-            return _Repository.GetAll();
+            return _Repository.GetAll().OrderBy(x => x.isSort);
         }
 
         public LienKetWeb GetById(int _id)
@@ -107,5 +107,5 @@ namespace ClassLibrary.Services
             _unitOfWork.Commit();
         }
     }
-    
+
 }

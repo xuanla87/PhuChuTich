@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Danh sách liên kết";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    int count = 0;
+}
+@model IEnumerable<ClassLibrary.Models.LienKetWeb>
+<section class="content-header">
+    <h1 class="title text-uppercase text-bold">@ViewBag.Title</h1>
+    <ol class="breadcrumb">
+        <li><a href="/Admin"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="/Admin/LienKetWeb">Quản lý liên kết</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <a href="@Url.Action("Detail", "LienKetWeb")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50">STT</th>
+                                    <th width="350">Tên liên kết</th>
+                                    <th>Link liên kết</th>
+                                    <th>Sắp xếp</th>
+                                    <th width="120">Thao tác</th>
+                                </tr>
+                            </thead>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td class="text-center">@count</td>
+                                        <td>@item.lienKetWebName</td>
+                                        <td>@item.lienKetWebLink</td>
+                                        <td>@item.isSort</td>
+                                        <td>
+                                            <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "LienKetWeb", new { Id = item.lienKetWebId })"><i class="fa fa-pencil"></i></a>
+                                            <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trashLienKet('@item.lienKetWebId')"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
