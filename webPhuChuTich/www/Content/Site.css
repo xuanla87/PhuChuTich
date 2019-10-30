@@ -3,6 +3,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    padding: 0px 20px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -197,7 +198,7 @@ img {
     }
 
 .box3, .box4, .box5, .box6, .box7, .box8 {
-    padding: 8px;
+    padding: 8px 15px;
 }
 
     .box3 .item, .box4 .item, .box5 .item, .box6 .item {
