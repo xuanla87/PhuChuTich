@@ -92,7 +92,10 @@ namespace www.Areas.Admin.Controllers
                 if (entity.contentId > 0)
                 {
                     Content model = _services.GetById((int)entity.contentId);
-                    model.alias = entity.alias;
+                    if (entity.alias.Contains("-" + entity.contentId))
+                        model.alias = entity.alias;
+                    else
+                        model.alias = entity.alias + "-" + entity.contentId;
                     model.contentMain = entity.contentMain;
                     model.description = entity.description;
                     model.contentId = entity.contentId;

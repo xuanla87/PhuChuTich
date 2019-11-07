@@ -6,42 +6,51 @@
 @if (Model != null && Model.Count() > 0)
 {
     <h2><a href="@ViewBag.Url">Mở cửa thư viện</a></h2>
-    <div class="box-body">
-        <div class="box7">
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    @foreach (var item in Model)
+    <div class="open-thu-vien clearfix">
+        <div class="left" style="visibility: visible; ">
+            <div class="slides" style="position: relative;">
+                @foreach (var item in Model)
+                {
+                    count1++;
+                    if (count1 == 1)
                     {
-                        count++;
-                        if (count == 1)
-                        {
-                            <div class="item-first">
-                                <div class="thumbnail">
-                                    <img src="@item.thumbnail" alt="@item.name" />
-                                </div>
-                            </div>
-                        }
+                        <div class="item" style="position: absolute; top: 0px; left: -100%; display: block; z-index: 4; opacity: 1; width: 100%;">
+                            <a class="thumb" href="@item.alias">
+                                <img src="@item.thumbnail">
+                            </a>
+                            <a class="title" href="@item.alias">
+                                @item.name
+                            </a>
+
+                        </div>
                     }
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-12">
-                    <ul>
-                        @foreach (var item in Model)
-                        {
-                            count1++;
-                            if (count1 > 1)
-                            {
-                                <li class="item">
-                                    <div class="text">
-                                        <a href="@item.alias" title="@item.name">
-                                            @Html.Raw(item.name)
-                                        </a>
-                                    </div>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </div>
+                    else
+                    {
+                        <div class="item" style="position: absolute; top: 0px; left: -100%; display: none; z-index: 4; opacity: 1; width: 100%;">
+                            <a class="thumb" href="@item.alias">
+                                <img src="@item.thumbnail">
+                            </a>
+                            <a class="title" href="@item.alias">
+                                @item.name
+                            </a>
+                        </div>
+                    }
+                }
             </div>
+        </div>
+        <div class="right">
+            @foreach (var item1 in Model)
+            {
+                count++;
+                if (count == 1)
+                {
+                    <a class="title activeSlide" href="@item1.alias">@item1.name</a>
+                }
+                else
+                {
+                    <a class="title" href="@item1.alias">@item1.name</a>
+                }
+            }
         </div>
     </div>
 }

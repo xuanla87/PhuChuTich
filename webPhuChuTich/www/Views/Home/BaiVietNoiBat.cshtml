@@ -3,82 +3,141 @@
     int count1 = 0;
 }
 @model IEnumerable<ClassLibrary.Models.Content>
-@if (Model != null && Model.Count() > 0)
-{
-    <div class="gallery">
-        <h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
-        <div class="box-body">
-            <div class="box-gallery">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="left">
-                            <div class="tab-content">
-                                @foreach (var item in Model)
-                                {
-                                    count1++;
-                                    if (count1 == 1)
+@*@if (Model != null && Model.Count() > 0)
+    {
+        <div class="gallery">
+            <h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
+            <div class="box-body">
+                <div class="box-gallery">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="left">
+                                <div class="tab-content">
+                                    @foreach (var item in Model)
                                     {
-                                        <div id="gallery_@count1" class="tab-pane fade in active">
-                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
-                                            <p class="des">
-                                                <a href="@item.alias">@Html.Raw(item.description)</a>
-                                                <a class="btnNext"><i class="fa fa-caret-right"></i></a>
-                                            </p>
-                                        </div>
+                                        count1++;
+                                        if (count1 == 1)
+                                        {
+                                            <div id="gallery_@count1" class="tab-pane fade in active">
+                                                <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                                <p class="des">
+                                                    <a href="@item.alias">@Html.Raw(item.description)</a>
+                                                    <a class="btnNext"><i class="fa fa-caret-right"></i></a>
+                                                </p>
+                                            </div>
 
-                                    }
-                                    else if (count1 == Model.Count())
-                                    {
-                                        <div id="gallery_@count1" class="tab-pane fade">
-                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
-                                            <p class="des">
-                                                <a href="@item.alias">@Html.Raw(item.description)</a>
-                                                <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
-                                            </p>
+                                        }
+                                        else if (count1 == Model.Count())
+                                        {
+                                            <div id="gallery_@count1" class="tab-pane fade">
+                                                <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                                <p class="des">
+                                                    <a href="@item.alias">@Html.Raw(item.description)</a>
+                                                    <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
+                                                </p>
 
-                                        </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div id="gallery_@count1" class="tab-pane fade">
+                                                <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
+                                                <p class="des">
+                                                    <a href="@item.alias">@Html.Raw(item.description)</a>
+                                                    <a class="btnNext"><i class="fa fa-caret-right"></i></a>
+                                                    <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
+                                                </p>
+                                            </div>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <div id="gallery_@count1" class="tab-pane fade">
-                                            <a href="@item.alias"><img src="@item.thumbnail" alt="@item.name" /></a>
-                                            <p class="des">
-                                                <a href="@item.alias">@Html.Raw(item.description)</a>
-                                                <a class="btnNext"><i class="fa fa-caret-right"></i></a>
-                                                <a class="btnPrevious"><i class="fa fa-caret-left"></i></a>
-                                            </p>
-                                        </div>
-                                    }
-                                }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="right">
-                            <ul>
-                                @foreach (var item in Model)
-                                {
-                                    count++;
-                                    if (count == 1)
+                        <div class="col-md-4">
+                            <div class="right">
+                                <ul>
+                                    @foreach (var item in Model)
                                     {
-                                        <li class="active">
-                                            <a data-toggle="tab" href="#gallery_@count">@item.name</a>
-                                            <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
-                                        </li>
+                                        count++;
+                                        if (count == 1)
+                                        {
+                                            <li class="active">
+                                                <a data-toggle="tab" href="#gallery_@count">@item.name</a>
+                                                <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a data-toggle="tab" href="#gallery_@count">@item.name</a>
+                                                <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
+                                            </li>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <li>
-                                            <a data-toggle="tab" href="#gallery_@count">@item.name</a>
-                                            <p>@item.ngayDang.ToString("dd/MM/yyyy")</p>
-                                        </li>
-                                    }
-                                }
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    }*@
+<h2><a href="@ViewBag.Url">Thông tin hoạt động</a></h2>
+<div class="featured-posts clearfix">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="left" style="visibility: visible; ">
+                <div class="slides" style="position: relative;">
+                    @foreach (var item in Model)
+                    {
+                        count1++;
+                        if (count1 == 1)
+                        {
+                            <div class="item" style="position: absolute; top: 0px; left: -100%; display: block; z-index: 4; opacity: 1; width: 100%;">
+                                <a class="thumb" href="@item.alias">
+                                    <img src="@item.thumbnail">
+                                </a>
+                                <a class="title" href="@item.alias">
+                                    @item.name
+                                </a>
+                                <p class="subject">
+                                    @Html.Raw(item.description)
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="item" style="position: absolute; top: 0px; left: -100%; display: none; z-index: 4; opacity: 1; width: 100%;">
+                                <a class="thumb" href="@item.alias">
+                                    <img src="@item.thumbnail">
+                                </a>
+                                <a class="title" href="@item.alias">
+                                    @item.name
+                                </a>
+                                <p class="subject">
+                                    @Html.Raw(item.description)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="right">
+                @foreach (var item1 in Model)
+                {
+                    count++;
+                    if (count == 1)
+                    {
+                        <a class="title activeSlide" href="@item1.alias">@item1.name</a>
+                    }
+                    else
+                    {
+                        <a class="title" href="@item1.alias">@item1.name</a>
+                    }
+                }
+            </div>
+        </div>
     </div>
-}
+</div>
