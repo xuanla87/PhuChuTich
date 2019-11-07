@@ -410,7 +410,7 @@ namespace www.Controllers
                 else if (_time.DayOfWeek == DayOfWeek.Sunday)
                     _stTime = "Chủ nhật";
             }
-            _stTime += ", " + _time.ToString("dd / MM / yyyy");
+            _stTime += ", " + _time.ToString("dd/MM/yyyy");
             ViewBag.TimePage = _stTime;
             return PartialView();
         }

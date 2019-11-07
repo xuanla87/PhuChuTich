@@ -7,50 +7,52 @@
 {
     <h2><a href="@ViewBag.Url">Cảm tưởng</a></h2>
     <div class="cam-tuong clearfix">
-        <div class="left" style="visibility: visible; ">
-            <div class="slides" style="position: relative;">
-                @foreach (var item in Model)
-                {
-                    count1++;
-                    if (count1 == 1)
+        <div class="body">
+            <div class="left" style="visibility: visible; ">
+                <div class="slides" style="position: relative;">
+                    @foreach (var item in Model)
                     {
-                        <div class="item" style="position: absolute; top: 0px; left: -100%; display: block; z-index: 4; opacity: 1; width: 100%;">
-                            <a class="thumb" href="@item.alias">
-                                <img src="@item.thumbnail">
-                            </a>
-                            <a class="title" href="@item.alias">
-                                @item.name
-                            </a>
+                        count1++;
+                        if (count1 == 1)
+                        {
+                            <div class="item" style="position: absolute; top: 0px; left: -100%; display: block; z-index: 4; opacity: 1; width: 100%;">
+                                <a class="thumb" href="@item.alias">
+                                    <img src="@item.thumbnail">
+                                </a>
+                                <a class="title" href="@item.alias">
+                                    @item.name
+                                </a>
 
-                        </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="item" style="position: absolute; top: 0px; left: -100%; display: none; z-index: 4; opacity: 1; width: 100%;">
+                                <a class="thumb" href="@item.alias">
+                                    <img src="@item.thumbnail">
+                                </a>
+                                <a class="title" href="@item.alias">
+                                    @item.name
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="right">
+                @foreach (var item1 in Model)
+                {
+                    count++;
+                    if (count == 1)
+                    {
+                        <a class="title activeSlide" href="@item1.alias">@item1.name</a>
                     }
                     else
                     {
-                        <div class="item" style="position: absolute; top: 0px; left: -100%; display: none; z-index: 4; opacity: 1; width: 100%;">
-                            <a class="thumb" href="@item.alias">
-                                <img src="@item.thumbnail">
-                            </a>
-                            <a class="title" href="@item.alias">
-                                @item.name
-                            </a>
-                        </div>
+                        <a class="title" href="@item1.alias">@item1.name</a>
                     }
                 }
             </div>
-        </div>
-        <div class="right">
-            @foreach (var item1 in Model)
-            {
-                count++;
-                if (count == 1)
-                {
-                    <a class="title activeSlide" href="@item1.alias">@item1.name</a>
-                }
-                else
-                {
-                    <a class="title" href="@item1.alias">@item1.name</a>
-                }
-            }
         </div>
     </div>
 }
