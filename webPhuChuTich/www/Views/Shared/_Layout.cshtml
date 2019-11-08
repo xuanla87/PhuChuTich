@@ -62,8 +62,8 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @*<script src="~/Scripts/owl.carousel.min.js"></script>*@
-    @*<script src="~/Scripts/html5gallery/html5gallery.js"></script>*@
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script src="~/Scripts/html5gallery/html5gallery.js"></script>
     <script src="~/Scripts/bxslider_jquery.bxslider.min.js"></script>
     <script src="~/Scripts/jquery.cycle.all.js"></script>
     @RenderSection("scripts", required: false)
@@ -113,38 +113,38 @@
             $('.cam-tuong .right a').unbind('click');
             $('.cam-tuong .left').css('visibility', 'visible');
 
-            //$(".wrapper-gallery-slider").each(function () {
-            //    var $this = $(this),
-            //        owl = $this.find('.gallery-slider');
-            //    owl.owlCarousel({
-            //        loop: true,
-            //        margin: 10,
-            //        nav: true,
-            //        dots: false,
-            //        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-            //        responsive: {
-            //            0: { items: 1 },
-            //            600: { items: 2, margin: 20 },
-            //            1000: { items: 3 }
-            //        }
-            //    })
-            //});
-            //$(".wrapper-video-slider").each(function () {
-            //    var $this = $(this),
-            //        owl = $this.find('.video-slider');
-            //    owl.owlCarousel({
-            //        loop: true,
-            //        margin: 10,
-            //        nav: true,
-            //        dots: false,
-            //        navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
-            //        responsive: {
-            //            0: { items: 1 },
-            //            600: { items: 1 },
-            //            1000: { items: 1 }
-            //        }
-            //    })
-            //});
+            $(".wrapper-gallery-slider").each(function () {
+                var $this = $(this),
+                    owl = $this.find('.gallery-slider');
+                owl.owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    dots: false,
+                    navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
+                    responsive: {
+                        0: { items: 1 },
+                        600: { items: 2, margin: 20 },
+                        1000: { items: 3 }
+                    }
+                })
+            });
+            $(".wrapper-video-slider").each(function () {
+                var $this = $(this),
+                    owl = $this.find('.video-slider');
+                owl.owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    dots: false,
+                    navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
+                    responsive: {
+                        0: { items: 1 },
+                        600: { items: 1 },
+                        1000: { items: 1 }
+                    }
+                })
+            });
             //$('.btnNext').click(function () {
             //    $('ul > .active').next('li').find('a').trigger('click');
             //});
@@ -160,9 +160,6 @@
             //    toClick.trigger('click');
             //}, 5000);
         });
-    </script>
-    <script type="text/javascript">
-                                //$(document).ready(function () { $('.weblinks-box').bxSlider({ mode: 'vertical', minSlides: 6, auto: true, speed: 1000, pager: false }); });
     </script>
 </body>
 </html>

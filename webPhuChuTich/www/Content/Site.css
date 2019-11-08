@@ -251,8 +251,6 @@ footer {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dad9b0', endColorstr='#dad9b0', GradientType=1 );
     float: left;
     width: 100%;
-    margin-left: -15px;
-    margin-right: -15px;
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 30px;
@@ -897,23 +895,28 @@ footer p {
             height: 500px;
         }
 
-        .featured-posts .left .item .title {
+        .featured-posts .left .item {
             display: none;
+            max-width: 400px;
         }
 
-        .featured-posts .left .item .subject {
-            display: block;
-            text-align: justify;
-            position: absolute;
-            bottom: -120px;
-            left: 10%;
-            background: #d5d5bcd6;
-            padding: 30px;
-            color: #333;
-            width: 80%;
-            height: 140px;
-            font-weight: 600;
-        }
+            .featured-posts .left .item .title {
+                display: none;
+            }
+
+            .featured-posts .left .item .subject {
+                display: block;
+                text-align: justify;
+                position: absolute;
+                bottom: -120px;
+                left: 10%;
+                background: #d5d5bcd6;
+                padding: 30px;
+                color: #333;
+                width: 80%;
+                height: 140px;
+                font-weight: 600;
+            }
 
     .featured-posts .right {
         overflow: hidden;
