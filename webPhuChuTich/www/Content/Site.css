@@ -407,12 +407,22 @@ h1.page-title {
             color: #333;
         }
 
-.gallery-slider .owl-prev, .gallery-slider .owl-next, .video-slider .owl-prev, .video-slider .owl-next {
+.gallery-slider .owl-prev, .gallery-slider .owl-next {
     position: absolute;
     top: 50%;
     left: -10px;
     font-size: 24px;
     margin-top: -17px;
+    color: #333;
+    opacity: 1;
+}
+
+.video-slider .owl-prev, .video-slider .owl-next {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    font-size: 24px;
+    margin-top: -25px;
     color: #333;
     opacity: 1;
 }
@@ -887,17 +897,17 @@ footer p {
         overflow: hidden;
         visibility: hidden;
         box-sizing: border-box;
-        height: 500px;
+        height: 580px !important;
     }
 
         .featured-posts .left .slides {
             overflow: visible !important;
-            height: 500px;
+            height: 580px !important;
         }
 
         .featured-posts .left .item {
             display: none;
-            max-width: 400px;
+            max-height: 400px;
         }
 
             .featured-posts .left .item .title {
@@ -908,13 +918,12 @@ footer p {
                 display: block;
                 text-align: justify;
                 position: absolute;
-                bottom: -120px;
+                top: 440px;
                 left: 10%;
                 background: #d5d5bcd6;
                 padding: 30px;
                 color: #333;
                 width: 80%;
-                height: 140px;
                 font-weight: 600;
             }
 
