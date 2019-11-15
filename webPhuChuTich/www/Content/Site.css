@@ -256,7 +256,7 @@ footer {
     padding-right: 15px;
     padding-bottom: 30px;
     padding-top: 30px;
-    margin-top: 250px;
+    margin-top: 50px;
 }
 
     footer p {
@@ -267,7 +267,7 @@ footer {
     background: url(icon-main.png);
     background-repeat: no-repeat;
     position: absolute;
-    bottom: 70px;
+    bottom: 0px;
     right: 20px;
     height: 700px;
     width: 450px;
@@ -1039,3 +1039,7 @@ footer p {
                 text-decoration: none;
                 color: #0618a7;
             }
+
+.box3, .box4, .box5 {
+    height: 730px;
+}
