@@ -216,7 +216,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult Box2()
@@ -229,7 +229,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(10));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(10));
         }
 
         public ActionResult Box3()
@@ -242,7 +242,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult Box4()
@@ -255,7 +255,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult Box5()
@@ -268,7 +268,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult Box6()
@@ -281,7 +281,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(4));
         }
 
         public ActionResult Box7()
@@ -294,7 +294,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult Box8()
@@ -307,7 +307,7 @@ namespace www.Controllers
                 var entity = _services.GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(5));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
         }
 
         public ActionResult ThongTinHoatDong()
@@ -381,7 +381,7 @@ namespace www.Controllers
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
             var entity = _services.GetById(Id);
             ViewBag.Url = entity.alias;
-            return PartialView(model.ViewContents.OrderBy(x => x.ngayDang).Take(8));
+            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(8));
         }
 
         public ActionResult NgayThang()

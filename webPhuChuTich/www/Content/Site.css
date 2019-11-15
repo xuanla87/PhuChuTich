@@ -211,6 +211,7 @@ img {
 
     .box3 .item, .box4 .item, .box5 .item, .box6 .item {
         margin-bottom: 15px;
+        float: left;
     }
 
     .box3 a, .box4 a, .box5 a, .box6 a {
