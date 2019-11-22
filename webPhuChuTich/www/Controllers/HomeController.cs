@@ -380,7 +380,8 @@ namespace www.Controllers
             int.TryParse(_configSystemServices.GetValueByKey("Box1"), out Id);
             var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
             var entity = _services.GetById(Id);
-            ViewBag.Url = entity.alias;
+            if (entity != null)
+                ViewBag.Url = entity.alias;
             return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(8));
         }
 

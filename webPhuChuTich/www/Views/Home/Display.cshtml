@@ -5,7 +5,7 @@
 @if (Model != null)
 {
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="col-lg-7 col-md-7 col-sm-12">
             <div class="breadcrumb">
                 @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
             </div>
@@ -49,7 +49,9 @@
                             <source src="/FileVideo/@Model.description">
                         </video>
                     }
-                    @Html.Raw(Model.contentMain)
+                    <div class="content">
+                        @Html.Raw(Model.contentMain)
+                    </div>
                     <div style="float:left;width:100%; text-align:right; padding:30px 0px">
                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
                         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5da1d303ffcfeb25"></script>
@@ -59,9 +61,12 @@
                 </div>
             }
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="col-lg-5 col-md-5 col-sm-12">
             @Html.Action("TuTuongDaoDuc", "Home")
+
             @Html.Action("BaiVietXemNhieu", "Home")
+            <div class="clearfix30">
+            </div>
             @Html.Action("_HitCounter", "Home")
         </div>
     </div>

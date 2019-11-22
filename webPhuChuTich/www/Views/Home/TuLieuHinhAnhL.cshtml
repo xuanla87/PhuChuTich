@@ -21,7 +21,7 @@
     lastPaging = lastPaging >= totalPage ? totalPage : lastPaging;
 }
 <div class="row">
-    <div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="col-lg-7 col-md-7 col-sm-12">
         <div class="page-content">
             <div class="breadcrumb">
                 <a href="/">Trang chủ</a> - <a href="tu-lieu-hinh-anh"> Tư liệu hình ảnh</a>
@@ -103,9 +103,10 @@
             }
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-12">
+    <div class="col-lg-5 col-md-5 col-sm-12">
         @Html.Action("TuTuongDaoDuc", "Home")
         @Html.Action("BaiVietXemNhieu", "Home")
+        <div class="clearfix30"></div>
         @Html.Action("_HitCounter", "Home")
     </div>
 </div>
