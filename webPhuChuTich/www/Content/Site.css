@@ -977,6 +977,7 @@ footer p {
     box-sizing: border-box;
     padding-right: 10px;
     padding-top: 10px;
+    padding-left: 10px;
 }
 
     .open-thu-vien .left .item .title {
@@ -1025,6 +1026,7 @@ footer p {
         box-sizing: border-box;
         padding-right: 10px;
         padding-top: 10px;
+        padding-left: 10px;
     }
 
         .cam-tuong .left .item .title {
