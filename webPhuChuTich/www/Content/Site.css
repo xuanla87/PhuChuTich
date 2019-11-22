@@ -784,11 +784,13 @@ a {
 .page-content .content p, .page-content .content span, .page-content .content p span, .page-content .content span span {
     font-family: 'Times New Roman' !important;
     font-size: 16px !important;
+    text-align: justify;
 }
 
 .page-des {
     font-size: 16px !important;
     font-family: 'Times New Roman' !important;
+    text-align: justify;
 }
 
 .box7 ul {
