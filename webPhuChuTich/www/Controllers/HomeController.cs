@@ -481,17 +481,21 @@ namespace www.Controllers
         {
             string _html = "";
             var model = _services.GetByParent(_id, _key);
-            _html += " <ul class=\"" + _css + "\">";
-            foreach (var item in model)
+            if (model.Count() > 0)
             {
-                _html += " <li>";
-                _html += " <a href=\"" + item.alias + "\">";
-                _html += item.name;
-                _html += "</a>";
-                _html += SubMenu2(_css, (int)item.contentId, item.contentKey);
-                _html += "</li>";
+                _html += " <ul class=\"" + _css + "\">";
+                foreach (var item in model)
+                {
+                    _html += " <li>";
+                    _html += " <a href=\"" + item.alias + "\">";
+                    _html += item.name;
+                    _html += "</a>";
+                    _html += SubMenu2(_css, (int)item.contentId, item.contentKey);
+                    _html += "</li>";
+                }
+                _html += "</ul>";
             }
-            _html += "</ul>";
+
             return _html;
         }
 
