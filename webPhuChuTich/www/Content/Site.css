@@ -97,7 +97,7 @@ img {
     .navbar-nav li a {
         border-right: 1px solid #3f8944;
         line-height: 35px;
-        padding: 0px 15px;
+        padding: 0px 10px;
     }
 
 .navbar-nav a:hover {
