@@ -13,9 +13,11 @@ namespace www.Areas.Admin.Controllers
     public class NewsPaperController : Controller
     {
         private IContentServices _services;
-        public NewsPaperController(IContentServices services)
+        private IOptionServices _optionServices;
+        public NewsPaperController(IContentServices services, IOptionServices optionServices)
         {
             _services = services;
+            _optionServices = optionServices;
         }
         public ActionResult Index(string _searchKey, int? _parentId, DateTime? _fromDate, DateTime? _toDate, int? _pageIndex)
         {
@@ -285,6 +287,44 @@ namespace www.Areas.Admin.Controllers
                 Value = x.Value.ToString()
             });
             return View(entity);
+        }
+
+        [HttpGet]
+        public ActionResult AddImg(int Id)
+        {
+            IEnumerable<Option> model = null;
+            if (Id > 0)
+            {
+                var _content = _services.GetById(Id);
+                ViewBag.Name = _content.name;
+                model = _optionServices.GetByContentId(Id);
+            }
+            ViewBag.ContentId = Id;
+            return View(model);
+        }
+
+        public ActionResult Option(int Id, string thumbnail)
+        {
+            if (Id > 0 && !string.IsNullOrEmpty(thumbnail))
+            {
+                var entity = new Option
+                {
+                    contentId = Id,
+                    isSort = 0,
+                    thumbnail = thumbnail,
+                    videoClip = null
+                };
+                _optionServices.Add(entity, User.Identity.Name);
+                _optionServices.Save();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RemoveOption(int Id)
+        {
+            _optionServices.Delete(Id, User.Identity.Name);
+            _optionServices.Save();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UnApproval(int id)

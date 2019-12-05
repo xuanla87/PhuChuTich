@@ -19,14 +19,16 @@ namespace www.Controllers
         IConfigSystemServices _configSystemServices;
         IContactServices _contactServices;
         ILienKetWebServices _lienKetWebServices;
+        IOptionServices _optionService;
         private HttpCookie languagecode;
-        public HomeController(IContentServices services, IMenuServices menuServices, IConfigSystemServices configSystemServices, IContactServices contactServices, ILienKetWebServices lienKetWebServices)
+        public HomeController(IContentServices services, IMenuServices menuServices, IConfigSystemServices configSystemServices, IContactServices contactServices, ILienKetWebServices lienKetWebServices, IOptionServices optionService)
         {
             this._services = services;
             this._menuServices = menuServices;
             this._configSystemServices = configSystemServices;
             this._contactServices = contactServices;
             this._lienKetWebServices = lienKetWebServices;
+            this._optionService = optionService;
         }
 
         public ActionResult Index()
@@ -509,6 +511,28 @@ namespace www.Controllers
         {
             var model = _lienKetWebServices.All();
             return PartialView(model);
+        }
+
+        public string getOption(int Id)
+        {
+            var model = _optionService.GetByContentId(Id);
+            string _html = "";
+            if (model.Count() > 0)
+            {
+                _html += "<div class=\"lightbox-main\">";
+                _html += "<div class=\"row\">";
+                foreach (var item in model)
+                {
+                    _html += "<div class=\"col-md-4\">";
+                    _html += "<div class=\"item\">";
+                    _html += "<a href=\"" + item.thumbnail + "\" data-lightbox=\"roadtrip\"><img src=\"" + item.thumbnail + "\" alt=\"\" /></a>";
+                    _html += "</div>";
+                    _html += "</div>";
+                }
+                _html += "</div>";
+                _html += "</div>";
+            }
+            return _html;
         }
     }
 }

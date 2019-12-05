@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Danh sách ảnh của bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    int count = 0;
+}
+@model IEnumerable<ClassLibrary.Models.Option>
+<section class="content-header">
+    <h1 class="title text-uppercase text-bold">@ViewBag.Title: </h1>
+    @ViewBag.Name
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="/Admin/NewsPaper">Quản lý bài viết</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" name="thumbnail" id="thumbnail" class="form-control" placeholder="Chọn ảnh.." />
+                                <input type="hidden" name="contentId" id="contentId" value="@ViewBag.ContentId" />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-flat" onclick="Addimg()"><i class="fa fa-plus"></i> Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50">STT</th>
+                                    <th>Link Ảnh</th>
+                                    <th width="200">Thao tác</th>
+                                </tr>
+                            </thead>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td class="text-center">@count</td>
+                                        <td>
+                                            <img src="@item.thumbnail" alt="" width="90" height="70" />
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="Remove('@item.optionId')"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scriptAs {
+    <script>
+        function Addimg() {
+            var _id = $("#contentId").val();
+            var _thum = $("#thumbnail").val();
+            $.ajax({
+                type: "GET",
+                url: "/Admin/NewsPaper/Option",
+                data: { Id: _id, thumbnail: _thum },
+                datatype: "json",
+                success: function (data) {
+                    window.location.href = "/Admin/NewsPaper/AddImg/" + _id;
+                }
+            });
+        }
+
+        function Remove(x) {
+            var _id = $("#contentId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Admin/NewsPaper/RemoveOption",
+                data: { Id: x },
+                datatype: "json",
+                success: function (data) {
+                    window.location.href = "/Admin/NewsPaper/AddImg/" + _id;
+                }
+            });
+        }
+
+    </script>
+}

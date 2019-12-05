@@ -8,6 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/bxslider_jquery.bxslider.css" rel="stylesheet" />
+    <link href="~/Content/lightbox.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -63,9 +64,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/owl.carousel.min.js"></script>
-    <script src="~/Scripts/html5gallery/html5gallery.js"></script>
+    @*<script src="~/Scripts/html5gallery/html5gallery.js"></script>*@
     <script src="~/Scripts/bxslider_jquery.bxslider.min.js"></script>
     <script src="~/Scripts/jquery.cycle.all.js"></script>
+    <script src="~/Scripts/lightbox-2.6.min.js"></script>
     @RenderSection("scripts", required: false)
     <script>
         window.onscroll = function () { myFunction() };
@@ -87,6 +89,7 @@
                 window.location.href = "tim-kiem?searchKey=" + $('#search-text').val();
             }
         });
+       
         $(window).ready(function () {
 
             $('.featured-posts .right').html('');

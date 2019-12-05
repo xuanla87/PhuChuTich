@@ -1080,3 +1080,13 @@ footer p {
 .weblinks-box a:hover {
     background: #eee;
 }
+
+.lightbox-main {
+    float: left;
+    width: 100%;
+    margin-top: 15px;
+}
+
+    .lightbox-main .item {
+        margin-bottom: 15px;
+    }

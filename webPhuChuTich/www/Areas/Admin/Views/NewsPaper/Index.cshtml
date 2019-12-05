@@ -67,7 +67,7 @@
                                         <th>Link</th>
                                         <th width="50">Ngày tạo</th>
                                         <th width="150">Chuyên mục</th>
-                                        <th width="185">Thao tác</th>
+                                        <th width="200">Thao tác</th>
                                     </tr>
                                 </thead>
                                 @if (Model != null && Model.Count() > 0)
@@ -92,13 +92,14 @@
                                                 }
                                                 else
                                                 {
-                                                    if (User.IsInRole("Admin") || User.Identity.Name=="admin")
+                                                    if (User.IsInRole("Admin") || User.Identity.Name == "admin")
                                                     {
                                                         <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
                                                         <button type="button" class="btn btn-info btn-flat" title="Hủy duyệt" onclick="UnApproval('@item.contentId','NewsPaper')"><i class="fa fa-exclamation-triangle"></i></button>
                                                     }
                                                 }
                                                 <a title="Xem nhanh" class="btn btn-primary btn-flat" href="/@item.alias" target="_blank"><i class="fa fa-eye"></i></a>
+                                                <a title="Thêm ảnh" class="btn btn-danger btn-flat" href="@Url.Action("AddImg", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-image"></i></a>
                                             </td>
                                         </tr>
                                     }
