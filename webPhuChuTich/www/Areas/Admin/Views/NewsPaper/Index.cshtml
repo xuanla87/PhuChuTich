@@ -80,7 +80,7 @@
                                             <td>@item.name</td>
                                             <td>@item.alias</td>
                                             <td>@item.createTime</td>
-                                            <td></td>
+                                            <td>@Html.Action("getName", "NewsPaper", new { Id = item.parentId })</td>
                                             <td>
                                                 @if (!item.approved)
                                                 {

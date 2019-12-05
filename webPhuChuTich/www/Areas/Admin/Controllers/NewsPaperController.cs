@@ -342,5 +342,16 @@ namespace www.Areas.Admin.Controllers
             _services.Trash(id);
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
+        public string getName(int? Id)
+        {
+            if (Id.HasValue && Id > 0)
+            {
+                var entity = _services.GetById(Id.Value);
+                return entity.name;
+            }
+            else
+                return null;
+        }
     }
 }
