@@ -151,8 +151,26 @@
                     }
                 })
             });
+
             $('.weblinks-box').bxSlider({ mode: 'vertical', minSlides: 6, auto: true, speed: 1000, pager: false });
-            $('.lightbox-main img').magnify();
+
+            $(".wrapper-img-slider").each(function () {
+                var $this = $(this),
+                    owl = $this.find('.img-slider');
+                owl.owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    dots: false,
+                    navText: ['<i class="fa fa-caret-left"></i>', '<i class="fa fa-caret-right"></i>'],
+                    responsive: {
+                        0: { items: 1 },
+                        600: { items: 1 },
+                        1000: { items: 1 }
+                    }
+                })
+            });
+            $('.img-slider img').magnify();
         });
     </script>
 </body>

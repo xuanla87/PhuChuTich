@@ -1094,3 +1094,53 @@ footer p {
 .cssleft .thong-ke {
     margin-bottom: 240px;
 }
+
+.slides {
+    min-height: 150px !important;
+}
+
+.lightbox-main .modal {
+    z-index: 99999 !important;
+    background-color: #000000d9;
+}
+
+.img-slider .owl-prev, .img-slider .owl-next {
+    position: absolute;
+    top: 45%;
+    left: -25px;
+    font-size: 40px;
+    margin-top: -17px;
+    color: #333;
+    opacity: 1;
+    color: #f2f2f2;
+}
+
+
+
+    .img-slider .owl-prev:hover, .img-slider .owl-next:hover {
+        opacity: 1;
+    }
+
+.img-slider .owl-next {
+    left: auto;
+    right: -25px;
+}
+
+.lightbox-main .modal-content {
+    border-radius: 0px;
+    box-shadow: none !important;
+    background: none;
+    border: none;
+}
+
+.lightbox-main .modal-header {
+    border: none;
+}
+
+.lightbox-main .modal-lg {
+}
+
+.lightbox-main .modal .close {
+    color: #f2f2f2;
+    font-size: 40px;
+}

@@ -557,5 +557,50 @@ namespace www.Controllers
             }
             return _html;
         }
+
+        public string getOption2(int Id)
+        {
+            var model = _optionService.GetByContentId(Id);
+            string _html = "";
+            if (model.Count() > 0)
+            {
+                _html += "<div class=\"lightbox-main\">";
+                _html += "<div class=\"row\">";
+                foreach (var item in model)
+                {
+                    _html += "<div class=\"col-md-4\">";
+                    _html += "<div class=\"item\">";
+                    _html += "<a href=\"#modal-" + Id + "\" data-target=\"#modal-" + Id + "\" data-toggle=\"modal\" ><img src=\"" + item.thumbnail + "\" alt=\"\" /></a>";
+                    _html += "</div>";
+                    _html += "</div>";
+                }
+                _html += "</div>";
+                _html += "<div class=\"modal\" id=\"modal-" + Id + "\" role=\"dialog\">";
+                _html += "<div class=\"modal-dialog modal-lg\" role=\"document\">";
+                _html += "<div class=\"modal-content\">";
+                _html += "<div class=\"modal-header\">";
+                _html += "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">";
+                _html += "<span aria-hidden=\"true\">&times;</span>";
+                _html += "</button>";
+                _html += "</div>";
+                _html += "<div class=\"modal-body\">";
+                _html += "<div class=\"wrapper-img-slider\">";
+                _html += "<div class=\"img-slider owl-carousel owl-theme\">";
+                foreach (var item in model)
+                {
+                    _html += "<div class=\"item\">";
+                    _html += "<a href=\"" + item.thumbnail + "\"><img src=\"" + item.thumbnail + "\" alt=\"\" /></a>";
+                    _html += "</div>";
+                }
+                _html += "</div>";
+                _html += "</div>";
+                _html += "</div>";
+                _html += "</div>";
+                _html += "</div>";
+                _html += "</div>";
+                _html += "</div>";
+            }
+            return _html;
+        }
     }
 }
