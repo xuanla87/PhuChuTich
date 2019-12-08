@@ -441,7 +441,7 @@ namespace www.Controllers
                     _html += " <a href=\"" + item.menuLink + "\">";
                     _html += item.menuName;
                     _html += "</a>";
-                    _html += SubMenu("sub-menu nav", null, item.menuLink);
+                    _html += SubMenu3("sub-menu nav", item.menuParentId);
                     _html += "</li>";
                 }
                 else
@@ -450,7 +450,7 @@ namespace www.Controllers
                     _html += " <a href=\"" + item.menuLink + "\">";
                     _html += item.menuName;
                     _html += "</a>";
-                    _html += SubMenu("sub-menu nav", null, item.menuLink);
+                    _html += SubMenu3("sub-menu nav", item.menuId);
                     _html += "</li>";
                 }
             }
@@ -500,7 +500,30 @@ namespace www.Controllers
 
             return _html;
         }
-
+        public string SubMenu3(string _css, int? _id)
+        {
+            string _html = "";
+            if (_id.HasValue && _id > 0)
+            {
+                var model = _menuServices.GetByParent(_id).Where(x => x.isTrash == false);
+                if (model.Count() > 0)
+                {
+                    model = model.OrderBy(x => x.isSort);
+                    _html += " <ul class=\"" + _css + "\">";
+                    foreach (var item in model)
+                    {
+                        _html += " <li>";
+                        _html += " <a href=\"" + item.menuLink + "\">";
+                        _html += item.menuName;
+                        _html += "</a>";
+                        _html += SubMenu3(_css, item.menuId);
+                        _html += "</li>";
+                    }
+                    _html += "</ul>";
+                }
+            }
+            return _html;
+        }
         public ActionResult BaiVietMoi()
         {
             var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);

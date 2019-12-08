@@ -9,6 +9,7 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/bxslider_jquery.bxslider.css" rel="stylesheet" />
     <link href="~/Content/lightbox.css" rel="stylesheet" />
+    <link href="~/Content/magnify.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -68,6 +69,8 @@
     <script src="~/Scripts/bxslider_jquery.bxslider.min.js"></script>
     <script src="~/Scripts/jquery.cycle.all.js"></script>
     <script src="~/Scripts/lightbox-2.6.min.js"></script>
+    <script src="~/Scripts/jquery.magnify.js"></script>
+    <script src="~/Scripts/jquery.magnify-mobile.js"></script>
     @RenderSection("scripts", required: false)
     <script>
         window.onscroll = function () { myFunction() };
@@ -89,7 +92,7 @@
                 window.location.href = "tim-kiem?searchKey=" + $('#search-text').val();
             }
         });
-       
+
         $(window).ready(function () {
 
             $('.featured-posts .right').html('');
@@ -149,6 +152,7 @@
                 })
             });
             $('.weblinks-box').bxSlider({ mode: 'vertical', minSlides: 6, auto: true, speed: 1000, pager: false });
+            $('.lightbox-main img').magnify();
         });
     </script>
 </body>
