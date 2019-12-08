@@ -18,6 +18,7 @@ namespace ClassLibrary.Services
     public interface IOptionServices
     {
         Option Add(Option _model, string _userName);
+        void Update(Option _model, string _userName);
 
         Option Delete(int _id, string _userName);
 
@@ -56,6 +57,24 @@ namespace ClassLibrary.Services
             {
             }
             return _Repository.Add(_model);
+        }
+
+        public void Update(Option _model, string _userName)
+        {
+            try
+            {
+                LogAction entity = new LogAction();
+                entity.action = "Thêm option: <a href=\"" + _model.contentId + "\" target=\"_blank\">" + _model.contentId + "</a>";
+                entity.browser = "";
+                entity.ipAddress = "";
+                entity.userAction = _userName;
+                entity.createTime = DateTime.Now;
+                _RepositoryLogAction.Add(entity);
+            }
+            catch
+            {
+            }
+            _Repository.Update(_model);
         }
 
         public Option Delete(int _id, string _userName)

@@ -307,10 +307,11 @@ namespace www.Areas.Admin.Controllers
         {
             if (Id > 0 && !string.IsNullOrEmpty(thumbnail))
             {
+                var model = _optionServices.GetByContentId(Id);
                 var entity = new Option
                 {
                     contentId = Id,
-                    isSort = 0,
+                    isSort = model.Count(),
                     thumbnail = thumbnail,
                     videoClip = null
                 };
@@ -322,6 +323,15 @@ namespace www.Areas.Admin.Controllers
 
         public ActionResult RemoveOption(int Id)
         {
+            var entity = _optionServices.GetById(Id);
+            var model = _optionServices.GetByContentId(entity.contentId).Where(x => x.isSort > entity.isSort).ToList();
+            foreach (var item in model)
+            {
+                item.isSort = item.isSort - 1;
+                _optionServices.Update(item, User.Identity.Name);
+                _optionServices.Save();
+            }
+
             _optionServices.Delete(Id, User.Identity.Name);
             _optionServices.Save();
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -342,7 +352,28 @@ namespace www.Areas.Admin.Controllers
             _services.Trash(id);
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult Up(int id, int _sort)
+        {
+            var entity = _optionServices.GetById(id);
+            if (entity != null)
+            {
+                entity.isSort = _sort - 1;
+                _optionServices.Update(entity, User.Identity.Name);
+                _optionServices.Save();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Down(int id, int _sort)
+        {
+            var entity = _optionServices.GetById(id);
+            if (entity != null)
+            {
+                entity.isSort = _sort + 1;
+                _optionServices.Update(entity, User.Identity.Name);
+                _optionServices.Save();
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         public string getName(int? Id)
         {
             if (Id.HasValue && Id > 0)

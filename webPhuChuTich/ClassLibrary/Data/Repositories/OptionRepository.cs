@@ -20,7 +20,7 @@
 
         public IEnumerable<Option> GetByContenId(int _id)
         {
-            return this.DbContext.Options.Where(x => x.contentId == _id);
+            return this.DbContext.Options.Where(x => x.contentId == _id).OrderBy(x => x.isSort);
         }
     }
 }

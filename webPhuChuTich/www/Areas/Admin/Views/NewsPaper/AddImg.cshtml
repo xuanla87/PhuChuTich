@@ -45,12 +45,14 @@
                                 {
                                     count++;
                                     <tr>
-                                        <td class="text-center">@count</td>
+                                        <td class="text-center">@item.isSort</td>
                                         <td>
                                             <img src="@item.thumbnail" alt="" width="90" height="70" />
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="Remove('@item.optionId')"><i class="fa fa-trash"></i></button>
+                                            <button type="button" class="btn btn-success btn-flat" title="Tăng" onclick="Up('@item.optionId', '@item.isSort')"><i class="fa fa-sort-up"></i></button>
+                                            <button type="button" class="btn btn-danger btn-flat" title="Giảm" onclick="Down('@item.optionId','@item.isSort')"><i class="fa fa-sort-down"></i></button>
                                         </td>
                                     </tr>
                                 }
@@ -90,6 +92,29 @@
                 }
             });
         }
-
+        function Up(x, y) {
+            var _id = $("#contentId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Admin/NewsPaper/Up",
+                data: { id: x, _sort: y },
+                datatype: "json",
+                success: function (data) {
+                    window.location.href = "/Admin/NewsPaper/AddImg/" + _id;
+                }
+            });
+        }
+        function Down(x, y) {
+            var _id = $("#contentId").val();
+            $.ajax({
+                type: "GET",
+                url: "/Admin/NewsPaper/Down",
+                data: { id: x, _sort: y },
+                datatype: "json",
+                success: function (data) {
+                    window.location.href = "/Admin/NewsPaper/AddImg/" + _id;
+                }
+            });
+        }
     </script>
 }
