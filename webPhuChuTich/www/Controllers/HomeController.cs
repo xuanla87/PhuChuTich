@@ -441,7 +441,7 @@ namespace www.Controllers
                     _html += " <a href=\"" + item.menuLink + "\">";
                     _html += item.menuName;
                     _html += "</a>";
-                    _html += SubMenu3("sub-menu nav", item.menuParentId);
+                    _html += SubMenu3("sub-menu nav", item.menuId);
                     _html += "</li>";
                 }
                 else
