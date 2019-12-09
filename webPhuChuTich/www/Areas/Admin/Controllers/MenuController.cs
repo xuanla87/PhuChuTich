@@ -138,5 +138,12 @@ namespace www.Areas.Admin.Controllers
                 return null;
 
         }
+
+        public ActionResult Trash(int id)
+        {
+            _services.Delete(id);
+            _services.Save();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

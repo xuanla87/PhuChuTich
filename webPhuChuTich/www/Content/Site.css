@@ -219,6 +219,11 @@ img {
         font-weight: 600;
     }
 
+    .box5 .item .thumbnail {
+        max-height: 217px;
+        overflow: hidden;
+    }
+
     .box6 .item .thumbnail {
         width: 150px;
         max-height: 110px;
@@ -417,7 +422,7 @@ h1.page-title {
 
 .gallery-slider .owl-prev, .gallery-slider .owl-next {
     position: absolute;
-    top: 27%;
+    top: 47%;
     left: -10px;
     font-size: 24px;
     margin-top: -17px;
@@ -835,6 +840,7 @@ footer p {
         padding-left: 5px;
         border: 1px solid #fff;
         box-sizing: border-box;
+        width: 150px;
     }
 
     .search-header span {
@@ -1143,4 +1149,41 @@ footer p {
 .lightbox-main .modal .close {
     color: #f2f2f2;
     font-size: 40px;
+}
+
+.home-icon {
+    font-size: 32px;
+}
+
+.lightbox-main .modal-body {
+    height: 450px !important;
+}
+
+.wrapper-img-slider {
+    height: 450px !important;
+}
+
+.img-slider {
+    max-height: 450px !important;
+}
+
+    .img-slider .owl-item {
+        max-height: 450px !important;
+    }
+
+        .img-slider .owl-item .item {
+            max-height: 450px !important;
+            text-align: center;
+        }
+
+    .img-slider .magnify {
+        max-height: 450px !important;
+    }
+
+.lightbox-main .modal-body img {
+    max-height: 450px !important;
+}
+
+.owl-stage {
+    width: 3000px !important;
 }

@@ -1,7 +1,6 @@
-﻿using ClassLibrary.Models;
-using ClassLibrary.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,11 @@ namespace www.Controllers
 
     public class HomeController : Controller
     {
-        IContentServices _services;
-        IMenuServices _menuServices;
-        IConfigSystemServices _configSystemServices;
-        IContactServices _contactServices;
-        ILienKetWebServices _lienKetWebServices;
-        IOptionServices _optionService;
+        ModelPCT _db;
         private HttpCookie languagecode;
-        public HomeController(IContentServices services, IMenuServices menuServices, IConfigSystemServices configSystemServices, IContactServices contactServices, ILienKetWebServices lienKetWebServices, IOptionServices optionService)
+        public HomeController()
         {
-            this._services = services;
-            this._menuServices = menuServices;
-            this._configSystemServices = configSystemServices;
-            this._contactServices = contactServices;
-            this._lienKetWebServices = lienKetWebServices;
-            this._optionService = optionService;
+            this._db = new ModelPCT();
         }
 
         public ActionResult Index()
@@ -38,22 +27,50 @@ namespace www.Controllers
 
         public ActionResult Detail(string pageUrl)
         {
-            var entity = _services.GetByAlias(pageUrl);
+            var entity = GetByAlias(pageUrl);
             return View(entity);
         }
 
         [ValidateInput(false)]
         public ActionResult Display(string pageUrl, int? _pageIndex)
         {
-            var entity = _services.GetByAlias(pageUrl);
+            var entity = GetByAlias(pageUrl);
             if (entity != null)
             {
                 ViewBag.Title = entity.name;
-                _services.UpdateView(entity);
+                entity.isView = entity.isView + 1;
+                _db.Contents.Attach(entity);
+                _db.Entry(entity).State = EntityState.Modified;
+                _db.SaveChanges();
             }
             else
-                ViewBag.Title = _configSystemServices.GetValueByKey("SiteTitle");
+                ViewBag.Title = GetValueByKey("SiteTitle");
             return View(entity);
+        }
+
+        private Content GetByAlias(string _pageUrl)
+        {
+            var entity = _db.Contents.FirstOrDefault(x => x.alias == _pageUrl);
+            return entity;
+        }
+        private Content GetById(int Id)
+        {
+            var entity = _db.Contents.Find(Id);
+            return entity;
+        }
+
+        private IEnumerable<Content> GetByParent(int? _id, string _key)
+        {
+            var entity = _db.Contents.Where(x => x.parentId == _id && x.contentKey == _key);
+            return entity;
+        }
+        private string GetValueByKey(string _key)
+        {
+            var model = _db.ConfigSytems.FirstOrDefault(x => x.configKey == _key);
+            if (model != null)
+                return model.configValue;
+            else
+                return null;
         }
 
         public ActionResult getMenuMain()
@@ -61,22 +78,21 @@ namespace www.Controllers
             int _languageId = 1;
             int Id = 0;
             if (_languageId == 1)
-                int.TryParse(_configSystemServices.GetValueByKey("DanhMucChinh"), out Id);
-            List<Menu> eMenus = _menuServices.GetByParent(Id).Where(x => x.isTrash == false).OrderBy(x => x.isSort).ToList();
+                int.TryParse(GetValueByKey("DanhMucChinh"), out Id);
+            List<Menu> eMenus = _db.Menus.Where(x => x.menuParentId == Id && x.isTrash == false).OrderBy(x => x.isSort).ToList();
             return PartialView(eMenus);
         }
 
         public ActionResult _HitCounter()
         {
 
-            HitCounterEntity db = new HitCounterEntity();
             int TotalOnline = 0;
             int TotalYesterday = 0;
             int TotalMonth = 0;
             int Total = 0;
             try
             {
-                var _hit = db.HitCounters.ToList();
+                var _hit = _db.HitCounters.ToList();
                 TotalOnline = (int)HttpContext.Application["Totaluser"];
                 TotalYesterday = _hit.Where(x => x.visitTime <= DateTime.Now && x.visitTime >= DateTime.Now.Date).Count();
                 TotalMonth = _hit.Where(x => x.visitTime.Year == DateTime.Now.Year && x.visitTime.Month == DateTime.Now.Month).Count();
@@ -97,23 +113,29 @@ namespace www.Controllers
             int _laguageId = 1;
             if (string.IsNullOrEmpty(searchKey))
             {
-                var entity = new ContentView();
-                return View(entity.ViewContents);
+                var entity = new Content();
+                return View(entity);
             }
             else
             {
                 int _totalRecord = 0;
                 _pageIndex = _pageIndex ?? 1;
-                var entity = _services.GetAll(searchKey, null, null, null, "TinTuc", _laguageId, false, _pageIndex, 9, null, true);
-                _totalRecord = entity.TotalRecord;
+                var entity = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.isTrash == false && x.approved == true && x.languageId == _laguageId);
+                if (!string.IsNullOrEmpty(searchKey))
+                    entity = entity.Where(x => x.name.Contains(searchKey.Trim()));
+                entity = entity.OrderByDescending(x => x.ngayDang);
+                _totalRecord = entity.Count();
+                if (_pageIndex != null)
+                    entity = entity.Skip((_pageIndex.Value - 1) * 9);
+                var totalPage = 0;
+                totalPage = (int)Math.Ceiling(1.0 * _totalRecord / 9);
+                entity = entity.Take(9);
                 ViewBag.TotalRecord = _totalRecord.ToString();
-                ViewBag.TotalPage = entity.Total;
+                ViewBag.TotalPage = totalPage;
                 ViewBag.PageIndex = _pageIndex ?? 1;
                 ViewBag.SearchKey = searchKey;
-                ViewBag.CurentUrl = "tim-kiem?searchKey=" + searchKey;
-                return View(entity.ViewContents.OrderByDescending(x => x.createTime));
+                return View(entity);
             }
-
         }
 
         public ActionResult LienHe()
@@ -138,8 +160,8 @@ namespace www.Controllers
                     model.contactBody = entity.contactBody;
                     model.createTime = DateTime.Now;
                     model.isTrash = false;
-                    _contactServices.Add(model);
-                    _contactServices.Save();
+                    _db.Contacts.Add(model);
+                    _db.SaveChanges();
                     return Redirect("/");
                 }
                 return View(entity);
@@ -171,14 +193,17 @@ namespace www.Controllers
 
         public ActionResult TuLieuAnh()
         {
-            var model = _services.GetAll(null, null, null, null, "Gallery", 1, false, null, null, null, null);
-            return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(15));
+            var model = _db.Contents.Where(x => x.contentKey == "Gallery" && x.languageId == 1 && x.isTrash == false);
+            model = model.OrderByDescending(x => x.isSort);
+            return PartialView(model.Take(15));
+
         }
 
         public ActionResult TuLieuVideo()
         {
-            var model = _services.GetAll(null, null, null, null, "Video", 1, false, null, null, null, null);
-            return PartialView(model.ViewContents.OrderBy(x => x.isSort).Take(5));
+            var model = _db.Contents.Where(x => x.contentKey == "Video" && x.languageId == 1 && x.isTrash == false);
+            model = model.OrderByDescending(x => x.isSort);
+            return PartialView(model.Take(5));
         }
 
         public ActionResult TuLieuVideoL(int? _pageIndex)
@@ -186,12 +211,18 @@ namespace www.Controllers
             int _laguageId = 1;
             int _totalRecord = 0;
             _pageIndex = _pageIndex ?? 1;
-            var entity = _services.GetAll(null, null, null, null, "Video", _laguageId, false, _pageIndex, 20, null, null);
-            _totalRecord = entity.TotalRecord;
+            var entity = _db.Contents.Where(x => x.contentKey == "Video" && x.languageId == _laguageId && x.isTrash == false);
+            entity = entity.OrderByDescending(x => x.createTime);
+            _totalRecord = entity.Count();
+            if (_pageIndex != null)
+                entity = entity.Skip((_pageIndex.Value - 1) * 20);
+            var totalPage = 0;
+            totalPage = (int)Math.Ceiling(1.0 * _totalRecord / 20);
+            entity = entity.Take(20);
             ViewBag.TotalRecord = _totalRecord.ToString();
-            ViewBag.TotalPage = entity.Total;
+            ViewBag.TotalPage = totalPage;
             ViewBag.PageIndex = _pageIndex ?? 1;
-            return View(entity.ViewContents.OrderByDescending(x => x.createTime));
+            return View(entity);
         }
 
         public ActionResult TuLieuHinhAnhL(int? _pageIndex)
@@ -199,117 +230,131 @@ namespace www.Controllers
             int _laguageId = 1;
             int _totalRecord = 0;
             _pageIndex = _pageIndex ?? 1;
-            var entity = _services.GetAll(null, null, null, null, "Gallery", _laguageId, false, _pageIndex, 20, null, null);
-            _totalRecord = entity.TotalRecord;
+            var entity = _db.Contents.Where(x => x.contentKey == "Gallery" && x.languageId == _laguageId && x.isTrash == false);
+            entity = entity.OrderByDescending(x => x.createTime);
+            _totalRecord = entity.Count();
+            if (_pageIndex != null)
+                entity = entity.Skip((_pageIndex.Value - 1) * 10);
+            var totalPage = 0;
+            totalPage = (int)Math.Ceiling(1.0 * _totalRecord / 10);
+            entity = entity.Take(10);
             ViewBag.TotalRecord = _totalRecord.ToString();
-            ViewBag.TotalPage = entity.Total;
+            ViewBag.TotalPage = totalPage;
             ViewBag.PageIndex = _pageIndex ?? 1;
-            return View(entity.ViewContents.OrderByDescending(x => x.createTime));
+            return View(entity);
         }
 
         public ActionResult Box1()
         {
             int Id = 0;
 
-            int.TryParse(_configSystemServices.GetValueByKey("Box1"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box1"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box2()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box2"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box2"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(10));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box3()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box3"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box3"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box4()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box4"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box4"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box5()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box5"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box5"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box6()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box6"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box6"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(4));
+            return PartialView(model.Take(4).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box7()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box7"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box7"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult Box8()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box8"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
+            int.TryParse(GetValueByKey("Box8"), out Id);
+            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
             if (Id > 0)
             {
-                var entity = _services.GetById(Id);
+                var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(5));
+            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult ThongTinHoatDong()
@@ -321,21 +366,27 @@ namespace www.Controllers
         {
             int _totalRecord = 0;
             _pageIndex = _pageIndex ?? 1;
-            var entity = _services.GetAll(null, null, null, Id, null, 1, false, _pageIndex, 10, null, true);
-            _totalRecord = entity.TotalRecord;
+            var entity = _db.Contents.Where(x => x.parentId == Id && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            entity = entity.OrderByDescending(x => x.ngayDang);
+            _totalRecord = entity.Count();
+            if (_pageIndex != null)
+                entity = entity.Skip((_pageIndex.Value - 1) * 10);
+            var totalPage = 0;
+            totalPage = (int)Math.Ceiling(1.0 * _totalRecord / 10);
+            entity = entity.Take(10);
             ViewBag.TotalRecord = _totalRecord.ToString();
-            ViewBag.TotalPage = entity.Total;
+            ViewBag.TotalPage = totalPage;
             ViewBag.PageIndex = _pageIndex ?? 1;
             ViewBag.CurentUrl = _url;
-            return PartialView(entity.ViewContents.OrderByDescending(x => x.ngayDang));
+            return PartialView(entity.OrderByDescending(x => x.createTime));
         }
 
         public ActionResult getBreadcrumb(string pageUrl)
         {
-            var entity = _services.GetByAlias(pageUrl);
+            var entity = GetByAlias(pageUrl);
             if (entity != null && entity.parentId.HasValue)
             {
-                var model = _services.GetById(entity.parentId.Value);
+                var model = GetById(entity.parentId.Value);
                 if (model != null)
                 {
                     ViewBag.PTitle = "<a href=\"/\">Trang chủ</a> - " + getParent(model.parentId) + "<a href=\"" + model.alias + "\">" + model.name + "</a>";
@@ -357,7 +408,7 @@ namespace www.Controllers
             string _outHtml = "";
             if (Id.HasValue && Id.Value > 0)
             {
-                var model = _services.GetById((int)Id.Value);
+                var model = GetById((int)Id.Value);
                 _outHtml += getParent(model.parentId);
                 if (!string.IsNullOrEmpty(_outHtml))
                     _outHtml += " - ";
@@ -372,19 +423,21 @@ namespace www.Controllers
 
         public ActionResult BaiVietXemNhieu()
         {
-            var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);
-            return PartialView(entity.ViewContents.OrderByDescending(x => x.isView).Take(8));
+            var model = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.isView);
+            return PartialView(model.Take(8).OrderByDescending(x => x.ngayDang));
         }
 
         public ActionResult TuTuongDaoDuc()
         {
             int Id = 0;
-            int.TryParse(_configSystemServices.GetValueByKey("Box1"), out Id);
-            var model = _services.GetAll(null, null, null, Id, "TinTuc", 1, false, null, null, null, true);
-            var entity = _services.GetById(Id);
+            int.TryParse(GetValueByKey("Box1"), out Id);
+            var model = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.parentId == Id && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            model = model.OrderByDescending(x => x.ngayDang);
+            var entity = GetById(Id);
             if (entity != null)
                 ViewBag.Url = entity.alias;
-            return PartialView(model.ViewContents.OrderByDescending(x => x.ngayDang).Take(8));
+            return PartialView(model.Take(8).OrderByDescending(x => x.createTime));
         }
 
         public ActionResult NgayThang()
@@ -420,8 +473,9 @@ namespace www.Controllers
 
         public ActionResult BaiVietNoiBat()
         {
-            var model = _services.GetTinTucChung(null, null, null, null, "TinTuc", 1, false, true, null, null);
-            return PartialView(model.ViewContents.Take(6));
+            var model = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true && x.isFeature == true);
+            model = model.OrderByDescending(x => x.ngayDang);
+            return PartialView(model.Take(6).OrderByDescending(x => x.createTime));
         }
 
         public string MainMenu2()
@@ -429,30 +483,22 @@ namespace www.Controllers
             int _languageId = 1;
             int Id = 0;
             if (_languageId == 1)
-                int.TryParse(_configSystemServices.GetValueByKey("DanhMucChinh"), out Id);
-            List<Menu> eMenus = _menuServices.GetByParent(Id).Where(x => x.isTrash == false).OrderBy(x => x.isSort).ToList();
+                int.TryParse(GetValueByKey("DanhMucChinh"), out Id);
+            List<Menu> eMenus = _db.Menus.Where(x => x.menuParentId == Id && x.isTrash == false).OrderBy(x => x.isSort).ToList();
             string _html = "";
             _html += "<ul class=\"main-nav nav navbar-nav\">";
+            _html += "<li>";
+            _html += "<a class=\"home-icon\" href=\"/\"><i class=\"fa fa-home\"></i>";
+            _html += "</a>";
+            _html += "</li>";
             foreach (var item in eMenus)
             {
-                if (item.menuLink == "/" || item.menuLink == "")
-                {
-                    _html += " <li>";
-                    _html += " <a href=\"" + item.menuLink + "\">";
-                    _html += item.menuName;
-                    _html += "</a>";
-                    _html += SubMenu3("sub-menu nav", item.menuId);
-                    _html += "</li>";
-                }
-                else
-                {
-                    _html += " <li>";
-                    _html += " <a href=\"" + item.menuLink + "\">";
-                    _html += item.menuName;
-                    _html += "</a>";
-                    _html += SubMenu3("sub-menu nav", item.menuId);
-                    _html += "</li>";
-                }
+                _html += "<li>";
+                _html += "<a href=\"" + item.menuLink + "\">";
+                _html += item.menuName;
+                _html += "</a>";
+                _html += SubMenu3("sub-menu nav", item.menuId);
+                _html += "</li>";
             }
             _html += "</ul>";
             return _html;
@@ -460,11 +506,11 @@ namespace www.Controllers
 
         public string SubMenu(string _css, string _html, string _link)
         {
-            var entity = _services.GetByAlias(_link);
+            var entity = GetByAlias(_link);
             if (entity != null)
             {
-                var model = _services.GetAll(null, null, null, (int)entity.contentId, entity.contentKey, 1, false, null, null, null, null);
-                var List = model.ViewContents.OrderBy(x => x.isSort);
+                var model = _db.Contents.Where(x => x.parentId == entity.contentId && x.contentKey == entity.contentKey && x.languageId == 1 && x.isTrash == false && x.approved == true);
+                var List = model.OrderBy(x => x.isSort);
                 _html += " <ul class=\"" + _css + "\">";
                 foreach (var item in List)
                 {
@@ -482,7 +528,7 @@ namespace www.Controllers
         public string SubMenu2(string _css, int _id, string _key)
         {
             string _html = "";
-            var model = _services.GetByParent(_id, _key);
+            var model = GetByParent(_id, _key);
             if (model.Count() > 0)
             {
                 _html += " <ul class=\"" + _css + "\">";
@@ -505,7 +551,7 @@ namespace www.Controllers
             string _html = "";
             if (_id.HasValue && _id > 0)
             {
-                var model = _menuServices.GetByParent(_id).Where(x => x.isTrash == false);
+                var model = _db.Menus.Where(x => x.menuParentId == _id && x.isTrash == false);
                 if (model.Count() > 0)
                 {
                     model = model.OrderBy(x => x.isSort);
@@ -526,19 +572,20 @@ namespace www.Controllers
         }
         public ActionResult BaiVietMoi()
         {
-            var entity = _services.GetAll(null, null, null, null, "TinTuc", 1, false, null, null, null, true);
-            return PartialView(entity.ViewContents.OrderByDescending(x => x.createTime).Take(10));
+            var entity = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+            entity = entity.OrderByDescending(x => x.ngayDang);
+            return PartialView(entity.OrderByDescending(x => x.createTime).Take(10));
         }
 
         public ActionResult LienKetWeb()
         {
-            var model = _lienKetWebServices.All();
+            var model = _db.LienKetWebs.OrderBy(x => x.isSort);
             return PartialView(model);
         }
 
         public string getOption(int Id)
         {
-            var model = _optionService.GetByContentId(Id);
+            var model = _db.Options.Where(x => x.contentId == Id).OrderBy(x => x.isSort);
             string _html = "";
             if (model.Count() > 0)
             {
@@ -560,7 +607,7 @@ namespace www.Controllers
 
         public string getOption2(int Id)
         {
-            var model = _optionService.GetByContentId(Id);
+            var model = _db.Options.Where(x => x.contentId == Id).OrderBy(x => x.isSort);
             string _html = "";
             if (model.Count() > 0)
             {
