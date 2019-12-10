@@ -1152,7 +1152,8 @@ footer p {
 }
 
 .home-icon {
-    font-size: 32px;
+    font-size: 24px;
+    margin-left: -15px;
 }
 
 .lightbox-main .modal-body {
@@ -1184,6 +1185,15 @@ footer p {
     max-height: 450px !important;
 }
 
-.owl-stage {
-    width: 3000px !important;
+.wrapper-gallery-slider .owl-stage {
+    width: 8000px !important;
 }
+
+.lightbox-main .col-md-4 .item {
+    overflow: hidden;
+    height: 120px;
+}
+
+    .lightbox-main .col-md-4 .item img {
+        max-height: none;
+    }
