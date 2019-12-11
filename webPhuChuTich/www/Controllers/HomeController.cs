@@ -256,7 +256,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult Box2()
@@ -270,7 +270,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult Box3()
@@ -284,7 +284,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult Box4()
@@ -298,7 +298,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult Box5()
@@ -307,12 +307,13 @@ namespace www.Controllers
             int.TryParse(GetValueByKey("Box5"), out Id);
             var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
             model = model.OrderByDescending(x => x.ngayDang);
+            model = model.Take(5);
             if (Id > 0)
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model);
         }
 
         public ActionResult Box6()
@@ -326,7 +327,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(4).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(4));
         }
 
         public ActionResult Box7()
@@ -340,7 +341,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult Box8()
@@ -354,7 +355,7 @@ namespace www.Controllers
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model.Take(5).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(5));
         }
 
         public ActionResult ThongTinHoatDong()
@@ -425,7 +426,7 @@ namespace www.Controllers
         {
             var model = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
             model = model.OrderByDescending(x => x.isView);
-            return PartialView(model.Take(8).OrderByDescending(x => x.ngayDang));
+            return PartialView(model.Take(8));
         }
 
         public ActionResult TuTuongDaoDuc()
@@ -437,7 +438,7 @@ namespace www.Controllers
             var entity = GetById(Id);
             if (entity != null)
                 ViewBag.Url = entity.alias;
-            return PartialView(model.Take(8).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(8));
         }
 
         public ActionResult NgayThang()
@@ -475,7 +476,7 @@ namespace www.Controllers
         {
             var model = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true && x.isFeature == true);
             model = model.OrderByDescending(x => x.ngayDang);
-            return PartialView(model.Take(6).OrderByDescending(x => x.createTime));
+            return PartialView(model.Take(6));
         }
 
         public string MainMenu2()

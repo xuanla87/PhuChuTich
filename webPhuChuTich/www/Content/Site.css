@@ -1192,8 +1192,10 @@ footer p {
 .lightbox-main .col-md-4 .item {
     overflow: hidden;
     height: 120px;
+    text-align: center;
 }
 
     .lightbox-main .col-md-4 .item img {
-        max-height: none;
+        max-height: 100% !important;
+        width: auto !important;
     }
