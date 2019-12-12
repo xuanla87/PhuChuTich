@@ -20,6 +20,7 @@ body:after {
 .lightbox {
     position: absolute;
     left: 0;
+    top: 100% !important;
     width: 100%;
     z-index: 10000;
     text-align: center;
@@ -60,6 +61,7 @@ body:after {
 /* line 44, ../sass/lightbox.sass */
 .lb-container {
     padding: 0px;
+    position: relative;
 }
 
 /* line 47, ../sass/lightbox.sass */
@@ -84,12 +86,12 @@ body:after {
 
 /* line 63, ../sass/lightbox.sass */
 .lb-nav {
-    position: absolute;
+    /*position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 10;
+    z-index: 10;*/
 }
 
 /* line 71, ../sass/lightbox.sass */
@@ -104,16 +106,17 @@ body:after {
 
 /* line 77, ../sass/lightbox.sass */
 .lb-prev, .lb-next {
-    height: 100%;
     cursor: pointer;
     /* Trick IE into showing hover */
     display: block;
+    position: absolute;
+    top: 45%;
+    left: 0px;
 }
 
 /* line 84, ../sass/lightbox.sass */
 .lb-prev {
     left: 0;
-    float: left;
 }
 
     .lb-prev::before {
@@ -127,7 +130,7 @@ body:after {
         content: "\f0d9";
         top: 50%;
         position: absolute;
-        left: -25px;
+        left: -55px;
         font-size: 40px;
         color: #999999;
     }
@@ -139,7 +142,6 @@ body:after {
 /* line 90, ../sass/lightbox.sass */
 .lb-next {
     right: 0;
-    float: right;
 }
 
     .lb-next::before {
@@ -153,7 +155,7 @@ body:after {
         content: "\f0da";
         top: 50%;
         position: absolute;
-        right: -25px;
+        right: -55px;
         font-size: 40px;
         color: #999999;
     }
@@ -235,4 +237,3 @@ body:after {
     width: 100px;
     height: 100px;
 }
-
