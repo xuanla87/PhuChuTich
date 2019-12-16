@@ -73,7 +73,6 @@
                                         <tr>
                                             <td class="text-center">@count</td>
                                             <td>@item.name</td>
-                                            <td>@item.parentId</td>
                                             <td>
                                                 <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Video", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
                                                 <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trash('@item.contentId','Video')"><i class="fa fa-trash"></i></button>

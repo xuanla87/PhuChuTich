@@ -101,7 +101,8 @@ namespace www.Areas.Admin.Controllers
                 {
                     Content model = _services.GetById((int)entity.contentId);
                     model.contentMain = entity.contentMain;
-                    model.description = _fileName ?? model.description;
+                    if (!string.IsNullOrEmpty(_fileName))
+                        model.description = _fileName;
                     model.contentId = entity.contentId;
                     model.thumbnail = entity.thumbnail;
                     model.modifiedTime = DateTime.Now;
