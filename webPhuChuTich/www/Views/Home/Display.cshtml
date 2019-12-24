@@ -45,8 +45,11 @@
                     </div>
                     @if (Model.contentKey == "Video")
                     {
-                        <video controls>
-                            <source src="/FileVideo/@Model.description">
+                        <video class="video-js" controls preload="auto" poster="@Model.thumbnail" data-setup="{}">
+                            <source src="/FileVideo/@Model.description" type="video/mp4" />
+                            <p class="vjs-no-js">
+                                Hỗ trợ: 0946.236.687
+                            </p>
                         </video>
                     }
                     <div class="content">
@@ -79,7 +82,7 @@ else
 
 @section scripts {
     <script>
-       
+
     </script>
 }
 
