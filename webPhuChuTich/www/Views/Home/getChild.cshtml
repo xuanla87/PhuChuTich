@@ -1,0 +1,16 @@
+﻿@model IEnumerable<www.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="box">
+            <h2>
+                <a href="@item.alias"> @item.name</a>
+            </h2>
+            <div class="box-body">
+                @Html.Action("getChildContent", "Home", new { Id = item.contentId, _key = item.contentKey })
+            </div>
+        </div>
+    }
+}
+

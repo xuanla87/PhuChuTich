@@ -19,6 +19,9 @@
 }
 @if (Model != null && Model.Count() > 0)
 {
+    <div class="breadcrumb">
+        @Html.Action("getBreadcrumb", "Home", new { pageUrl = ViewBag.Alias })
+    </div>
     foreach (var item in Model)
     {
         if (string.IsNullOrEmpty(item.thumbnail))

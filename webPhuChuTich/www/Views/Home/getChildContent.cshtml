@@ -1,0 +1,42 @@
+﻿@model IEnumerable<www.Models.Content>
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        if (string.IsNullOrEmpty(item.thumbnail))
+        {
+            <div class="item">
+                <a href="@item.alias" title="@item.name">@item.name</a>
+                <div class="des">
+                    @Html.Raw(item.description)
+                </div>
+                <div class="date-post text-right">
+                    <i>@item.ngayDang.ToString("dd") Tháng @item.ngayDang.ToString("MM") Năm @item.ngayDang.ToString("yyyy") / @item.isView lượt xem </i>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="item">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-4 col-sm-12">
+                        <div class="thumbnail">
+                            <a href="@item.alias"><img src="@item.thumbnail.Replace("~/","")" alt="@item.name" /></a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-xs-8 col-sm-12">
+                        <a href="@item.alias" title="@item.name">@item.name</a>
+                        <div class="des">
+                            @Html.Raw(item.description)
+                        </div>
+                        <div class="date-post text-right">
+                            <i>@item.ngayDang.ToString("dd") Tháng @item.ngayDang.ToString("MM") Năm @item.ngayDang.ToString("yyyy") / @item.isView lượt xem </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+

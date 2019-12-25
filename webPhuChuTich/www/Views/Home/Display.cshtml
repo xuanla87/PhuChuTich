@@ -6,18 +6,18 @@
 {
     <div class="row">
         <div class="col-lg-7 col-md-7 col-sm-12">
-            <div class="breadcrumb">
-                @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
-            </div>
             @if (Model.contentKey.StartsWith("ChuyenMucTinTuc"))
             {
                 <div class="page-content">
+                    @Html.Action("getChild", "Home", new { Id = Model.contentId, _key = Model.contentKey })
                     @Html.Action("getChildDisplay", "Home", new { Id = Model.contentId, _url = Model.alias })
-                    @Html.Raw(Model.contentMain)
                 </div>
             }
             else if (Model.contentKey.StartsWith("CHUYENMUCMEDIA"))
             {
+                <div class="breadcrumb">
+                    @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
+                </div>
                 <div class="page-content">
                     @Html.Action("getChildDisplayMedia", "Home", new { Id = Model.contentId, _url = Model.alias })
                     @Html.Raw(Model.contentMain)
@@ -25,6 +25,9 @@
             }
             else if (Model.contentKey.StartsWith("DONVIPHONGKHOA"))
             {
+                <div class="breadcrumb">
+                    @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
+                </div>
                 <div class="page-content">
                     @Html.Action("childrenLichCongTac", "Home", new { Id = Model.contentId })
                     @Html.Action("LichCongTacChildren", "Home", new { Id = Model.contentId, _url = Model.alias })
@@ -32,12 +35,18 @@
             }
             else if (Model.contentKey.StartsWith("CHUYENMUCTAILIEU"))
             {
+                <div class="breadcrumb">
+                    @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
+                </div>
                 <div class="page-content">
                     @Html.Action("ViewVanBan", "Home", new { Id = Model.contentId, _url = Model.alias })
                 </div>
             }
             else
             {
+                <div class="breadcrumb">
+                    @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
+                </div>
                 <div class="page-content">
                     <h1 class="page-title">@Model.name</h1>
                     <div class="date-post text-right">
@@ -45,18 +54,18 @@
                     </div>
                     @if (Model.contentKey == "Video")
                     {
-                    <video class="video-js" controls preload="auto" poster="@Model.thumbnail" data-setup="{}">
-                        <source src="/FileVideo/@Model.description" type="video/mp4" />
-                        <source src="/FileVideo/@Model.description" type="video/m4v" />
-                        <source src="/FileVideo/@Model.description" type="video/mpeg" />
-                        <source src="/FileVideo/@Model.description" type="video/ogg" />
-                        <source src="/FileVideo/@Model.description" type="video/quicktime" />
-                        <source src="/FileVideo/@Model.description" type="video/webm" />
-                        <source src="/FileVideo/@Model.description" type="video/x-ms-wmv" />
-                        <p class="vjs-no-js">
-                            Hỗ trợ: 0946.236.687
-                        </p>
-                    </video>
+                        <video class="video-js" controls preload="auto" poster="@Model.thumbnail" data-setup="{}">
+                            <source src="/FileVideo/@Model.description" type="video/mp4" />
+                            <source src="/FileVideo/@Model.description" type="video/m4v" />
+                            <source src="/FileVideo/@Model.description" type="video/mpeg" />
+                            <source src="/FileVideo/@Model.description" type="video/ogg" />
+                            <source src="/FileVideo/@Model.description" type="video/quicktime" />
+                            <source src="/FileVideo/@Model.description" type="video/webm" />
+                            <source src="/FileVideo/@Model.description" type="video/x-ms-wmv" />
+                            <p class="vjs-no-js">
+                                Hỗ trợ: 0946.236.687
+                            </p>
+                        </video>
                     }
                     <div class="content">
                         @Html.Raw(Model.contentMain)

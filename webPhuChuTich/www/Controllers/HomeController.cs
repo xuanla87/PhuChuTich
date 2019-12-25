@@ -53,6 +53,7 @@ namespace www.Controllers
             var entity = _db.Contents.FirstOrDefault(x => x.alias == _pageUrl);
             return entity;
         }
+
         private Content GetById(int Id)
         {
             var entity = _db.Contents.Find(Id);
@@ -305,15 +306,39 @@ namespace www.Controllers
         {
             int Id = 0;
             int.TryParse(GetValueByKey("Box5"), out Id);
-            var model = _db.Contents.Where(x => x.parentId == Id && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
-            model = model.OrderByDescending(x => x.ngayDang);
-            model = model.Take(5);
+            var _list = new List<int>();
+            var _listChuyenMuc = _db.Contents.Where(x => x.contentKey == "ChuyenMucTinTuc" && x.languageId == 1 && x.isTrash == false && x.parentId == Id);
+            foreach (var item in _listChuyenMuc)
+            {
+                _list.Add(item.contentId);
+                _list = getById(item.contentId, _list);
+            }
+            var _listContent = new List<Content>();
+
+            foreach (var item in _list)
+            {
+                var model = _db.Contents.Where(x => x.parentId == item && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+                _listContent.AddRange(model.ToList());
+            }
+            _listContent = _listContent.OrderByDescending(x => x.ngayDang).ToList();
+            _listContent = _listContent.Take(5).ToList();
             if (Id > 0)
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
             }
-            return PartialView(model);
+            return PartialView(_listContent);
+        }
+
+        private List<int> getById(int Id, List<int> _list)
+        {
+            var _listChuyenMuc = _db.Contents.Where(x => x.contentKey == "ChuyenMucTinTuc" && x.languageId == 1 && x.isTrash == false && x.parentId == Id);
+            foreach (var item in _listChuyenMuc)
+            {
+                _list.Add(item.contentId);
+                _list = getById(item.contentId, _list);
+            }
+            return _list;
         }
 
         public ActionResult Box6()
@@ -379,6 +404,24 @@ namespace www.Controllers
             ViewBag.TotalPage = totalPage;
             ViewBag.PageIndex = _pageIndex ?? 1;
             ViewBag.CurentUrl = _url;
+            var model = GetById(Id);
+            if (model != null)
+                ViewBag.Alias = model.alias;
+            return PartialView(entity.OrderByDescending(x => x.createTime));
+        }
+
+        public ActionResult getChild(int Id, string _key)
+        {
+            var entity = _db.Contents.Where(x => x.parentId == Id && x.languageId == 1 && x.isTrash == false && x.contentKey == _key);
+            entity = entity.OrderBy(x => x.contentId);
+            return PartialView(entity);
+        }
+
+        public ActionResult getChildContent(int Id, string _key)
+        {
+            var entity = _db.Contents.Where(x => x.parentId == Id && x.languageId == 1 && x.isTrash == false && x.approved == true && x.contentKey != _key);
+            entity = entity.OrderByDescending(x => x.ngayDang);
+            entity = entity.Take(2);
             return PartialView(entity.OrderByDescending(x => x.createTime));
         }
 
@@ -390,7 +433,7 @@ namespace www.Controllers
                 var model = GetById(entity.parentId.Value);
                 if (model != null)
                 {
-                    ViewBag.PTitle = "<a href=\"/\">Trang chủ</a> - " + getParent(model.parentId) + "<a href=\"" + model.alias + "\">" + model.name + "</a>";
+                    ViewBag.PTitle = "<a href=\"/\">Trang chủ</a> - " + getParent(model.parentId) + "<a href=\"" + model.alias + "\">" + model.name + "</a> - " + entity.name;
                 }
                 else
                 {
