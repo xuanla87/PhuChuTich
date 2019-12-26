@@ -15,7 +15,7 @@
             }
             else if (Model.contentKey.StartsWith("CHUYENMUCMEDIA"))
             {
-                <div class="breadcrumb">
+                <div class="breadcrumb" style="float: left; width: 100%;">
                     @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
                 </div>
                 <div class="page-content">
@@ -25,7 +25,7 @@
             }
             else if (Model.contentKey.StartsWith("DONVIPHONGKHOA"))
             {
-                <div class="breadcrumb">
+                <div class="breadcrumb" style="float: left; width: 100%;">
                     @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
                 </div>
                 <div class="page-content">
@@ -35,7 +35,7 @@
             }
             else if (Model.contentKey.StartsWith("CHUYENMUCTAILIEU"))
             {
-                <div class="breadcrumb">
+                <div class="breadcrumb" style="float: left; width: 100%;">
                     @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
                 </div>
                 <div class="page-content">
@@ -44,7 +44,7 @@
             }
             else
             {
-                <div class="breadcrumb">
+                <div class="breadcrumb" style="float: left; width: 100%;">
                     @Html.Action("getBreadcrumb", "Home", new { pageUrl = Model.alias })
                 </div>
                 <div class="page-content">
