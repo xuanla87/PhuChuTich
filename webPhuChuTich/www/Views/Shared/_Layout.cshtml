@@ -10,7 +10,6 @@
     <link href="~/Content/bxslider_jquery.bxslider.css" rel="stylesheet" />
     <link href="~/Content/lightbox.css" rel="stylesheet" />
     <link href="~/Content/magnify.css" rel="stylesheet" />
-    <link href="~/Content/video-js.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -71,7 +70,6 @@
     <script src="~/Scripts/jquery.cycle.all.js"></script>
     <script src="~/Scripts/lightbox-2.6.js"></script>
     <script src="~/Scripts/jquery.magnify.js"></script>
-    <script src="~/Scripts/video.js"></script>
     @RenderSection("scripts", required: false)
     <script>
         window.onscroll = function () { myFunction() };
@@ -95,7 +93,7 @@
         });
 
         $(window).ready(function () {
-
+           
             $('.featured-posts .right').html('');
             $('.featured-posts .left .slides').cycle({
                 fx: 'scrollHorz', speed: 500, timeout: 0, pager: '.featured-posts .right', pagerEvent: 'mouseover', pauseOnPagerHover: true,
@@ -152,7 +150,16 @@
                     }
                 })
             });
-
+            $('.video-slider .owl-next').on('click', function () {
+                $('.vid').each(function () {
+                    $(this).get(0).pause();
+                });
+            });
+            $('.video-slider .owl-prev').on('click', function () {
+                $('.vid').each(function () {
+                    $(this).get(0).pause();
+                });
+            });
             $('.weblinks-box').bxSlider({ mode: 'vertical', minSlides: 6, auto: true, speed: 1000, pager: false });
 
             $(".wrapper-img-slider").each(function () {

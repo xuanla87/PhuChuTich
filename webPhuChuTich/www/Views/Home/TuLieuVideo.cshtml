@@ -7,7 +7,7 @@
             @foreach (var item in Model)
             {
                 <div class="item">
-                    <video controls="controls" autoplay="autoplay" poster="@item.thumbnail">
+                    <video class="vid" controls="controls" poster="@item.thumbnail">
                         <source src="/FileVideo/@item.description" type="video/mp4" />
                         <source src="/FileVideo/@item.description" type="video/m4v" />
                         <source src="/FileVideo/@item.description" type="video/mpeg" />
