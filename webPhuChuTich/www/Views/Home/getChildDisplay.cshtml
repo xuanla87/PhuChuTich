@@ -19,7 +19,7 @@
 }
 @if (Model != null && Model.Count() > 0)
 {
-    <div class="breadcrumb">
+    <div class="breadcrumb" style="float: left; width: 100%;">
         @Html.Action("getBreadcrumb", "Home", new { pageUrl = ViewBag.Alias })
     </div>
     foreach (var item in Model)
