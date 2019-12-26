@@ -7,11 +7,14 @@
             @foreach (var item in Model)
             {
                 <div class="item">
-                    <video class="video-js" controls preload="auto" poster="@item.thumbnail" data-setup="{}">
-                        <source src="/FileVideo/@item.description" />
-                        <p class="vjs-no-js">
-                            Hỗ trợ: 0946.236.687
-                        </p>
+                    <video controls="controls" autoplay="autoplay" poster="@item.thumbnail">
+                        <source src="/FileVideo/@item.description" type="video/mp4" />
+                        <source src="/FileVideo/@item.description" type="video/m4v" />
+                        <source src="/FileVideo/@item.description" type="video/mpeg" />
+                        <source src="/FileVideo/@item.description" type="video/ogg" />
+                        <source src="/FileVideo/@item.description" type="video/quicktime" />
+                        <source src="/FileVideo/@item.description" type="video/webm" />
+                        <source src="/FileVideo/@item.description" type="video/x-ms-wmv" />
                     </video>
                 </div>
             }

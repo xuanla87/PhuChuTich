@@ -54,7 +54,7 @@
                     </div>
                     @if (Model.contentKey == "Video")
                     {
-                        <video class="video-js" controls preload="auto" poster="@Model.thumbnail" data-setup="{}">
+                        <video controls="controls" autoplay="autoplay" poster="@Model.thumbnail">
                             <source src="/FileVideo/@Model.description" type="video/mp4" />
                             <source src="/FileVideo/@Model.description" type="video/m4v" />
                             <source src="/FileVideo/@Model.description" type="video/mpeg" />
@@ -62,9 +62,6 @@
                             <source src="/FileVideo/@Model.description" type="video/quicktime" />
                             <source src="/FileVideo/@Model.description" type="video/webm" />
                             <source src="/FileVideo/@Model.description" type="video/x-ms-wmv" />
-                            <p class="vjs-no-js">
-                                Hỗ trợ: 0946.236.687
-                            </p>
                         </video>
                     }
                     <div class="content">
