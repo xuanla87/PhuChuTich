@@ -7,7 +7,7 @@
             <h2>
                 <a href="@item.alias"> @item.name</a>
             </h2>
-            <div class="box-body">
+            <div class="box-body" style="margin-top:15px;">
                 @Html.Action("getChildContent", "Home", new { Id = item.contentId, _key = item.contentKey })
             </div>
         </div>
