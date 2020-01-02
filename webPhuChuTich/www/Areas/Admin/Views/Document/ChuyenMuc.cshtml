@@ -1,14 +1,30 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
+    ViewBag.Title = "Chuyên mục văn bản";
+    int ipage = 1;
+    if (ViewBag.PageIndex != null)
+    {
+        ipage = (int)ViewBag.PageIndex;
+    }
+    int totalPage = 1;
+    if (ViewBag.TotalPage != null)
+    {
+        totalPage = (int)ViewBag.TotalPage;
+    }
+    int firstPaging = ipage - 2;
+    int lastPaging = ipage + 2;
+    firstPaging = firstPaging <= 0 ? 1 : firstPaging;
+    lastPaging = lastPaging - firstPaging < 5 ? firstPaging + 4 : lastPaging;
+    lastPaging = lastPaging >= totalPage ? totalPage : lastPaging;
+    bool? trash = (bool?)ViewBag.Trash;
+    int count = (ipage - 1) * 20;
 }
-@model  ClassLibrary.Models.Content
+@model IEnumerable<ClassLibrary.Models.Content>
 <section class="content-header">
-    <h1>
-        @ViewBag.Title
-    </h1>
+    <h1 class="title text-uppercase text-bold">@ViewBag.Title</h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Admin</a></li>
-        <li><a href="/Admin/Document">Danh sách văn bản</a></li>
+        <li><a href="/"><i class="fa fa-dashboard"></i> Admin</a></li>
+        <li><a href="/Admin/Document">Quản lý văn bản</a></li>
         <li class="active">@ViewBag.Title</li>
     </ol>
 </section>
@@ -16,82 +32,94 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box">
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("ChuyenMuc", "Document", FormMethod.Get, new { @id = "categories-list" }))
                 {
                     <div class="box-body">
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.Label("Tên chuyên mục", new { @class = "control-lable" })
-                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl", @placeholder = "Nhập tên..", @onchange = "javascript: Changed(this);" })
-                                    @Html.ValidationMessageFor(x => x.name, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" name="_searchKey" value="@ViewBag.SearchKey" class="form-control" placeholder="Nhập từ khóa.." />
                                 </div>
-                                <div class="form-group">
-                                    @Html.Label("Chuyên mục cha", new { @class = "control-lable" })
-                                    @Html.DropDownListFor(x => x.parentId, null, "---Chọn chuyên mục ---", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(x => x.parentId, "", new { @class = "text-danger" })
+                                <div class="col-md-4">
+                                    @Html.DropDownList("_parentId", null, "--Chuyên mục--", new { @class = "form-control" })
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    @Html.Label("Mô tả ngắn", new { @class = "control-lable" })
-                                    @Html.TextAreaFor(x => x.description, new { @class = "form-control", @placeholder = "Nhập ghi chú..", @rows = "5" })
-                                    @Html.ValidationMessageFor(x => x.description, "", new { @class = "text-danger" })
+                                <div class="col-md-2 text-right">
+                                    <button type="button" class="btn btn-danger search btn-flat"><i class="fa fa-filter"></i> Lọc</button>
+                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('ChuyenMuc/Document')"><i class="fa fa-refresh"></i> Hủy</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="row">
-                                @Html.HiddenFor(x => x.authorName)
-                                @Html.HiddenFor(x => x.alias)
-                                @Html.HiddenFor(x => x.contentId)
-                                @Html.HiddenFor(x => x.isHome)
-                                @Html.HiddenFor(x => x.isNew)
-                                @Html.HiddenFor(x => x.isSort)
-                                @Html.HiddenFor(x => x.isTrash)
-                                @Html.HiddenFor(x => x.isView)
-                                @Html.HiddenFor(x => x.languageId)
-                                @Html.HiddenFor(x => x.modifiedTime)
-                                @Html.HiddenFor(x => x.createTime)
-                                @Html.HiddenFor(x => x.approvedUser)
-                                @Html.HiddenFor(x => x.createUser)
-                                @Html.HiddenFor(x => x.modifiedUser)
-                                @Html.HiddenFor(x => x.approvedTime)
-                                @Html.HiddenFor(x => x.allowComment)
-                                @Html.HiddenFor(x => x.contentKey)
-                                @Html.HiddenFor(x => x.oldId)
-                                @Html.HiddenFor(x => x.isFeature)
-                                @Html.HiddenFor(x => x.ngayDang)
-                            </div>
+                            <a href="@Url.Action("DetailChuyenMuc", "Document")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Lưu dữ liệu</button>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="50">STT</th>
+                                        <th width="350">Tên chuyên mục</th>
+                                        <th width="350">Link chuyên mục</th>
+                                        <th>Chuyên mục cha</th>
+                                        <th width="120">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <td class="text-center">@count</td>
+                                            <td>@item.name</td>
+                                            <td>@item.alias</td>
+                                            <td>@*@Html.Action("getNameById", new { Id = item.ParentId })*@</td>
+                                            <td>
+                                                <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("DetailChuyenMuc", "Document", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
+                                                <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trash('@item.contentId','ChuyenMuc/Document')"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
                         </div>
+                        @if (totalPage > 1)
+                        {
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    @if (firstPaging > 1)
+                                    {
+                                        <li>
+                                            <a href="#" aria-label="Previous" onclick="moveToPreviousPage(@ipage, 'categories-list')">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @for (int i = firstPaging; i <= lastPaging; i++)
+                                    {
+                                        var cssClass = "";
+                                        if (i == ipage)
+                                        {
+                                            cssClass = "active";
+                                        }
+                                        <li class="@cssClass"><a href="#" onclick="moveToPage(@i, 'categories-list')">@i</a></li>
+                                    }
+                                    @if (lastPaging < totalPage)
+                                    {
+                                        <li>
+                                            <a href="#" aria-label="Next" onclick="moveToNextPage(@ipage, 'categories-list')">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
+                        <input type="hidden" name="_pageIndex" value="@ipage" class="page-to-move" />
                     </div>
                 }
             </div>
         </div>
     </div>
 </section>
-@section scriptAs {
-    <script>
-        $(function () {
-            CKEDITOR.replace('description', {
-                toolbar: [
-                    ['Bold', 'Italic', 'Underline'],
-                    ['Styles', 'Format', 'Font', 'FontSize']
-                ], height: '80px'
 
-            });
-        });
-        function Changed(textControl) {
-            document.getElementById('alias').value = geturl(textControl.value);
-            textControl.value = textControl.value.replace(/ + /g, " ");
-            textControl.value = textControl.value.replace(/^\ +|\ +$/g, "");
-        }
-    </script>
-}
+
