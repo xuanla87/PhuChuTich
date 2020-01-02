@@ -69,7 +69,8 @@ namespace www.Areas.Admin.Controllers
                     isView = 0,
                     modifiedTime = DateTime.Now,
                     modifiedUser = User.Identity.Name,
-                    contentKey = "Document"
+                    contentKey = "Document",
+                    metaTitle = ""
                 };
                 ViewBag.Title = "Thêm mới văn bản";
             }
@@ -96,6 +97,7 @@ namespace www.Areas.Admin.Controllers
                     model.modifiedTime = DateTime.Now;
                     model.parentId = entity.parentId;
                     model.name = entity.name;
+                    model.metaTitle = entity.metaTitle;
                     _services.Update(model);
                     _services.Save();
                 }
