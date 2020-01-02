@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
-    ViewBag.Title = "Danh sách bài viết";
+    ViewBag.Title = "Danh sách văn bản";
     int ipage = 1;
     if (ViewBag.PageIndex != null)
     {
@@ -24,7 +24,7 @@
     <h1 class="title text-uppercase text-bold">@ViewBag.Title</h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Admin</a></li>
-        <li><a href="/Admin/NewsPaper">Quản lý bài viết</a></li>
+        <li><a href="/Admin/Document">Quản lý văn bản</a></li>
         <li class="active">@ViewBag.Title</li>
     </ol>
 </section>
@@ -32,31 +32,31 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box">
-                @using (Html.BeginForm("Index", "NewsPaper", FormMethod.Get, new { @id = "news-list" }))
+                @using (Html.BeginForm("Index", "Document", FormMethod.Get, new { @id = "document-list" }))
                 {
                     <div class="box-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <input type="text" name="_searchKey" value="@ViewBag.SearchKey" autocomplete="off" class="form-control" placeholder="Nhập từ khóa.." />
+                                    <input type="text" name="_searchKey" value="@ViewBag.SearchKey" class="form-control" autocomplete="off" placeholder="Nhập từ khóa.." />
                                 </div>
                                 <div class="col-md-2">
                                     @Html.DropDownList("_parentId", null, "--Chuyên mục--", new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" name="_fromDate" value="@ViewBag.FromDate" autocomplete="off" class="form-control datepicker" placeholder="Từ ngày.." />
+                                    <input type="text" name="_fromDate" value="@ViewBag.FromDate" class="form-control datepicker" placeholder="Từ ngày.." />
                                 </div>
                                 <div class="col-md-2">
-                                    <input type="text" name="_toDate" value="@ViewBag.ToDate" autocomplete="off" class="form-control datepicker" placeholder="Đến ngày.." />
+                                    <input type="text" name="_toDate" value="@ViewBag.ToDate" class="form-control datepicker" placeholder="Đến ngày.." />
                                 </div>
                                 <div class="col-md-2 text-right">
                                     <button type="button" class="btn btn-danger search btn-flat"><i class="fa fa-filter"></i> Lọc</button>
-                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('NewsPaper')"><i class="fa fa-refresh"></i> Hủy</button>
+                                    <button type="button" class="btn btn-info btn-flat" onclick="refresh('Document')"><i class="fa fa-refresh"></i> Hủy</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <a href="@Url.Action("Detail", "NewsPaper")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
+                            <a href="@Url.Action("Detail", "Document")" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
@@ -65,7 +65,8 @@
                                         <th width="50">STT</th>
                                         <th>Tiêu đề</th>
                                         <th>Link</th>
-                                        <th width="50">Ngày tạo</th>
+                                        <th width="100">Số hiệu</th>
+                                        <th width="80">Ngày tạo</th>
                                         <th width="150">Chuyên mục</th>
                                         <th width="200">Thao tác</th>
                                     </tr>
@@ -78,28 +79,28 @@
                                         <tr>
                                             <td class="text-center">@count</td>
                                             <td>@item.name</td>
+                                            <td>@item.metaTitle</td>
                                             <td>@item.alias</td>
                                             <td>@item.ngayDang</td>
                                             <td>@Html.Action("getName", "NewsPaper", new { Id = item.parentId })</td>
                                             <td>
                                                 @if (!item.approved)
                                                 {
-                                                    <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
+                                                    <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Document", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
                                                     if (User.IsInRole("Admin") || User.Identity.Name == "admin")
                                                     {
-                                                        <button type="button" class="btn btn-success btn-flat" title="Duyệt" onclick="Approval('@item.contentId','NewsPaper')"><i class="fa fa-check"></i></button>
+                                                        <button type="button" class="btn btn-success btn-flat" title="Duyệt" onclick="Approval('@item.contentId','Document')"><i class="fa fa-check"></i></button>
                                                     }
                                                 }
                                                 else
                                                 {
                                                     if (User.IsInRole("Admin") || User.Identity.Name == "admin")
                                                     {
-                                                        <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
-                                                        <button type="button" class="btn btn-info btn-flat" title="Hủy duyệt" onclick="UnApproval('@item.contentId','NewsPaper')"><i class="fa fa-exclamation-triangle"></i></button>
+                                                        <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Document", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
+                                                        <button type="button" class="btn btn-info btn-flat" title="Hủy duyệt" onclick="UnApproval('@item.contentId','Document')"><i class="fa fa-exclamation-triangle"></i></button>
                                                     }
                                                 }
                                                 <a title="Xem nhanh" class="btn btn-primary btn-flat" href="/@item.alias" target="_blank"><i class="fa fa-eye"></i></a>
-                                                <a title="Thêm ảnh" class="btn btn-danger btn-flat" href="@Url.Action("AddImg", "NewsPaper", new { Id = item.contentId })"><i class="fa fa-image"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -113,7 +114,7 @@
                                     @if (firstPaging > 1)
                                     {
                                         <li>
-                                            <a href="#" aria-label="Previous" onclick="moveToPreviousPage(@ipage, 'news-list')">
+                                            <a href="#" aria-label="Previous" onclick="moveToPreviousPage(@ipage, 'document-list')">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
@@ -125,12 +126,12 @@
                                         {
                                             cssClass = "active";
                                         }
-                                        <li class="@cssClass"><a href="#" onclick="moveToPage(@i, 'news-list')">@i</a></li>
+                                        <li class="@cssClass"><a href="#" onclick="moveToPage(@i, 'document-list')">@i</a></li>
                                     }
                                     @if (lastPaging < totalPage)
                                     {
                                         <li>
-                                            <a href="#" aria-label="Next" onclick="moveToNextPage(@ipage, 'news-list')">
+                                            <a href="#" aria-label="Next" onclick="moveToNextPage(@ipage, 'document-list')">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

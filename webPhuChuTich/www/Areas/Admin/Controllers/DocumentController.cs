@@ -45,7 +45,7 @@ namespace www.Areas.Admin.Controllers
             if (Id.HasValue && Id > 0)
             {
                 model = _services.GetById(Id.Value);
-                ViewBag.Title = "Cập nhật tài liệu";
+                ViewBag.Title = "Cập nhật văn bản";
             }
             else
             {
@@ -71,7 +71,7 @@ namespace www.Areas.Admin.Controllers
                     modifiedUser = User.Identity.Name,
                     contentKey = "Document"
                 };
-                ViewBag.Title = "Thêm mới tài liệu";
+                ViewBag.Title = "Thêm mới văn bản";
             }
             IEnumerable<DropdownModel> category = _services.Dropdownlist(0, null, "ChuyenMucDocument", _languageId);
             ViewBag.parentId = category.Select(x => new SelectListItem { Text = x.Text, Value = x.Value.ToString() });

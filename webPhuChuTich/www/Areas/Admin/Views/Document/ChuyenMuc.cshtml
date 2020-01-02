@@ -1,20 +1,17 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_LayoutPageAdmin.cshtml";
 }
-
 @model  ClassLibrary.Models.Content
-<!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
         @ViewBag.Title
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i>Admin</a></li>
-        <li><a href="/Admin/NewsPaper">Danh sách bài viết</a></li>
+        <li><a href="/Admin/Document">Danh sách văn bản</a></li>
         <li class="active">@ViewBag.Title</li>
     </ol>
 </section>
-<!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -27,19 +24,14 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.Label("Tiêu đề", new { @class = "control-lable" })
-                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl", @autocomplete = "off", @placeholder = "Nhập tiêu đề..", @onchange = "javascript: Changed(this);" })
+                                    @Html.Label("Tên chuyên mục", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl", @placeholder = "Nhập tên..", @onchange = "javascript: Changed(this);" })
                                     @Html.ValidationMessageFor(x => x.name, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    @Html.Label("Chuyên mục", new { @class = "control-lable" })
-                                    @Html.DropDownListFor(x => x.parentId, null, "---Chọn chuyên mục---", new { @class = "form-control" })
+                                    @Html.Label("Chuyên mục cha", new { @class = "control-lable" })
+                                    @Html.DropDownListFor(x => x.parentId, null, "---Chọn chuyên mục ---", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.parentId, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Hình ảnh", new { @class = "control-lable" })
-                                    @Html.TextBoxFor(x => x.thumbnail, new { @class = "form-control", @placeholder = "Chọn ảnh.." })
-                                    @Html.ValidationMessageFor(x => x.thumbnail, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -51,22 +43,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.Label("Nội dung", new { @class = "control-lable" })
-                            @Html.TextAreaFor(x => x.contentMain, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.contentMain, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        @Html.Label("Ngày viết", new { @class = "control-lable" })
-                                        <input type="text" name="NgayViet" value="@ViewBag.NgayViet" autocomplete = "off" class="form-control datepicker" placeholder="Chọn ngày.." />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.Label("Tác giả", new { @class = "control-lable" })
-                                    @Html.TextBoxFor(x => x.authorName, new { @class = "form-control", @placeholder = "Nhập tác giả.." })
-                                </div>
+                                @Html.HiddenFor(x => x.authorName)
                                 @Html.HiddenFor(x => x.alias)
                                 @Html.HiddenFor(x => x.contentId)
                                 @Html.HiddenFor(x => x.isHome)
@@ -84,12 +62,8 @@
                                 @Html.HiddenFor(x => x.allowComment)
                                 @Html.HiddenFor(x => x.contentKey)
                                 @Html.HiddenFor(x => x.oldId)
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                @Html.Label("Bài nổi bật", new { @class = "control-lable" })
-                                @Html.CheckBoxFor(x => x.isFeature)
+                                @Html.HiddenFor(x => x.isFeature)
+                                @Html.HiddenFor(x => x.ngayDang)
                             </div>
                         </div>
                     </div>
@@ -103,11 +77,16 @@
         </div>
     </div>
 </section>
-<!-- /.content -->
 @section scriptAs {
     <script>
         $(function () {
-            CKEDITOR.replace('contentMain');
+            CKEDITOR.replace('description', {
+                toolbar: [
+                    ['Bold', 'Italic', 'Underline'],
+                    ['Styles', 'Format', 'Font', 'FontSize']
+                ], height: '80px'
+
+            });
         });
         function Changed(textControl) {
             document.getElementById('alias').value = geturl(textControl.value);
