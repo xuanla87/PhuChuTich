@@ -82,5 +82,6 @@ namespace www.Models
         public bool isNew { get; set; }
 
         public int? oldId { get; set; }
+        public int? showCount { get; set; }
     }
 }

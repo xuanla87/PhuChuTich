@@ -256,8 +256,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult Box2()
@@ -270,8 +274,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult Box3()
@@ -284,8 +292,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult Box4()
@@ -298,8 +310,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult Box5()
@@ -321,11 +337,14 @@ namespace www.Controllers
                 _listContent.AddRange(model.ToList());
             }
             _listContent = _listContent.OrderByDescending(x => x.ngayDang).ToList();
-            _listContent = _listContent.Take(5).ToList();
             if (Id > 0)
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    _listContent = _listContent.Take(entity.showCount.Value).ToList();
+                else
+                    _listContent = _listContent.Take(5).ToList();
             }
             return PartialView(_listContent);
         }
@@ -351,8 +370,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(4));
+            return PartialView(model);
         }
 
         public ActionResult Box7()
@@ -365,8 +388,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult Box8()
@@ -379,8 +406,12 @@ namespace www.Controllers
             {
                 var entity = GetById(Id);
                 ViewBag.Url = entity.alias;
+                if (entity.showCount.HasValue && entity.showCount > 0)
+                    model = model.Take(entity.showCount.Value);
+                else
+                    model = model.Take(5);
             }
-            return PartialView(model.Take(5));
+            return PartialView(model);
         }
 
         public ActionResult ThongTinHoatDong()
@@ -481,7 +512,11 @@ namespace www.Controllers
             var entity = GetById(Id);
             if (entity != null)
                 ViewBag.Url = entity.alias;
-            return PartialView(model.Take(8));
+            if (entity.showCount.HasValue && entity.showCount > 0)
+                model = model.Take(entity.showCount.Value);
+            else
+                model = model.Take(8);
+            return PartialView(model);
         }
 
         public ActionResult NgayThang()

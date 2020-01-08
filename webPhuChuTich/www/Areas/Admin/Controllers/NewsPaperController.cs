@@ -1,5 +1,7 @@
 ﻿using ClassLibrary.Models;
 using ClassLibrary.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,13 +16,25 @@ namespace www.Areas.Admin.Controllers
     {
         private IContentServices _services;
         private IOptionServices _optionServices;
+        www.Models.ModelPCT _db;
         public NewsPaperController(IContentServices services, IOptionServices optionServices)
         {
             _services = services;
             _optionServices = optionServices;
+            _db = new www.Models.ModelPCT();
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
         public ActionResult Index(string _searchKey, int? _parentId, DateTime? _fromDate, DateTime? _toDate, int? _pageIndex)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             ContentView result;
             int _languageId = 1;
             string _userName = null;
@@ -43,6 +57,9 @@ namespace www.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Detail(int? Id)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             int _languageId = 1;
             Content model = null;
             if (Id.HasValue && Id > 0)
@@ -164,6 +181,10 @@ namespace www.Areas.Admin.Controllers
 
         public ActionResult ChuyenMuc(string _searchKey, int? _parentId, int? _pageIndex)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
             ContentView result;
             int _languageId = 1;
             result = _services.GetAllAdmin(_searchKey, null, null, _parentId, "ChuyenMucTinTuc", _languageId, false, _pageIndex, 20);
@@ -179,6 +200,9 @@ namespace www.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult DetailChuyenMuc(int? Id)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             int _languageId = 1;
             Content model = null;
             if (Id.HasValue && Id > 0)
@@ -235,6 +259,7 @@ namespace www.Areas.Admin.Controllers
                     model.thumbnail = entity.thumbnail;
                     model.modifiedTime = DateTime.Now;
                     model.parentId = entity.parentId;
+                    model.showCount = entity.showCount;
                     model.name = entity.name;
                     _services.Update(model);
                     _services.Save();
@@ -258,6 +283,7 @@ namespace www.Areas.Admin.Controllers
                         contentKey = "ChuyenMucTinTuc",
                         contentMain = entity.contentMain,
                         createUser = User.Identity.Name,
+                        showCount = entity.showCount,
                         isFeature = false,
                         isHome = false,
                         isNew = false,

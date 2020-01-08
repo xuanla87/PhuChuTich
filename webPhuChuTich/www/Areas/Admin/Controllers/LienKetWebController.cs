@@ -1,5 +1,7 @@
 ﻿using ClassLibrary.Models;
 using ClassLibrary.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +14,33 @@ namespace www.Areas.Admin.Controllers
     public class LienKetWebController : Controller
     {
         ILienKetWebServices _services;
+        www.Models.ModelPCT _db;
         public LienKetWebController(ILienKetWebServices services)
         {
             this._services = services;
+            _db = new www.Models.ModelPCT();
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
         public ActionResult Index()
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             var result = _services.All();
             return View(result);
         }
         [HttpGet]
         public ActionResult Detail(int? Id)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             LienKetWeb model = null;
             if (Id.HasValue && Id > 0)
             {

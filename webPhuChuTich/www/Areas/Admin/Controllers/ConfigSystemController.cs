@@ -1,4 +1,6 @@
 ﻿using ClassLibrary.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +16,26 @@ namespace www.Areas.Admin.Controllers
         IConfigSystemServices _services;
         IMenuServices _menuService;
         IContentServices _contentService;
+        www.Models.ModelPCT _db;
         public ConfigSystemController(IConfigSystemServices services, IMenuServices menuService, IContentServices contentService)
         {
             this._services = services;
             this._menuService = menuService;
             this._contentService = contentService;
+            _db = new www.Models.ModelPCT();
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
         public ActionResult Index()
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             var model = new ModelCaiDatHeThong();
             if (!string.IsNullOrEmpty(_services.GetValueByKey("DanhMucChinh")))
                 model.DanhMucChinh = int.Parse(_services.GetValueByKey("DanhMucChinh"));

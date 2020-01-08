@@ -25,13 +25,17 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     @Html.Label("Tên chuyên mục", new { @class = "control-lable" })
-                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl" , @autocomplete = "off", @placeholder = "Nhập tên..", @onchange = "javascript: Changed(this);" })
+                                    @Html.TextBoxFor(x => x.name, new { @class = "form-control geturl", @autocomplete = "off", @placeholder = "Nhập tên..", @onchange = "javascript: Changed(this);" })
                                     @Html.ValidationMessageFor(x => x.name, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Chuyên mục cha", new { @class = "control-lable" })
                                     @Html.DropDownListFor(x => x.parentId, null, "---Chọn chuyên mục ---", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(x => x.parentId, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Số lượng hiển thị", new { @class = "control-lable" })
+                                    @Html.TextBoxFor(x => x.showCount, new { @class = "form-control number" })
                                 </div>
                             </div>
                             <div class="col-md-8">

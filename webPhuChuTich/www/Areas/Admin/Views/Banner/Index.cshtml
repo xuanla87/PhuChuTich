@@ -66,6 +66,8 @@
                                         <th width="50">STT</th>
                                         <th width="350">Tiêu đề</th>
                                         <th>Banner cha</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Người tạo</th>
                                         <th width="120">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -77,7 +79,9 @@
                                         <tr>
                                             <td class="text-center">@count</td>
                                             <td>@item.name</td>
-                                            <td>@item.parentId</td>
+                                            <td>@Html.Action("getName", "NewsPaper", new { Id = item.parentId })</td>
+                                            <td>@item.createTime.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.createUser</td>
                                             <td>
                                                 <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Banner", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
                                                 <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trash('@item.contentId','Banner')"><i class="fa fa-trash"></i></button>

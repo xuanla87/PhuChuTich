@@ -1,5 +1,7 @@
 ﻿using ClassLibrary.Models;
 using ClassLibrary.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,24 @@ namespace www.Areas.Admin.Controllers
     public class MenuController : Controller
     {
         IMenuServices _services;
+        www.Models.ModelPCT _db;
         public MenuController(IMenuServices services)
         {
             this._services = services;
+            _db = new www.Models.ModelPCT();
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
         public ActionResult Index(string _searchKey, int? _parentId, int? _pageIndex)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             MenuView result;
             int _languageId = 1;
             result = _services.GetAll(_searchKey, _parentId, _languageId, false, _pageIndex, 20);
@@ -50,6 +64,9 @@ namespace www.Areas.Admin.Controllers
 
         public ActionResult ThemMoi()
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             int _languageId = 1;
 
             var model = new ModelDanhMuc
@@ -87,6 +104,9 @@ namespace www.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult CapNhat(int Id)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             int _languageId = 1;
             var entity = _services.GetById(Id);
             var model = new ModelDanhMuc

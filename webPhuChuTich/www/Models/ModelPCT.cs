@@ -26,6 +26,7 @@ namespace www.Models
         public virtual DbSet<LogAction> LogActions { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<UserLogin> UserLogins { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

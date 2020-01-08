@@ -62,6 +62,8 @@
                                     <tr>
                                         <th width="50">STT</th>
                                         <th width="350">Tiêu đề</th>
+                                        <th width="80">Ngày tạo</th>
+                                        <th width="80">Người tạo</th>
                                         <th width="120">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -70,14 +72,16 @@
                                     foreach (var item in Model)
                                     {
                                         count++;
-                                        <tr>
-                                            <td class="text-center">@count</td>
-                                            <td>@item.name</td>
-                                            <td>
-                                                <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Gallery", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trash('@item.contentId','Gallery')"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                            <tr>
+                                <td class="text-center">@count</td>
+                                <td>@item.name</td>
+                                <td>@item.createTime.ToString("dd/MM/yyyy")</td>
+                                <td>@item.createUser</td>
+                                <td>
+                                    <a title="Cập nhật" class="btn btn-warning btn-flat" href="@Url.Action("Detail", "Gallery", new { Id = item.contentId })"><i class="fa fa-pencil"></i></a>
+                                    <button type="button" class="btn btn-danger btn-flat" title="Xóa" onclick="trash('@item.contentId','Gallery')"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
                                     }
                                 }
                             </table>

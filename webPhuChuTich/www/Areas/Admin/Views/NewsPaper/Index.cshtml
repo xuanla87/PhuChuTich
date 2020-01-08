@@ -66,6 +66,7 @@
                                         <th>Tiêu đề</th>
                                         <th>Link</th>
                                         <th width="50">Ngày tạo</th>
+                                        <th width="50">Người tạo</th>
                                         <th width="150">Chuyên mục</th>
                                         <th width="200">Thao tác</th>
                                     </tr>
@@ -79,7 +80,8 @@
                                             <td class="text-center">@count</td>
                                             <td>@item.name</td>
                                             <td>@item.alias</td>
-                                            <td>@item.ngayDang</td>
+                                            <td>@item.ngayDang.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.createUser</td>
                                             <td>@Html.Action("getName", "NewsPaper", new { Id = item.parentId })</td>
                                             <td>
                                                 @if (!item.approved)

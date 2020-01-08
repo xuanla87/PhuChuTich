@@ -1,5 +1,7 @@
 ﻿using ClassLibrary.Models;
 using ClassLibrary.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,15 +14,25 @@ namespace www.Areas.Admin.Controllers
     [Authorize]
     public class VideoController : Controller
     {
-
-
         private IContentServices _services;
+        www.Models.ModelPCT _db;
         public VideoController(IContentServices services)
         {
             _services = services;
+            _db = new www.Models.ModelPCT();
+        }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
         public ActionResult Index(string _searchKey, DateTime? _fromDate, DateTime? _toDate, int? _pageIndex)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             ContentView result;
             int _languageId = 1;
             string _userName = null;
@@ -41,6 +53,9 @@ namespace www.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Detail(int? Id)
         {
+            var _user = _db.UserLogins.Find(User.Identity.Name);
+            if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             int _languageId = 1;
             Content model = null;
             if (Id.HasValue && Id > 0)

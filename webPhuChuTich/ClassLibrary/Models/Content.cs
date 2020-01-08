@@ -39,6 +39,7 @@
         public bool isFeature { get; set; }
         public bool isNew { get; set; }
         public int? oldId { get; set; }
+        public int? showCount { get; set; }
     }
     public class ContentView
     {
