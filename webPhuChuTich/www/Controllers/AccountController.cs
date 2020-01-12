@@ -94,6 +94,7 @@ namespace www.Controllers
                         }
                         else
                         {
+                            entity = new UserLogin();
                             entity.userName = model.UserName;
                             entity.sessionId = HttpContext.Session.SessionID;
                             entity.createTime = DateTime.Now;
