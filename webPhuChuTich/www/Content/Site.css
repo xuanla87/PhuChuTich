@@ -1338,4 +1338,12 @@ footer p {
     .body-content {
         padding: initial;
     }
+
+    .box h2 {
+        border-left: 8px solid #6ba06a;
+    }
+
+        .box h2 a {
+            font-size: 13px;
+        }
 }
