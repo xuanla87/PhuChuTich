@@ -456,16 +456,24 @@ h1.page-title {
     height: 155px;
 }
 
-.wrapper-noi-bat-slider .item .title a {
-    font-weight: bold;
-    color: #333;
+.wrapper-noi-bat-slider {
+    background: #f7bdb3;
 }
 
-.wrapper-noi-bat-slider .item .subject {
-    color: #333;
-    margin-top: 15px;
-    text-align: justify;
-}
+    .wrapper-noi-bat-slider .item .title, .wrapper-noi-bat-slider .item .subject {
+        padding: 0px 15px;
+    }
+
+        .wrapper-noi-bat-slider .item .title a {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .wrapper-noi-bat-slider .item .subject {
+            color: #333;
+            margin-top: 15px;
+            text-align: justify;
+        }
 
 .page-content video {
     width: 100%;
@@ -1309,5 +1317,9 @@ footer p {
 
     .clearfix30 {
         height: 0px;
+    }
+
+    .home-icon {
+        margin: initial;
     }
 }
