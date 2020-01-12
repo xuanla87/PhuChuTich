@@ -469,11 +469,11 @@ h1.page-title {
             color: #333;
         }
 
-        .wrapper-noi-bat-slider .item .subject {
-            color: #333;
-            margin-top: 15px;
-            text-align: justify;
-        }
+    .wrapper-noi-bat-slider .item .subject {
+        color: #333;
+        margin-top: 15px;
+        text-align: justify;
+    }
 
 .page-content video {
     width: 100%;
@@ -1257,7 +1257,7 @@ footer p {
         animation: marquee 30s linear infinite;
     }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 812px) {
     .main-nav {
         margin: 0px;
         float: left;
@@ -1321,5 +1321,21 @@ footer p {
 
     .home-icon {
         margin: initial;
+    }
+
+    .thong-ke {
+        margin-bottom: initial;
+    }
+
+    .cam-tuong, .open-thu-vien {
+        margin-bottom: initial;
+    }
+
+    footer {
+        margin-top: initial;
+    }
+
+    .body-content {
+        padding: initial;
     }
 }
