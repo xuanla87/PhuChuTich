@@ -432,7 +432,7 @@ h1.page-title {
     opacity: 1;
 }
 
-.video-slider .owl-prev, .video-slider .owl-next{
+.video-slider .owl-prev, .video-slider .owl-next {
     position: absolute;
     top: 50%;
     left: -10px;
@@ -441,6 +441,7 @@ h1.page-title {
     color: #333;
     opacity: 1;
 }
+
 .noi-bat-slider .owl-prev, .noi-bat-slider .owl-next {
     position: absolute;
     top: 26%;
@@ -450,9 +451,10 @@ h1.page-title {
     color: #333;
     opacity: 1;
 }
-    .gallery-slider .owl-prev:hover, .gallery-slider .owl-next:hover, .video-slider .owl-prev:hover, .video-slider .owl-next:hover {
-        opacity: 1;
-    }
+
+.gallery-slider .owl-prev:hover, .gallery-slider .owl-next:hover, .video-slider .owl-prev:hover, .video-slider .owl-next:hover {
+    opacity: 1;
+}
 
 .gallery-slider .owl-next, .video-slider .owl-next, .noi-bat-slider .owl-next {
     left: auto;
@@ -1262,7 +1264,6 @@ footer p {
 
     #navbar .time span {
         display: inline-block;
-        animation: marquee 30s linear infinite;
     }
 
 @media only screen and (max-width: 812px) {
@@ -1354,4 +1355,8 @@ footer p {
         .box h2 a {
             font-size: 13px;
         }
+
+    #navbar .time span {
+        animation: marquee 30s linear infinite;
+    }
 }

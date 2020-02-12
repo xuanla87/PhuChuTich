@@ -35,15 +35,51 @@ namespace www.Areas.Admin.Controllers
             var _user = _db.UserLogins.Find(User.Identity.Name);
             if (_user != null && _user.sessionId != HttpContext.Session.SessionID)
                 AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            ContentView result;
             int _languageId = 1;
             string _userName = null;
             if (User.IsInRole("Admin"))
                 _userName = null;
             else
                 _userName = User.Identity.Name;
-            result = _services.GetAll(_searchKey, _fromDate, _toDate, _parentId, "TinTuc", _languageId, false, _pageIndex, 20, _userName, null);
-            int totalPage = result?.Total ?? 0;
+            var _list = new List<int>();
+            IQueryable<www.Models.Content> _listChuyenMuc = null;
+            if (_parentId > 0)
+                _listChuyenMuc = _db.Contents.Where(x => x.contentKey == "ChuyenMucTinTuc" && x.languageId == 1 && x.isTrash == false && x.parentId == _parentId);
+            if (_listChuyenMuc != null && _listChuyenMuc.Count() > 0)
+            {
+                foreach (var item in _listChuyenMuc)
+                {
+                    _list.Add(item.contentId);
+                    _list = getById(item.contentId, _list);
+                }
+            }
+            var _listContent = new List<www.Models.Content>();
+            if (_parentId > 0)
+                _list.Add(_parentId.Value);
+            if (_list.Count > 0)
+            {
+                foreach (var item in _list)
+                {
+                    var model = _db.Contents.Where(x => x.parentId == item && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+                    _listContent.AddRange(model.ToList());
+                }
+            }
+            else
+                _listContent = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true).ToList();
+            _listContent = _listContent.OrderByDescending(x => x.ngayDang).ToList();
+            if (!string.IsNullOrEmpty(_searchKey))
+                _listContent = _listContent.Where(x => x.name.Contains(_searchKey)).ToList();
+            if (_fromDate.HasValue)
+                _listContent = _listContent.Where(x => x.ngayDang >= _fromDate.Value.Date).ToList();
+            if (_toDate.HasValue)
+                _listContent = _listContent.Where(x => x.ngayDang <= _toDate.Value.Date.AddDays(1).AddSeconds(-1)).ToList();
+            int _totalRecord = _listContent.Count;
+            if (_pageIndex != null)
+                _listContent = _listContent.Skip((_pageIndex.Value - 1) * 15).ToList();
+            var totalPage = 0;
+            totalPage = (int)Math.Ceiling(1.0 * _totalRecord / 15);
+            _listContent = _listContent.Take(15).ToList();
+            ViewBag.TotalRecord = _totalRecord.ToString();
             ViewBag.TotalPage = totalPage;
             ViewBag.PageIndex = _pageIndex ?? 1;
             ViewBag.SearchKey = string.IsNullOrWhiteSpace(_searchKey) ? string.Empty : _searchKey;
@@ -51,7 +87,18 @@ namespace www.Areas.Admin.Controllers
             ViewBag.ToDate = _toDate?.ToString("dd/MM/yyyy") ?? null;
             IEnumerable<DropdownModel> category = _services.Dropdownlist(0, null, "ChuyenMucTinTuc", _languageId);
             ViewBag._parentId = category.Select(x => new SelectListItem { Text = x.Text, Value = x.Value.ToString() });
-            return View(result.ViewContents);
+            return View(_listContent);
+        }
+
+        private List<int> getById(int Id, List<int> _list)
+        {
+            var _listChuyenMuc = _db.Contents.Where(x => x.contentKey == "ChuyenMucTinTuc" && x.languageId == 1 && x.isTrash == false && x.parentId == Id);
+            foreach (var item in _listChuyenMuc)
+            {
+                _list.Add(item.contentId);
+                _list = getById(item.contentId, _list);
+            }
+            return _list;
         }
 
         [HttpGet]
