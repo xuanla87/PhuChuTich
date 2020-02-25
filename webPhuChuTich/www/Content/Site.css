@@ -47,7 +47,7 @@ img {
 
 .day-now {
     position: absolute;
-    right: 5px;
+    right: 20px;
     top: 5px;
     width: 180px;
     text-transform: initial;
@@ -463,7 +463,7 @@ h1.page-title {
 
 .wrapper-video-slider .item video {
     width: 100%;
-    height: 155px;
+    height: 175px;
 }
 
 .wrapper-noi-bat-slider {
@@ -719,7 +719,7 @@ h1.page-title {
     top: 0;
     width: 100%;
     z-index: 9999;
-    max-width: 1140px;
+    max-width: 1170px;
 }
 
     /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
