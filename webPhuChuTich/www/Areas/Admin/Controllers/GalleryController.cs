@@ -106,6 +106,7 @@ namespace www.Areas.Admin.Controllers
                     model.contentId = entity.contentId;
                     model.thumbnail = entity.thumbnail;
                     model.modifiedTime = DateTime.Now;
+                    model.isSort = entity.isSort;
                     model.name = entity.name;
                     _services.Update(model);
                     _services.Save();
@@ -132,7 +133,7 @@ namespace www.Areas.Admin.Controllers
                         isFeature = false,
                         isHome = false,
                         isNew = false,
-                        isSort = 0,
+                        isSort = entity.isSort,
                         isTrash = false,
                         isView = 0,
                         languageId = entity.languageId,

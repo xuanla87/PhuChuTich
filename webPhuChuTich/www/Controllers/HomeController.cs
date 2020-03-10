@@ -195,16 +195,17 @@ namespace www.Controllers
         public ActionResult TuLieuAnh()
         {
             var model = _db.Contents.Where(x => x.contentKey == "Gallery" && x.languageId == 1 && x.isTrash == false);
-            model = model.OrderByDescending(x => x.isSort);
-            return PartialView(model.Take(15));
-
+            model = model.OrderBy(x => x.isSort);
+            model = model.Take(15);
+            return PartialView(model);
         }
 
         public ActionResult TuLieuVideo()
         {
             var model = _db.Contents.Where(x => x.contentKey == "Video" && x.languageId == 1 && x.isTrash == false);
-            model = model.OrderByDescending(x => x.isSort);
-            return PartialView(model.Take(5));
+            model = model.OrderBy(x => x.isSort);
+            model = model.Take(5);
+            return PartialView(model);
         }
 
         public ActionResult TuLieuVideoL(int? _pageIndex)
@@ -213,7 +214,7 @@ namespace www.Controllers
             int _totalRecord = 0;
             _pageIndex = _pageIndex ?? 1;
             var entity = _db.Contents.Where(x => x.contentKey == "Video" && x.languageId == _laguageId && x.isTrash == false);
-            entity = entity.OrderByDescending(x => x.createTime);
+            entity = entity.OrderBy(x => x.isSort);
             _totalRecord = entity.Count();
             if (_pageIndex != null)
                 entity = entity.Skip((_pageIndex.Value - 1) * 20);
@@ -232,7 +233,7 @@ namespace www.Controllers
             int _totalRecord = 0;
             _pageIndex = _pageIndex ?? 1;
             var entity = _db.Contents.Where(x => x.contentKey == "Gallery" && x.languageId == _laguageId && x.isTrash == false);
-            entity = entity.OrderByDescending(x => x.createTime);
+            entity = entity.OrderBy(x => x.isSort);
             _totalRecord = entity.Count();
             if (_pageIndex != null)
                 entity = entity.Skip((_pageIndex.Value - 1) * 10);
@@ -277,7 +278,7 @@ namespace www.Controllers
                 if (entity.showCount.HasValue && entity.showCount > 0)
                     model = model.Take(entity.showCount.Value);
                 else
-                    model = model.Take(5);
+                    model = model.Take(10);
             }
             return PartialView(model);
         }
@@ -604,6 +605,7 @@ namespace www.Controllers
             }
             return _html;
         }
+
         public string SubMenu2(string _css, int _id, string _key)
         {
             string _html = "";
@@ -625,6 +627,7 @@ namespace www.Controllers
 
             return _html;
         }
+
         public string SubMenu3(string _css, int? _id)
         {
             string _html = "";
@@ -649,6 +652,7 @@ namespace www.Controllers
             }
             return _html;
         }
+
         public ActionResult BaiVietMoi()
         {
             var entity = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
