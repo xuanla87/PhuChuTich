@@ -60,12 +60,12 @@ namespace www.Areas.Admin.Controllers
             {
                 foreach (var item in _list)
                 {
-                    var model = _db.Contents.Where(x => x.parentId == item && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true);
+                    var model = _db.Contents.Where(x => x.parentId == item && x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false);
                     _listContent.AddRange(model.ToList());
                 }
             }
             else
-                _listContent = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false && x.approved == true).ToList();
+                _listContent = _db.Contents.Where(x => x.contentKey == "TinTuc" && x.languageId == 1 && x.isTrash == false).ToList();
             _listContent = _listContent.OrderByDescending(x => x.ngayDang).ToList();
             if (!string.IsNullOrEmpty(_searchKey))
                 _listContent = _listContent.Where(x => x.name.Contains(_searchKey)).ToList();
