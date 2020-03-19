@@ -37,7 +37,15 @@
                             <ul class="dropdown-menu">
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat" onclick="logout()">Thoát</a>
+                                        @using Microsoft.AspNet.Identity
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            using (Html.BeginForm("LogOff", "ThanhVien", FormMethod.Post, new { id = "logoutForm"}))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Thoát</a>
+                                            }
+                                        }
                                     </div>
                                 </li>
                             </ul>
